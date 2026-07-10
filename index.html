@@ -103,6 +103,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  html,body{overflow-x:clip}
   body{
     font-family:var(--ui);
     color:var(--ink);
@@ -134,11 +135,9 @@
     padding:.55rem .15rem;
   }
   nav a:hover{color:var(--accent)}
-  nav .cta{
-    border:1px solid var(--ink);border-radius:999px;padding:.55rem 1.15rem;
-    transition:background .2s,color .2s,border-color .2s;
-  }
-  nav .cta:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  nav .cta{color:var(--accent);font-weight:600;transition:color .15s}
+  nav .cta:hover{color:var(--accent-deep);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px}
+  nav .cta:active{color:var(--ink)}
   nav .ltk{color:var(--accent)}
   nav .ltk:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
   @media (max-width:640px){
@@ -213,18 +212,6 @@
     background:var(--paper);
   }
   .endstate .ltk-strip{margin-top:auto}
-  @media (max-width:640px){
-    .stage{--headtop:clamp(.8rem,3vh,1.6rem)}
-    .stage-inner,.endstate{padding-top:4rem}
-    .endstate{gap:.9rem}
-    .ask button{width:44px;height:44px}
-    .ask{padding-left:1.1rem}
-    .ask-caption{font-size:.56rem;letter-spacing:.08em;white-space:nowrap}
-    .social-row{gap:.6rem;flex-wrap:nowrap}
-    .social-row a{font-size:.62rem;letter-spacing:.08em;white-space:nowrap}
-    .social-row .ltk-pill{padding:.55rem .85rem}
-    .replay{font-size:.58rem;letter-spacing:.08em;padding:.5rem .2rem}
-  }
   .endstate.show{opacity:1;pointer-events:auto}
   .endstate h1{
     margin-top:var(--headtop); /* same spot as the intro words */
@@ -250,12 +237,13 @@
   }
   .ask input::placeholder{color:#B4ACA0;opacity:1}
   .ask button{
-    flex:none;width:52px;height:52px;border-radius:50%;
-    border:0;background:var(--ink);color:#fff;font-size:1.25rem;cursor:pointer;
-    display:grid;place-items:center;
-    transition:background .2s,transform .2s;
+    flex:none;min-width:48px;height:48px;
+    border:0;background:none;color:var(--ink);font-size:1.5rem;cursor:pointer;
+    display:grid;place-items:center;padding:0 .7rem;
+    transition:color .2s,transform .2s;
   }
-  .ask button:hover{background:var(--accent);transform:translateX(2px)}
+  .ask button:hover{color:var(--accent);transform:translateX(4px)}
+  .ask button:active{color:var(--accent-deep)}
   .ask-caption{
     font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
     text-align:center;
@@ -267,11 +255,9 @@
     color:var(--ink);padding:.4rem 0;
   }
   .social-row a:hover{color:var(--accent)}
-  .social-row .ltk-pill{
-    background:var(--accent);color:#fff;border-radius:999px;padding:.75rem 1.5rem;
-    transition:background .2s,transform .2s;
-  }
-  .social-row .ltk-pill:hover{background:#5E1622;color:#fff;transform:translateY(-1px)}
+  .social-row .ltk-pill{color:var(--accent);font-weight:700}
+  .social-row .ltk-pill:hover{color:var(--accent-deep);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px}
+  .social-row .ltk-pill:active{color:var(--ink)}
   .ask-reply{
     font-family:var(--ui);font-style:italic;font-size:1.05rem;color:var(--accent);
     min-height:1.4em;text-align:center;
@@ -306,27 +292,49 @@
     scrollbar-width:none;
   }
   .ltk-tiles::-webkit-scrollbar{display:none}
+  /* safe centering inside a scroll row */
+  .ltk-tile:first-child{margin-left:auto}
+  .ltk-tile:last-child{margin-right:auto}
   .ltk-tile{
-    flex:0 0 auto;width:104px;height:138px;border-radius:12px;
-    display:flex;align-items:flex-end;padding:.6rem;
-    text-decoration:none;position:relative;overflow:hidden;
-    transition:transform .2s;
+    flex:0 0 auto;width:104px;height:138px;
+    display:block;text-decoration:none;
+    perspective:700px;
   }
-  .ltk-tile:hover{transform:translateY(-3px)}
-  .ltk-tile span{
+  .tile-in{
+    position:relative;display:block;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.35,.1,.25,1);
+  }
+  .ltk-tile:hover .tile-in,
+  .ltk-tile:focus-visible .tile-in{transform:rotateY(180deg)}
+  .tile-face{
+    position:absolute;inset:0;border-radius:12px;overflow:hidden;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    display:flex;align-items:flex-end;padding:.6rem;
+  }
+  .tile-face span{
     font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
     color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);
   }
-  /* drop ltk1/2/3.jpg into the site folder — swatches show until then */
-  .ltk-tile.p1{background:url('ltk1.jpg') center/cover no-repeat, linear-gradient(160deg,#C89A63,#8C5A2B)}
-  .ltk-tile.p2{background:url('ltk2.jpg') center/cover no-repeat, linear-gradient(160deg,#7793AE,#3E5063)}
-  .ltk-tile.p3{background:url('ltk3.jpg') center/cover no-repeat, linear-gradient(160deg,#8A8F7E,#4E5346)}
-  .ltk-tile.more{
-    background:#fff;border:1.5px solid var(--ink);align-items:center;justify-content:center;
+  .tile-back{
+    transform:rotateY(180deg);
+    background:var(--paper);border:1.5px solid var(--ink);
+    align-items:center;justify-content:center;text-align:center;
   }
-  .ltk-tile.more span{color:var(--ink);text-shadow:none;text-align:center}
-  .ltk-tile.more:hover{border-color:var(--accent)}
-  .ltk-tile.more:hover span{color:var(--accent)}
+  .tile-back span{color:var(--accent);text-shadow:none}
+  /* drop ltk1/2/3.jpg into the site folder — swatches show until then */
+  .p1 .tile-front{background:url('ltk1.jpg') center/cover no-repeat, linear-gradient(160deg,#C89A63,#8C5A2B)}
+  .p2 .tile-front{background:url('ltk2.jpg') center/cover no-repeat, linear-gradient(160deg,#7793AE,#3E5063)}
+  .p3 .tile-front{background:url('ltk3.jpg') center/cover no-repeat, linear-gradient(160deg,#8A8F7E,#4E5346)}
+  .ltk-tile.more .tile-front{
+    background:var(--paper);border:1.5px solid var(--ink);
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .ltk-tile.more .tile-front span{color:var(--ink);text-shadow:none}
+  .ltk-tile.more:hover .tile-front{border-color:var(--accent)}
+  .ltk-tile.more:hover .tile-front span{color:var(--accent)}
+  .ltk-tile.more:hover .tile-in{transform:none}
+  @media (prefers-reduced-motion:reduce){.tile-in{transition:none}}
   @media (max-width:640px){
     .ltk-strip{padding:.7rem 0 .9rem}
     .ltk-strip-head{margin-bottom:.6rem}
@@ -356,26 +364,41 @@
 
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem;counter-reset:step}
   @media (max-width:760px){.steps{grid-template-columns:1fr}}
-  .step{border-top:1px solid var(--hair);padding-top:1.3rem}
-  .step h3{
-    font-family:var(--ui);font-size:1.15rem;font-weight:700;margin-bottom:.6rem;
+  .step{
+    counter-increment:step;
+    border-top:1px solid var(--hair);padding-top:1.3rem;
+    perspective:1100px;cursor:pointer;
   }
-  .step h3::before{
-    counter-increment:step;content:"0" counter(step);
-    display:block;font-family:var(--ui);font-size:.72rem;letter-spacing:.22em;color:var(--accent);
+  .step-in{
+    position:relative;min-height:9.5rem;
+    transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.35,.1,.25,1);
+  }
+  .step:hover .step-in,
+  .step:focus-visible .step-in,
+  .step.flipped .step-in{transform:rotateY(180deg)}
+  .step-face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:var(--paper);
+  }
+  .step-face::before{
+    content:"0" counter(step);
+    display:block;font-size:.72rem;letter-spacing:.22em;color:var(--accent);
     margin-bottom:.9rem;font-weight:600;
   }
+  .step-back{transform:rotateY(180deg)}
+  .step h3{font-family:var(--ui);font-size:1.15rem;font-weight:700}
   .step p{color:#4C463D;font-size:.95rem;max-width:34ch}
+  @media (prefers-reduced-motion:reduce){.step-in{transition:none}}
 
-  .facts{background:var(--paper-warm);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .facts{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .facts-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem}
   @media (max-width:760px){.facts-grid{grid-template-columns:1fr}}
   .facts p.lede{font-size:1.05rem;max-width:52ch;color:#3B362E;margin-bottom:1.4rem}
-  .chips{display:flex;flex-wrap:wrap;gap:.55rem;list-style:none}
-  .chips li{
-    border:1px solid var(--ink);border-radius:999px;padding:.45rem 1rem;
-    font-size:.82rem;letter-spacing:.04em;
-  }
+  .chips{display:flex;flex-wrap:wrap;column-gap:.6rem;row-gap:.35rem;list-style:none;align-items:baseline}
+  .chips li{font-size:.88rem;letter-spacing:.03em}
+  .chips li + li::before{content:"·";color:var(--muted);margin-right:.6rem}
   dl.quickfacts div{display:flex;gap:1rem;border-bottom:1px solid var(--hair);padding:.8rem 0}
   dl.quickfacts dt{flex:0 0 9.5rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
   dl.quickfacts dd{font-size:.95rem}
@@ -404,7 +427,21 @@
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
-    .figure-wrap,.stage-inner,.endstate{transition:none}
+    .stage-inner,.endstate{transition:none}
+  }
+
+  /* ————— mobile (kept last so it wins the cascade) ————— */
+  @media (max-width:640px){
+    .stage{--headtop:clamp(.8rem,3vh,1.6rem)}
+    .stage-inner,.endstate{padding-top:4rem}
+    .endstate{gap:.9rem;padding-left:.7rem;padding-right:.7rem}
+    .ask button{min-width:44px;height:44px;padding:0 .4rem}
+    .ask{padding-left:1.1rem}
+    .ask-caption{font-size:clamp(.5rem,2.5vw,.62rem);letter-spacing:.02em;white-space:nowrap;max-width:100%}
+    .social-row{gap:2vw;flex-wrap:nowrap;max-width:100%}
+    .social-row a,.social-row .ltk-pill{font-size:clamp(.5rem,2.4vw,.64rem);letter-spacing:.05em;white-space:nowrap;padding:.4rem 0}
+    .replay{font-size:clamp(.48rem,2.2vw,.6rem);letter-spacing:.05em;padding:.4rem .1rem;white-space:nowrap}
+    .step-in{min-height:7.5rem}
   }
 </style>
 </head>
@@ -457,10 +494,18 @@
           <a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">All my looks on LTK &#8599;</a>
         </div>
         <div class="ltk-tiles">
-          <a class="ltk-tile p1" href="https://www.shopltk.com/explore/raddydolo/posts/b84de15e-6eb3-11ed-9470-0242ac110003" rel="noopener"><span>Look 01</span></a>
-          <a class="ltk-tile p2" href="https://www.shopltk.com/explore/raddydolo/posts/66671fdc-6ea7-11ed-a6b7-0242ac110004" rel="noopener"><span>Look 02</span></a>
-          <a class="ltk-tile p3" href="https://www.shopltk.com/explore/raddydolo/posts/0495875e-6ea7-11ed-9470-0242ac110003" rel="noopener"><span>Look 03</span></a>
-          <a class="ltk-tile more" href="https://www.shopltk.com/explore/raddydolo" rel="noopener"><span>See all &#8599;</span></a>
+          <a class="ltk-tile p1" href="https://www.shopltk.com/explore/raddydolo/posts/b84de15e-6eb3-11ed-9470-0242ac110003" rel="noopener">
+            <span class="tile-in"><span class="tile-face tile-front"><span>Look 01</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span>
+          </a>
+          <a class="ltk-tile p2" href="https://www.shopltk.com/explore/raddydolo/posts/66671fdc-6ea7-11ed-a6b7-0242ac110004" rel="noopener">
+            <span class="tile-in"><span class="tile-face tile-front"><span>Look 02</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span>
+          </a>
+          <a class="ltk-tile p3" href="https://www.shopltk.com/explore/raddydolo/posts/0495875e-6ea7-11ed-9470-0242ac110003" rel="noopener">
+            <span class="tile-in"><span class="tile-face tile-front"><span>Look 03</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span>
+          </a>
+          <a class="ltk-tile more" href="https://www.shopltk.com/explore/raddydolo" rel="noopener">
+            <span class="tile-in"><span class="tile-face tile-front"><span>See all &#8599;</span></span></span>
+          </a>
         </div>
       </div>
     </div>
@@ -475,17 +520,23 @@
       <p class="eyebrow">How it works</p>
       <h2>Three steps. Zero <em>judgment.</em></h2>
       <div class="steps">
-        <article class="step">
-          <h3>You dish, she listens</h3>
-          <p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p>
+        <article class="step" tabindex="0" aria-label="Step one: you dish, she listens. Flip for details.">
+          <div class="step-in">
+            <div class="step-face"><h3>You dish, she listens</h3></div>
+            <div class="step-face step-back"><p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p></div>
+          </div>
         </article>
-        <article class="step">
-          <h3>She builds your plan</h3>
-          <p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p>
+        <article class="step" tabindex="0" aria-label="Step two: she builds your plan. Flip for details.">
+          <div class="step-in">
+            <div class="step-face"><h3>She builds your plan</h3></div>
+            <div class="step-face step-back"><p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
+          </div>
         </article>
-        <article class="step">
-          <h3>You create the looks</h3>
-          <p>Together you build outfits that work for your body and your budget. Confidence included.</p>
+        <article class="step" tabindex="0" aria-label="Step three: you create the looks. Flip for details.">
+          <div class="step-in">
+            <div class="step-face"><h3>You create the looks</h3></div>
+            <div class="step-face step-back"><p>Together you build outfits that work for your body and your budget. Confidence included.</p></div>
+          </div>
         </article>
       </div>
     </div>
@@ -711,6 +762,14 @@
   });
 
   skipBtn.addEventListener('click', skipToEnd);
+
+  // step cards: tap/keyboard flip (hover handles pointer devices)
+  Array.prototype.forEach.call(document.querySelectorAll('.step'), function(s){
+    s.addEventListener('click', function(){ s.classList.toggle('flipped'); });
+    s.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); s.classList.toggle('flipped'); }
+    });
+  });
   replayBtn.addEventListener('click', function(){
     if (reduced) return;
     play();
