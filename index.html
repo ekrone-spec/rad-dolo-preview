@@ -166,30 +166,29 @@
   }
   .stage-inner.blink{opacity:0}
 
+  .video-wrap{position:relative;margin-top:var(--headtop)}
   .kinetic{
-    margin-top:var(--headtop);
+    position:absolute;left:0;right:0;bottom:12%;z-index:2;
     font-family:var(--display);
     font-weight:400;
-    font-size:clamp(2.2rem,6.8vw,5.2rem);
+    font-size:clamp(1.5rem,4.6vw,3.4rem);
     line-height:1;
     text-align:center;
     letter-spacing:-.015em;
     text-transform:uppercase;
-    min-height:1.1em;
-    max-width:17ch;
+    pointer-events:none;
   }
   .kinetic .accent{color:var(--accent)}
 
-  /* the video — edges feathered into the page so she stands in the white */
+  /* the video — multiply blend melts the white studio into the page,
+     so only Rad (and her shadow) renders: she's standing in the site */
   .hero-video{
     display:block;
-    margin-top:clamp(.8rem,3.5vh,2.2rem);
-    width:min(760px,88vw);
+    width:min(820px,92vw);
     aspect-ratio:16/9;
-    background:var(--paper);
     object-fit:cover;
-    -webkit-mask-image:radial-gradient(ellipse 96% 94% at 50% 50%, #000 55%, rgba(0,0,0,0) 90%);
-            mask-image:radial-gradient(ellipse 96% 94% at 50% 50%, #000 55%, rgba(0,0,0,0) 90%);
+    mix-blend-mode:multiply;
+    filter:brightness(1.04) contrast(1.03); /* pushes the studio to pure white */
   }
   @media (max-width:640px){ .hero-video{width:94vw} }
 
@@ -463,9 +462,11 @@
   <div class="stage" id="stage">
 
     <div class="stage-inner" id="stageInner" aria-hidden="true">
-      <p class="kinetic" id="kinetic">Hey — I'm <span class="accent">Rad.</span></p>
-      <video class="hero-video" id="heroVideo" src="Snap.m4v" muted playsinline preload="auto"
-             aria-label="Rad snapping her fingers, changing outfits with every snap"></video>
+      <div class="video-wrap">
+        <video class="hero-video" id="heroVideo" src="Snap.m4v" muted playsinline preload="auto"
+               aria-label="Rad snapping her fingers, changing outfits with every snap"></video>
+        <p class="kinetic" id="kinetic">Hey — I'm <span class="accent">Rad.</span></p>
+      </div>
     </div>
 
     <!-- ——— end state: the ask ——— -->
