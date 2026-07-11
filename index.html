@@ -186,7 +186,7 @@
     display:block;
     width:100vw;
     height:clamp(340px, calc(100svh - 14.5rem), 780px);
-    object-fit:cover;
+    object-fit:contain; /* never crop her — spare space is white anyway */
     mix-blend-mode:multiply;
     filter:brightness(1.04) contrast(1.03); /* pushes the studio to pure white */
   }
