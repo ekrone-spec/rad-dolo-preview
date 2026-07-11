@@ -168,11 +168,13 @@ version muted, ending frozen on the raised hand.
 
 ## Site wiring — DONE (Jul 2026)
 
-`Snap.m4v` (6.97s, 720p) is wired into `index.html`. Snap timestamps were
-detected from the audio track: **0.68 / 1.71 / 2.69 / 3.63 / 5.57s**. The first
-four drive the on-screen word swaps; playback freezes at 5.38s so the visitor's
-click plays her real final snap, then the ask box appears. On-screen words are
-HTML overlays — **keep every future video cut clean, no burned-in text**.
+`YOUR ENERGY.mp4` (6.76s, 1080p, white background) is wired into `index.html`,
+full-bleed with `mix-blend-mode:multiply` melting the white into the page.
+Snap timestamps detected from the audio track: **0.49 / 1.51 / 2.50 / 3.43 /
+5.03s**. The first four drive the word swaps ("Your energy → introduces you →
+before you ever → say a word."); the final snap at 5.03s turns the same text
+element into "Say the word." and reveals the ask box. On-screen words are HTML
+overlays — **keep every future video cut clean, no burned-in text**.
 
 If a new cut replaces Snap.m4v, update `SNAPS` and `FREEZE` in the script
 (timestamps in seconds). For launch, also export a WebM + poster frame and
