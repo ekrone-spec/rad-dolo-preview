@@ -156,8 +156,10 @@
   /* ————— hero / the white room ————— */
   .stage{position:relative;background:var(--paper)}
   /* clear the fixed header, and size the hero so the fold lands
-     right after the Instagram/TikTok line */
-  .video-wrap{position:relative;width:100%;margin-top:5.5rem}
+     right after the Instagram/TikTok line.
+     multiply lives on the WRAPPER: iOS Safari ignores blend set
+     directly on <video>, but honors it on the parent layer */
+  .video-wrap{position:relative;width:100%;margin-top:5.5rem;mix-blend-mode:multiply}
   .kinetic{
     position:absolute;left:0;right:0;bottom:7%;z-index:2;
     font-family:var(--display);
@@ -187,7 +189,6 @@
     width:100vw;
     height:clamp(340px, calc(100svh - 14.5rem), 780px);
     object-fit:contain; /* never crop her — spare space is white anyway */
-    mix-blend-mode:multiply;
     filter:brightness(1.04) contrast(1.03); /* pushes the studio to pure white */
   }
 
@@ -410,7 +411,14 @@
 
   /* ————— mobile (kept last so it wins the cascade) ————— */
   @media (max-width:640px){
-    .hero-video{height:clamp(300px,52svh,560px)}
+    .hero-video{height:clamp(300px,52svh,560px);filter:brightness(1.07) contrast(1.04)}
+    /* fallback if the blend still fails: feather the video edges to white */
+    .video-wrap::after{
+      content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+      background:
+        linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 10%, rgba(255,255,255,0) 90%, #fff 100%),
+        linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 8%, rgba(255,255,255,0) 92%, #fff 100%);
+    }
     .ask{bottom:calc(7% + clamp(2.8rem,10vw,4.2rem));padding-left:1rem;width:min(540px,92vw)}
     .ask button{min-width:44px;height:44px;padding:0 .4rem}
     .below{padding:1rem .7rem 2rem;gap:.7rem}
