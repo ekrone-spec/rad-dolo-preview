@@ -184,6 +184,7 @@
 
   /* the video — full-bleed; multiply blend melts the white studio into the
      page, so only Rad (and her shadow) renders: she's standing in the site */
+  .hero-video-src{position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none}
   .hero-video{
     display:block;
     width:100vw;
@@ -450,8 +451,13 @@
     <h1 class="sr-only">Rad Dolo — personal stylist in Minneapolis and virtual stylist anywhere. Closet edits, wardrobe revamps, event and photoshoot styling. Say the word.</h1>
 
     <div class="video-wrap">
-      <video class="hero-video" id="heroVideo" src="YOUR ENERGY.mp4" muted playsinline preload="auto"
-             aria-label="Rad snapping her fingers, changing outfits with every snap"></video>
+      <!-- video is hidden and mirrored onto the canvas: mobile browsers
+           composite <video> on a hardware layer that ignores CSS blending,
+           but a canvas blends correctly everywhere -->
+      <video class="hero-video-src" id="heroVideo" src="YOUR ENERGY.mp4" muted playsinline preload="auto"
+             aria-hidden="true" tabindex="-1"></video>
+      <canvas class="hero-video" id="heroCanvas" width="1920" height="1080" role="img"
+              aria-label="Rad snapping her fingers, changing outfits with every snap"></canvas>
       <form class="ask reveal" id="askForm">
         <label class="sr-only" for="askInput">Tell Rad about your closet and what you want your style to say</label>
         <input id="askInput" name="ask" type="text" autocomplete="off"
@@ -603,6 +609,25 @@
   var video       = document.getElementById('heroVideo');
   var soundBtn    = document.getElementById('soundBtn');
   var skipBtn     = document.getElementById('skipBtn');
+
+  // mirror the hidden video onto the canvas every frame
+  var canvas = document.getElementById('heroCanvas');
+  var ctx = canvas.getContext('2d');
+  function paintFrame(){
+    if (video.readyState >= 2) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  }
+  function paintLoop(){
+    paintFrame();
+    if (!video.paused && !video.ended) requestAnimationFrame(paintLoop);
+  }
+  video.addEventListener('play', function(){ requestAnimationFrame(paintLoop); });
+  video.addEventListener('loadedmetadata', function(){
+    if (video.videoWidth){ canvas.width = video.videoWidth; canvas.height = video.videoHeight; }
+    paintFrame();
+  });
+  ['loadeddata','seeked','timeupdate','pause','ended'].forEach(function(ev){
+    video.addEventListener(ev, paintFrame);
+  });
 
   // Snap timestamps detected from YOUR ENERGY.mp4's audio track.
   // Four snaps swap the words; her final snap at 5.03s becomes
