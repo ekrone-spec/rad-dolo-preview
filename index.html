@@ -156,10 +156,10 @@
   /* ————— hero / the white room ————— */
   .stage{position:relative;background:var(--paper)}
   /* clear the fixed header, and size the hero so the fold lands
-     right after the Instagram/TikTok line.
-     multiply lives on the WRAPPER: iOS Safari ignores blend set
-     directly on <video>, but honors it on the parent layer */
-  .video-wrap{position:relative;width:100%;margin-top:5.5rem;mix-blend-mode:multiply}
+     right after the Instagram/TikTok line. Background removal happens
+     in canvas pixel data (see script) — no blend modes, so no engine
+     can skip it. */
+  .video-wrap{position:relative;width:100%;margin-top:5.5rem}
   .kinetic{
     position:absolute;left:0;right:0;bottom:7%;z-index:2;
     font-family:var(--display);
@@ -190,7 +190,6 @@
     width:100vw;
     height:clamp(340px, calc(100svh - 14.5rem), 780px);
     object-fit:contain; /* never crop her — spare space is white anyway */
-    filter:brightness(1.04) contrast(1.03); /* pushes the studio to pure white */
   }
 
   /* sound toggle */
@@ -412,14 +411,7 @@
 
   /* ————— mobile (kept last so it wins the cascade) ————— */
   @media (max-width:640px){
-    .hero-video{height:clamp(300px,52svh,560px);filter:brightness(1.07) contrast(1.04)}
-    /* fallback if the blend still fails: feather the video edges to white */
-    .video-wrap::after{
-      content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-      background:
-        linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 10%, rgba(255,255,255,0) 90%, #fff 100%),
-        linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 8%, rgba(255,255,255,0) 92%, #fff 100%);
-    }
+    .hero-video{height:clamp(300px,52svh,560px)}
     .ask{bottom:calc(7% + clamp(2.8rem,10vw,4.2rem));padding-left:1rem;width:min(540px,92vw)}
     .ask button{min-width:44px;height:44px;padding:0 .4rem}
     .below{padding:1rem .7rem 2rem;gap:.7rem}
@@ -610,21 +602,35 @@
   var soundBtn    = document.getElementById('soundBtn');
   var skipBtn     = document.getElementById('skipBtn');
 
-  // mirror the hidden video onto the canvas every frame
+  // Mirror the hidden video onto the canvas, whitening the studio in the
+  // PIXEL DATA itself. GPU blend modes get skipped on iOS video/canvas
+  // layers (Chrome on iPhone is WebKit too) — pixels can't be skipped.
   var canvas = document.getElementById('heroCanvas');
-  var ctx = canvas.getContext('2d');
-  function paintFrame(){
-    if (video.readyState >= 2) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.width = 960; canvas.height = 540; // half-res keeps the per-pixel pass cheap
+  var ctx = canvas.getContext('2d', {willReadFrequently:true});
+  // soft-knee levels: below 200 untouched (her skin/clothes), 200→235
+  // ramps up, 235+ becomes pure page white
+  var LUT = new Uint8ClampedArray(256);
+  for (var li=0; li<256; li++){
+    LUT[li] = li < 200 ? li : (li >= 235 ? 255 : Math.round(200 + (li-200) * 55/35));
   }
-  function paintLoop(){
-    paintFrame();
+  var lastPaint = 0;
+  function paintFrame(){
+    if (video.readyState < 2) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var d = img.data;
+    for (var i=0; i<d.length; i+=4){
+      d[i] = LUT[d[i]]; d[i+1] = LUT[d[i+1]]; d[i+2] = LUT[d[i+2]];
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  function paintLoop(ts){
+    if (ts - lastPaint > 30){ lastPaint = ts; paintFrame(); } // ~30fps cap
     if (!video.paused && !video.ended) requestAnimationFrame(paintLoop);
+    else paintFrame();
   }
   video.addEventListener('play', function(){ requestAnimationFrame(paintLoop); });
-  video.addEventListener('loadedmetadata', function(){
-    if (video.videoWidth){ canvas.width = video.videoWidth; canvas.height = video.videoHeight; }
-    paintFrame();
-  });
   ['loadeddata','seeked','timeupdate','pause','ended'].forEach(function(ev){
     video.addEventListener(ev, paintFrame);
   });
