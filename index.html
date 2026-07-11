@@ -155,7 +155,9 @@
 
   /* ————— hero / the white room ————— */
   .stage{position:relative;background:var(--paper)}
-  .video-wrap{position:relative;width:100%}
+  /* clear the fixed header, and size the hero so the fold lands
+     right after the Instagram/TikTok line */
+  .video-wrap{position:relative;width:100%;margin-top:5.5rem}
   .kinetic{
     position:absolute;left:0;right:0;bottom:7%;z-index:2;
     font-family:var(--display);
@@ -183,7 +185,7 @@
   .hero-video{
     display:block;
     width:100vw;
-    height:clamp(380px,64svh,760px);
+    height:clamp(340px, calc(100svh - 14.5rem), 780px);
     object-fit:cover;
     mix-blend-mode:multiply;
     filter:brightness(1.04) contrast(1.03); /* pushes the studio to pure white */
@@ -244,13 +246,6 @@
     text-align:center;
   }
   .ask-reply:empty{display:none}
-  .replay{
-    position:absolute;bottom:1.4rem;left:clamp(1.2rem,4vw,3rem);z-index:5;
-    background:none;border:0;cursor:pointer;
-    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
-    font-family:var(--ui);padding:.5rem;
-  }
-  .replay:hover{color:var(--accent)}
 
   /* ————— LTK shop strip (above the fold) ————— */
   .ltk-strip{
@@ -422,7 +417,7 @@
     .ask-caption{font-size:clamp(.5rem,2.5vw,.62rem);letter-spacing:.02em;white-space:nowrap;max-width:100%}
     .social-row{gap:4vw;flex-wrap:nowrap;max-width:100%}
     .social-row a{font-size:clamp(.5rem,2.4vw,.64rem);letter-spacing:.05em;white-space:nowrap;padding:.4rem 0}
-    .replay,.sound,.skip{font-size:clamp(.48rem,2.2vw,.6rem);letter-spacing:.05em;white-space:nowrap}
+    .sound,.skip{font-size:clamp(.48rem,2.2vw,.6rem);letter-spacing:.05em;white-space:nowrap}
     .step-in{min-height:7.5rem}
   }
 </style>
@@ -457,7 +452,6 @@
       </form>
       <p class="kinetic" id="kinetic" aria-hidden="true"></p>
       <button class="sound" id="soundBtn" type="button" aria-pressed="false">Sound: off</button>
-      <button class="replay reveal" id="replayBtn" type="button">&#8634;&nbsp; Watch her again</button>
       <button class="skip" id="skipBtn" type="button">Skip intro &darr;</button>
     </div>
 
@@ -601,7 +595,6 @@
   var video       = document.getElementById('heroVideo');
   var soundBtn    = document.getElementById('soundBtn');
   var skipBtn     = document.getElementById('skipBtn');
-  var replayBtn   = document.getElementById('replayBtn');
 
   // Snap timestamps detected from YOUR ENERGY.mp4's audio track.
   // Four snaps swap the words; her final snap at 5.03s becomes
@@ -741,11 +734,6 @@
       if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); s.classList.toggle('flipped'); }
     });
   });
-  replayBtn.addEventListener('click', function(){
-    if (reduced) return;
-    play();
-  });
-
   document.getElementById('askForm').addEventListener('submit', function(e){
     e.preventDefault();
     var val = document.getElementById('askInput').value.trim();
@@ -762,7 +750,6 @@
 
   if (reduced){
     skipToEnd();
-    replayBtn.style.display = 'none';
     soundBtn.style.display = 'none';
   } else {
     play();
