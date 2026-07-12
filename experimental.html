@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rad Dolo — Personal Stylist, Minneapolis & Virtual (bold cut)</title>
+<meta name="description" content="Rad Dolo, personal stylist in Minneapolis and virtual anywhere. Closet edits, wardrobe revamps, event styling. Snap — and say the word.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F0E9;
+    --paper-rgb:244,240,233;
+    --ink:#141210;
+    --cognac:#9A4E1E;
+    --coral:#FF4A1C;
+    --muted:#8A8073;
+    --hair:#DAD3C6;
+    --display:"Anton", "Archivo Black", Impact, sans-serif;
+    --ui:"Archivo","Helvetica Neue",Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{overflow-x:clip}
+  body{
+    font-family:var(--ui);color:var(--ink);background:var(--paper);
+    font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--coral);color:#fff}
+  a{color:inherit}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  :focus-visible{outline:2px solid var(--coral);outline-offset:3px}
+
+  /* film grain over everything */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ————— header ————— */
+  header{
+    position:fixed;inset:0 0 auto 0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.8rem clamp(1rem,3.5vw,2.4rem);
+    background:var(--paper);
+    border-bottom:2px solid var(--ink);
+  }
+  .wordmark{text-decoration:none;line-height:.82;display:block}
+  .wordmark b{font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,3vw,2.4rem);letter-spacing:.01em;text-transform:uppercase;display:block}
+  .wordmark b i{font-style:normal;color:var(--coral)}
+  .wordmark span{font-family:var(--ui);font-weight:600;font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);display:block;margin-top:.35rem}
+  nav{display:flex;align-items:center;gap:clamp(.7rem,2vw,1.6rem)}
+  nav a{text-decoration:none;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;padding:.5rem .1rem}
+  nav a:hover{color:var(--coral)}
+  nav a.hot{color:var(--cognac)}
+  nav a.hot:hover{color:var(--coral);text-decoration:underline;text-underline-offset:4px}
+  @media (max-width:720px){ nav a.hide{display:none} }
+
+  /* ————— marquee ————— */
+  .marquee{
+    position:relative;overflow:hidden;white-space:nowrap;
+    margin-top:clamp(4.4rem,6vw,5.4rem); /* clear the fixed header */
+    border-bottom:2px solid var(--ink);
+    background:var(--ink);color:var(--paper);
+  }
+  .marquee .track{display:inline-flex;gap:0;will-change:transform;animation:scroll 28s linear infinite}
+  .marquee.rev .track{animation-direction:reverse}
+  .marquee span{font-family:var(--display);font-size:clamp(1rem,2.4vw,1.7rem);text-transform:uppercase;letter-spacing:.03em;padding:.35rem 1.1rem;display:inline-flex;align-items:center;gap:1.4rem}
+  .marquee span em{color:var(--coral);font-style:normal}
+  .star{color:var(--coral)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+
+  /* ————— hero ————— */
+  .hero{position:relative;padding-top:clamp(1rem,3vw,2.2rem)}
+  .backtype{
+    position:absolute;left:50%;top:1.5rem;transform:translateX(-50%);
+    z-index:0;pointer-events:none;width:100%;text-align:center;
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(4rem,20vw,17rem);line-height:.82;letter-spacing:-.01em;
+    color:transparent;-webkit-text-stroke:2px var(--hair);
+  }
+  .stage{position:relative;z-index:1}
+  .video-wrap{position:relative;width:100%}
+  .hero-video-src{position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none}
+  .hero-video{
+    display:block;width:100%;
+    height:clamp(360px, calc(100svh - 15rem), 760px);
+    object-fit:contain;
+  }
+  .kinetic{
+    position:absolute;left:0;right:0;bottom:6%;z-index:3;
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(2rem,7vw,5.6rem);line-height:.9;text-align:center;letter-spacing:.005em;
+    pointer-events:none;
+    color:var(--ink);
+    text-shadow:0 0 8px var(--paper),0 0 22px var(--paper),0 3px 14px var(--paper),0 -3px 14px var(--paper),3px 0 14px var(--paper),-3px 0 14px var(--paper);
+  }
+  .kinetic .accent{color:var(--coral)}
+
+  .reveal{opacity:0;pointer-events:none;transition:opacity .6s ease .12s}
+  .hero.done .reveal{opacity:1;pointer-events:auto}
+
+  /* ask box — bold slab with blinking caret */
+  .ask{
+    position:absolute;left:50%;transform:translateX(-50%);
+    bottom:calc(6% + clamp(3.4rem,8vw,6rem));z-index:4;
+    width:min(560px,88vw);display:flex;align-items:center;gap:.4rem;
+    background:var(--ink);border:2px solid var(--ink);
+    padding:.3rem .3rem .3rem 1.1rem;
+    box-shadow:8px 8px 0 var(--coral);
+  }
+  .ask::before{content:"›";color:var(--coral);font-family:var(--display);font-size:1.4rem;margin-right:.2rem}
+  .ask input{
+    flex:1;min-width:0;border:0;outline:0;background:transparent;
+    font-family:var(--ui);font-size:clamp(1rem,2.2vw,1.15rem);color:var(--paper);
+    padding:.7rem 0;caret-color:var(--coral);
+  }
+  .ask input::placeholder{color:#B9B0A2;opacity:1}
+  .ask button{
+    flex:none;min-width:48px;height:48px;border:0;cursor:pointer;
+    background:var(--coral);color:var(--ink);font-size:1.3rem;font-weight:700;
+    display:grid;place-items:center;padding:0 .8rem;
+    transition:transform .15s;
+  }
+  .ask button:hover{transform:translateX(3px)}
+
+  .sound,.skip{
+    position:absolute;bottom:.8rem;z-index:6;background:none;border:0;cursor:pointer;
+    font-family:var(--ui);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:.5rem;
+  }
+  .sound{left:clamp(1rem,3.5vw,2.4rem)}
+  .skip{right:clamp(1rem,3.5vw,2.4rem)}
+  .sound:hover,.skip:hover{color:var(--coral)}
+
+  /* under-hero band */
+  .band{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.7rem 1.4rem;
+    padding:1.1rem 1rem;text-align:center;
+    border-top:2px solid var(--ink);
+  }
+  .band .facts{font-family:var(--display);font-size:clamp(.95rem,2.2vw,1.4rem);text-transform:uppercase;letter-spacing:.02em}
+  .band .facts em{color:var(--coral);font-style:normal}
+  .band .socials{display:flex;gap:1.2rem}
+  .band .socials a{font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+  .band .socials a:hover{color:var(--coral)}
+  .ask-reply{width:100%;font-style:italic;color:var(--cognac);font-size:.95rem}
+  .ask-reply:empty{display:none}
+
+  /* ————— LTK polaroids ————— */
+  .looks{padding:clamp(3rem,7vw,6rem) clamp(1.2rem,4vw,3rem) clamp(3.5rem,8vw,6.5rem)}
+  .looks-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;max-width:1100px;margin:0 auto 2.4rem;flex-wrap:wrap}
+  .looks-head h2{font-family:var(--display);font-weight:400;font-size:clamp(2rem,6vw,4.2rem);text-transform:uppercase;line-height:.9;letter-spacing:-.005em}
+  .looks-head h2 em{color:var(--coral);font-style:normal}
+  .looks-head a{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cognac);text-decoration:none;white-space:nowrap}
+  .looks-head a:hover{color:var(--coral)}
+  .polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1rem,3vw,2.4rem);max-width:1000px;margin:0 auto}
+  .polaroid{
+    background:#fff;padding:.8rem .8rem 2.6rem;text-decoration:none;color:var(--ink);
+    box-shadow:0 18px 40px -22px rgba(20,18,16,.55);
+    transition:transform .3s cubic-bezier(.34,1.4,.5,1);
+    position:relative;
+  }
+  .polaroid:nth-child(1){transform:rotate(-5deg)}
+  .polaroid:nth-child(2){transform:rotate(3deg)}
+  .polaroid:nth-child(3){transform:rotate(-2deg)}
+  .polaroid:nth-child(4){transform:rotate(4deg)}
+  .polaroid:hover,.polaroid:focus-visible{transform:rotate(0) scale(1.04);z-index:2}
+  .polaroid .pic{width:clamp(150px,20vw,210px);height:clamp(190px,25vw,260px);display:block;background-size:cover;background-position:center}
+  .polaroid .cap{position:absolute;left:0;right:0;bottom:.7rem;text-align:center;font-family:var(--ui);font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .polaroid.more{display:grid;place-items:center;padding:0;min-width:clamp(150px,20vw,210px)}
+  .polaroid.more .pic{background:var(--ink);color:var(--paper);display:grid;place-items:center;text-align:center;font-family:var(--display);text-transform:uppercase;font-size:1.1rem;letter-spacing:.04em;width:clamp(150px,20vw,210px)}
+  .polaroid.more:hover .pic{background:var(--coral);color:var(--ink)}
+  /* swap tile backgrounds for her real LTK photos: ltk1/2/3.jpg */
+  .p1 .pic{background-image:url('ltk1.jpg'),linear-gradient(160deg,#C89A63,#8C5A2B)}
+  .p2 .pic{background-image:url('ltk2.jpg'),linear-gradient(160deg,#7793AE,#3E5063)}
+  .p3 .pic{background-image:url('ltk3.jpg'),linear-gradient(160deg,#8A8F7E,#4E5346)}
+
+  /* ————— process ————— */
+  .process{background:var(--ink);color:var(--paper);padding:clamp(3.5rem,8vw,6.5rem) clamp(1.2rem,4vw,3rem)}
+  .process .wrap{max-width:1100px;margin:0 auto}
+  .process .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:1rem}
+  .process h2{font-family:var(--display);font-weight:400;font-size:clamp(2rem,6vw,4.4rem);text-transform:uppercase;line-height:.92;margin-bottom:2.6rem}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--paper)}
+  @media (max-width:760px){.steps{grid-template-columns:1fr}}
+  .step{padding:1.6rem 1.4rem 1.8rem;border-bottom:2px solid var(--paper)}
+  .step + .step{border-left:2px solid var(--paper)}
+  @media (max-width:760px){.step + .step{border-left:0}}
+  .step .n{font-family:var(--display);font-size:2.4rem;color:var(--coral);line-height:1}
+  .step h3{font-family:var(--display);font-weight:400;font-size:1.5rem;text-transform:uppercase;margin:.6rem 0 .5rem}
+  .step p{color:#CFC7B9;font-size:.95rem;max-width:34ch}
+
+  /* ————— facts + faq ————— */
+  section.pad{padding:clamp(3.5rem,8vw,6rem) clamp(1.2rem,4vw,3rem)}
+  .measure{max-width:1050px;margin:0 auto}
+  .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cognac);margin-bottom:1rem}
+  .facts-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem}
+  @media (max-width:760px){.facts-grid{grid-template-columns:1fr}}
+  .lede{font-size:1.05rem;max-width:52ch;margin-bottom:1.4rem}
+  .lede strong{color:var(--cognac)}
+  .chips{display:flex;flex-wrap:wrap;column-gap:.6rem;row-gap:.35rem;list-style:none;align-items:baseline}
+  .chips li{font-size:.9rem}
+  .chips li+li::before{content:"✶";color:var(--coral);margin-right:.6rem;font-size:.7rem;vertical-align:middle}
+  dl.qf div{display:flex;gap:1rem;border-bottom:1px solid var(--hair);padding:.75rem 0}
+  dl.qf dt{flex:0 0 9rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+  dl.qf a{color:var(--cognac);text-underline-offset:3px}
+  h2.big{font-family:var(--display);font-weight:400;font-size:clamp(2rem,6vw,4.2rem);text-transform:uppercase;line-height:.92;margin-bottom:2rem}
+  h2.big em{color:var(--coral);font-style:normal}
+  .faq details{border-bottom:2px solid var(--ink)}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 0;font-family:var(--display);font-weight:400;font-size:clamp(1.1rem,2.6vw,1.5rem);text-transform:uppercase}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--coral);font-family:var(--ui);font-size:1.5rem;transition:transform .25s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{padding:0 0 1.2rem;color:#4C463D;max-width:62ch;font-size:.95rem}
+
+  footer{border-top:2px solid var(--ink);padding:2.2rem clamp(1.2rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+  footer .social{display:flex;gap:1.3rem}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--coral)}
+  footer .credit a{text-decoration:underline;text-underline-offset:3px}
+
+  @media (max-width:640px){
+    .hero-video{height:clamp(320px,54svh,560px)}
+    .ask{width:min(540px,92vw);bottom:calc(6% + clamp(2.8rem,10vw,4.2rem))}
+    .band .facts{font-size:clamp(.8rem,3.4vw,1.1rem)}
+  }
+</style>
+</head>
+<body class="grain">
+
+<header>
+  <a class="wordmark" href="/"><b>RAD <i>DOLO</i></b><span>Personal Stylist</span></a>
+  <nav aria-label="Primary">
+    <a class="hide" href="#process">Process</a>
+    <a class="hide" href="#services">Services</a>
+    <a class="hide" href="#faq">FAQ</a>
+    <a class="hot" href="https://www.shopltk.com/explore/raddydolo" rel="noopener">Shop my LTK ↗</a>
+    <a class="hot" href="mailto:dolo.radmila@gmail.com?subject=Free%20styling%20call">Book a call</a>
+  </nav>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Personal Stylist <em>✶</em> Minneapolis <em>✶</em> Virtual Anywhere <em>✶</em> Closet Edits <em>✶</em> Wardrobe Revamp <em>✶</em> Say The Word <em>✶</em>&nbsp;</span>
+    <span>Personal Stylist <em>✶</em> Minneapolis <em>✶</em> Virtual Anywhere <em>✶</em> Closet Edits <em>✶</em> Wardrobe Revamp <em>✶</em> Say The Word <em>✶</em>&nbsp;</span>
+  </div>
+</div>
+
+<main>
+  <h1 class="sr-only">Rad Dolo — personal stylist in Minneapolis and virtual anywhere. Closet edits, wardrobe revamps, event and photoshoot styling. Snap, and say the word.</h1>
+
+  <section class="hero" id="hero">
+    <div class="backtype" aria-hidden="true">SNAP</div>
+    <div class="stage">
+      <div class="video-wrap">
+        <video class="hero-video-src" id="heroVideo" src="YOUR ENERGY.mp4" muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+        <canvas class="hero-video" id="heroCanvas" width="854" height="480" role="img" aria-label="Rad snapping her fingers, changing outfits with every snap"></canvas>
+
+        <form class="ask reveal" id="askForm">
+          <label class="sr-only" for="askInput">Tell Rad about your closet</label>
+          <input id="askInput" name="ask" type="text" autocomplete="off" placeholder="Tell me about your closet…">
+          <button type="submit" aria-label="Send your note to Rad">→</button>
+        </form>
+        <p class="kinetic" id="kinetic" aria-hidden="true"></p>
+
+        <button class="sound" id="soundBtn" type="button" aria-pressed="false">Sound: off</button>
+        <button class="skip" id="skipBtn" type="button">Skip ↓</button>
+      </div>
+    </div>
+
+    <div class="band reveal">
+      <p class="ask-reply" id="askReply" aria-live="polite"></p>
+      <p class="facts">In Person In Minneapolis <em>·</em> Virtual Anywhere <em>·</em> First Call Free</p>
+      <span class="socials">
+        <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
+      </span>
+    </div>
+  </section>
+
+  <!-- ——— LTK polaroids ——— -->
+  <section class="looks" id="services">
+    <div class="looks-head">
+      <h2>Wearing it,<br><em>linking it.</em></h2>
+      <a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">All my looks on LTK ↗</a>
+    </div>
+    <div class="polaroids">
+      <a class="polaroid p1" href="https://www.shopltk.com/explore/raddydolo/posts/b84de15e-6eb3-11ed-9470-0242ac110003" rel="noopener"><span class="pic"></span><span class="cap">Look 01</span></a>
+      <a class="polaroid p2" href="https://www.shopltk.com/explore/raddydolo/posts/66671fdc-6ea7-11ed-a6b7-0242ac110004" rel="noopener"><span class="pic"></span><span class="cap">Look 02</span></a>
+      <a class="polaroid p3" href="https://www.shopltk.com/explore/raddydolo/posts/0495875e-6ea7-11ed-9470-0242ac110003" rel="noopener"><span class="pic"></span><span class="cap">Look 03</span></a>
+      <a class="polaroid more" href="https://www.shopltk.com/explore/raddydolo" rel="noopener"><span class="pic">Shop<br>them all ↗</span></a>
+    </div>
+  </section>
+
+  <!-- ——— PROCESS ——— -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps.<br>Zero judgment.</h2>
+      <div class="steps">
+        <article class="step"><div class="n">01</div><h3>You dish</h3><p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p></article>
+        <article class="step"><div class="n">02</div><h3>She builds</h3><p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></article>
+        <article class="step"><div class="n">03</div><h3>You wear it</h3><p>Together you build outfits that work for your body and your budget. Confidence included.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— FACTS ——— -->
+  <section class="pad" id="facts">
+    <div class="measure facts-grid">
+      <div>
+        <p class="eyebrow">The plain facts</p>
+        <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years in fashion in Los Angeles, she brought her practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself — and a well-styled outfit is how it speaks first.</p>
+        <ul class="chips" aria-label="Styling services">
+          <li>Closet edits</li><li>Wardrobe revamp</li><li>Personal shopping</li><li>Event styling</li><li>Photoshoot styling</li><li>Vacation styling</li><li>Virtual styling</li>
+        </ul>
+      </div>
+      <div>
+        <dl class="qf">
+          <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
+          <div><dt>Based in</dt><dd>Minneapolis, MN — serving the Twin Cities</dd></div>
+          <div><dt>Virtual</dt><dd>Yes — video-call styling anywhere</dd></div>
+          <div><dt>First step</dt><dd>A free consultation call</dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:dolo.radmila@gmail.com">dolo.radmila@gmail.com</a></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— FAQ ——— -->
+  <section class="pad faq" id="faq">
+    <div class="measure">
+      <p class="eyebrow">Questions, answered</p>
+      <h2 class="big">Before you <em>ask.</em></h2>
+      <details><summary>Where do you offer styling?</summary><p>In person across Minneapolis, St. Paul and the Twin Cities metro — and virtually anywhere over video call.</p></details>
+      <details><summary>How does virtual styling work?</summary><p>You hop on a video call and walk me through your closet and goals. I build a personalized plan — looks, shopping lists and outfit formulas — that works for your body and your budget, wherever you live.</p></details>
+      <details><summary>How do I start?</summary><p>With a free call. You dish about your style and goals; I tell you exactly how I can help. Then I build your plan and we start creating looks.</p></details>
+      <details><summary>Do I need a big budget?</summary><p>No. Every plan is built around your budget — and often starts with a closet edit of pieces you already own.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="credit">© <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" rel="noopener">Tree Crown Studio</a>.</p>
+  <div class="social">
+    <a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">Shop my LTK</a>
+    <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
+    <a href="mailto:dolo.radmila@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var hero     = document.getElementById('hero');
+  var kinetic  = document.getElementById('kinetic');
+  var video    = document.getElementById('heroVideo');
+  var soundBtn = document.getElementById('soundBtn');
+  var skipBtn  = document.getElementById('skipBtn');
+
+  // ——— video → canvas, whitening the studio to the PAPER colour in pixel
+  // data (blend modes are skipped by iOS WebKit on accelerated layers) ———
+  var canvas = document.getElementById('heroCanvas');
+  var ctx = canvas.getContext('2d', {willReadFrequently:true});
+  var PR=244, PG=240, PB=233;            // paper rgb
+  var LUTr=new Uint8ClampedArray(256), LUTg=new Uint8ClampedArray(256), LUTb=new Uint8ClampedArray(256);
+  function build(L, target){ for(var v=0;v<256;v++){ L[v]= v<205? v : (v>=235? target : Math.round(v + (target-v)*((v-205)/30))); } }
+  build(LUTr,PR); build(LUTg,PG); build(LUTb,PB);
+  var lastPaint=0;
+  function paintFrame(){
+    if (video.readyState < 2) return;
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    var img=ctx.getImageData(0,0,canvas.width,canvas.height), d=img.data;
+    for(var i=0;i<d.length;i+=4){ d[i]=LUTr[d[i]]; d[i+1]=LUTg[d[i+1]]; d[i+2]=LUTb[d[i+2]]; }
+    ctx.putImageData(img,0,0);
+  }
+  function paintLoop(ts){
+    if (ts-lastPaint>33){ lastPaint=ts; paintFrame(); }
+    if (!video.paused && !video.ended) requestAnimationFrame(paintLoop); else paintFrame();
+  }
+  video.addEventListener('play', function(){ requestAnimationFrame(paintLoop); });
+  ['loadeddata','seeked','timeupdate','pause','ended'].forEach(function(ev){ video.addEventListener(ev, paintFrame); });
+
+  // ——— snap-synced words (timestamps from YOUR ENERGY.mp4 audio) ———
+  var SNAPS=[0.49,1.51,2.50,3.43], ENDAT=5.15;
+  var WORDS=['','Your energy','introduces you','before you ever','say a <span class="accent">word.</span>'];
+  var FINAL='Say the <span class="accent">word.</span>';
+  var done=false, lastIdx=-1;
+
+  function setWord(i){ if(i===lastIdx)return; lastIdx=i; kinetic.innerHTML=WORDS[Math.min(i,WORDS.length-1)]; }
+  function syncStep(){
+    if(done) return false;
+    var t=video.currentTime, idx=0;
+    for(var i=0;i<SNAPS.length;i++){ if(t>=SNAPS[i]) idx=i+1; }
+    setWord(idx);
+    if(t>=ENDAT){ showEnd(); return false; }
+    return true;
+  }
+  function sync(){ if(video.paused||video.ended)return; if(syncStep()) requestAnimationFrame(sync); }
+  video.addEventListener('play', function(){ requestAnimationFrame(sync); });
+  video.addEventListener('timeupdate', function(){ if(!video.paused&&!video.ended) syncStep(); });
+  video.addEventListener('ended', function(){ showEnd(); });
+
+  function resume(){ if(!done&&video.paused&&!video.ended){ var r=video.play(); if(r&&r.catch)r.catch(function(){}); } }
+  video.addEventListener('pause', function(){ setTimeout(resume,250); });
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) resume(); });
+
+  function showEnd(){
+    if(done)return; done=true; lastIdx=-1;
+    kinetic.innerHTML=FINAL;
+    hero.classList.add('done');
+    skipBtn.style.display='none'; soundBtn.style.display='none';
+    var inp=document.getElementById('askInput'); if(inp) inp.focus({preventScroll:true});
+  }
+  function skipToEnd(){ showEnd(); if(video.readyState>0&&video.duration){ video.currentTime=Math.max(0,video.duration-0.05); } video.pause(); }
+
+  function updateSound(){ soundBtn.textContent = video.muted?'Sound: off':'Sound: on'; soundBtn.setAttribute('aria-pressed',String(!video.muted)); }
+  function attempt(mutedOnly){
+    if(!mutedOnly) video.muted=false;
+    var p=video.play();
+    if(p&&p.catch) p.catch(function(){
+      if(!video.muted){ video.muted=true; updateSound(); attempt(true); return; }
+      video.addEventListener('canplay', function(){ if(done)return; var q=video.play(); if(q&&q.catch)q.catch(function(){skipToEnd();}); }, {once:true});
+      setTimeout(function(){ if(!done&&video.paused&&video.currentTime<0.1) skipToEnd(); },4000);
+    });
+    updateSound();
+  }
+  function play(){
+    done=false; lastIdx=-1; hero.classList.remove('done');
+    skipBtn.style.display=''; soundBtn.style.display='';
+    setWord(0); if(video.readyState>0) video.currentTime=0; attempt(false);
+  }
+
+  soundBtn.addEventListener('click', function(){ video.muted=!video.muted; updateSound(); });
+  var gestured=false;
+  document.addEventListener('pointerdown', function(e){
+    if(gestured||done)return; gestured=true;
+    if(e.target.closest('#soundBtn'))return;
+    if(video.muted){ video.muted=false; updateSound(); }
+  });
+  skipBtn.addEventListener('click', skipToEnd);
+
+  document.getElementById('askForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var val=document.getElementById('askInput').value.trim();
+    var reply=document.getElementById('askReply');
+    if(!val){ reply.textContent='Go on — even "my closet is chaos" counts.'; return; }
+    reply.textContent='Love it already. Opening your email — Rad reads every note herself.';
+    window.location.href='mailto:dolo.radmila@gmail.com?subject='+encodeURIComponent('Styling note from raddolo.com')+'&body='+encodeURIComponent(val+'\n\n— sent from raddolo.com');
+  });
+
+  if(reduced){ skipToEnd(); soundBtn.style.display='none'; } else { play(); }
+})();
+</script>
+</body>
+</html>
