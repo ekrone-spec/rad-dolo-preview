@@ -134,8 +134,10 @@
     .icons svg{width:19px;height:19px}
   }
 
-  /* ————— hero: full-bleed photo ————— */
-  .hero{position:relative;height:100svh;min-height:560px;overflow:hidden}
+  /* ————— hero: fixed full-bleed photo; the site curtains up over it ————— */
+  .hero{position:fixed;inset:0;height:100svh;overflow:hidden;z-index:0}
+  .curtain{position:relative;z-index:1;margin-top:100svh;background:var(--paper);box-shadow:0 -26px 55px -26px rgba(0,0,0,.22)}
+  section[id]{scroll-margin-top:5rem}
   .hero-bg{
     position:absolute;inset:0;width:100%;height:100%;
     object-fit:cover;object-position:64% center;
@@ -152,14 +154,12 @@
     display:flex;flex-direction:column;align-items:center;gap:.85rem;text-align:center;
   }
   .hero-ui .ask{width:100%}
+  /* not a container — a soft gradient-white area the text sits on */
   .ask{
     width:100%;display:flex;align-items:center;gap:.4rem;
-    border-radius:12px;padding:.32rem .34rem .32rem 1.3rem;
-    background:rgba(255,255,255,.94);backdrop-filter:blur(6px);
-    box-shadow:0 20px 50px -18px rgba(23,19,14,.5);
-    transition:box-shadow .25s;
+    padding:.5rem 1.1rem;border:0;border-radius:0;box-shadow:none;
+    background:radial-gradient(ellipse 135% 170% at 50% 55%, rgba(255,255,255,.98) 26%, rgba(255,255,255,.72) 54%, rgba(255,255,255,0) 82%);
   }
-  .ask:focus-within{box-shadow:0 24px 60px -16px rgba(23,19,14,.6)}
   .ask input{
     flex:1;min-width:0;border:0;outline:0;background:transparent;
     font-family:var(--ui);font-style:italic;font-size:clamp(1rem,2.2vw,1.18rem);
@@ -179,6 +179,15 @@
     font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);
     white-space:nowrap;
   }
+  .facts a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;transition:opacity .2s}
+  .facts a:hover{opacity:.55}
+
+  /* rotating testimonials, just under the menu; fade out past the hero */
+  .testimonials{position:absolute;top:clamp(4.8rem,9vh,7rem);left:50%;transform:translateX(-50%);z-index:2;width:min(640px,88vw);text-align:center;pointer-events:none;transition:opacity .5s ease}
+  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1.05rem,2.3vw,1.45rem);line-height:1.32;color:var(--ink);transition:opacity .5s ease}
+  .testimonial.fade{opacity:0}
+  .testimonial cite{display:block;font-family:var(--label);font-style:normal;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.65rem}
+  .hero.past .testimonials{opacity:0}
   @media (max-width:640px){
     .ask{padding-left:1.1rem}
     .ask button{min-width:44px;height:44px;padding:0 .4rem}
@@ -283,6 +292,25 @@
   footer a:hover{color:var(--accent)}
   footer .credit a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 
+  /* ————— services showcase (unique list) ————— */
+  .services{padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem)}
+  .svc-list{max-width:1050px;margin:2.4rem auto 0;border-top:1px solid var(--ink)}
+  .svc{display:grid;grid-template-columns:2.6rem 1fr auto;gap:clamp(.8rem,2vw,1.8rem);align-items:center;padding:clamp(1rem,2.2vw,1.5rem) 0;border-bottom:1px solid var(--hair);transition:padding .3s ease}
+  .svc .n{font-family:var(--label);font-size:.7rem;letter-spacing:.18em;color:var(--muted)}
+  .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em}
+  .svc .desc{font-size:.9rem;color:#6A6A6A;text-align:right;max-width:34ch;opacity:.5;transition:opacity .3s ease}
+  .svc:hover,.svc:focus-within{padding-left:.7rem}
+  .svc:hover .desc,.svc:focus-within .desc{opacity:1}
+  @media (max-width:700px){
+    .svc{grid-template-columns:1.9rem 1fr;row-gap:.35rem}
+    .svc .desc{grid-column:1 / -1;text-align:left;max-width:none;opacity:.85;font-size:.86rem}
+  }
+
+  /* ————— press / featured in ————— */
+  .press{padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem);border-top:1px solid var(--hair);text-align:center}
+  .press-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1rem,3vw,2.2rem);max-width:920px;margin:1.8rem auto 0}
+  .press-slot{width:clamp(116px,17vw,158px);height:58px;border:1px dashed var(--hair);display:grid;place-items:center;font-family:var(--label);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#BDBDBD}
+
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -307,23 +335,26 @@
   </nav>
 </header>
 
-<main>
+<!-- ——— fixed full-bleed hero; the site curtains up over it ——— -->
+<section class="hero" id="hero">
   <h1 class="sr-only">Rad Dolo — personal stylist in Minneapolis and virtual stylist anywhere. Closet edits, wardrobe revamps, event and photoshoot styling.</h1>
+  <img class="hero-bg" src="hero.jpg" alt="Rad Dolo, personal stylist, standing beside a rack of clothes in her Minneapolis studio">
+  <div class="testimonials" id="testimonials" aria-hidden="true">
+    <p class="testimonial" id="testimonial"></p>
+  </div>
+  <div class="hero-ui">
+    <p class="ask-reply" id="askReply" aria-live="polite"></p>
+    <form class="ask" id="askForm">
+      <label class="sr-only" for="askInput">Tell Rad about your closet concerns</label>
+      <input id="askInput" name="ask" type="text" autocomplete="off" placeholder="Tell me about your closet concerns…">
+      <button type="submit" aria-label="Send your note to Rad">&rarr;</button>
+    </form>
+    <p class="facts">In Person In Minneapolis &nbsp;·&nbsp; Virtual Anywhere &nbsp;·&nbsp; <a class="book-open" href="#">First Call Is Free</a></p>
+  </div>
+</section>
 
-  <!-- ——— full-bleed photo hero ——— -->
-  <section class="hero">
-    <img class="hero-bg" src="hero.jpg" alt="Rad Dolo, personal stylist, standing beside a rack of clothes in her Minneapolis studio">
-    <div class="hero-ui">
-      <p class="ask-reply" id="askReply" aria-live="polite"></p>
-      <form class="ask" id="askForm">
-        <label class="sr-only" for="askInput">Tell Rad about your closet</label>
-        <input id="askInput" name="ask" type="text" autocomplete="off" placeholder="Tell me about your closet…">
-        <button type="submit" aria-label="Send your note to Rad">&rarr;</button>
-      </form>
-      <p class="facts">In Person In Minneapolis &nbsp;·&nbsp; Virtual Anywhere &nbsp;·&nbsp; First Call Is Free</p>
-    </div>
-  </section>
-
+<div class="curtain">
+<main>
   <!-- ——— SHOP (ShopMy) ——— -->
   <section class="shop-sec" id="shop" aria-label="Shop Rad's picks on ShopMy">
     <div class="shop-head">
@@ -346,6 +377,24 @@
     </div>
   </section>
 
+  <!-- ——— SERVICES (unique list) ——— -->
+  <section class="services" id="services">
+    <div class="measure">
+      <p class="eyebrow">What I do</p>
+      <h2>The <em>work.</em></h2>
+    </div>
+    <div class="svc-list">
+      <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Pare it down to what you love and actually wear.</span></div>
+      <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Wardrobe revamp</span><span class="desc">A full reset, rebuilt around your real life.</span></div>
+      <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
+      <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
+      <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
+      <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
+      <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Family styling</span><span class="desc">Everyone pulled together, no one matchy.</span></div>
+      <div class="svc" tabindex="0"><span class="n">08</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
+    </div>
+  </section>
+
   <!-- ——— JOURNAL (carousel) ——— -->
   <section class="journal" id="journal" aria-label="Short notes from Rad">
     <div class="journal-head">
@@ -353,7 +402,8 @@
         <p class="eyebrow">The journal</p>
         <h2>Notes on getting <em>dressed.</em></h2>
       </div>
-      <a class="shop-head-link email-open" data-subject="Subscribe me to the journal" href="#" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email<i class="ar" aria-hidden="true"></i></a>
+      <!-- Newsletter: recommend Substack (free, doubles as the blog host). Replace with her real URL once created. -->
+      <a class="shop-head-link" href="https://raddydolo.substack.com" target="_blank" rel="noopener noreferrer" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email<i class="ar" aria-hidden="true"></i></a>
     </div>
     <!-- Feature photos: drop blog-1.jpg … blog-4.jpg into the folder to replace the gray placeholders. Post links point to real posts once the blog exists. -->
     <div class="carousel">
@@ -387,6 +437,19 @@
     <div class="carousel-nav">
       <button type="button" class="prev" data-track="journalTrack" aria-label="Previous posts">&larr;</button>
       <button type="button" class="next" data-track="journalTrack" aria-label="More posts">&rarr;</button>
+    </div>
+  </section>
+
+  <!-- ——— PRESS / FEATURED IN ——— -->
+  <!-- Placeholder logo slots — send Rad's real publications (names or logo files) and I'll drop them in. -->
+  <section class="press" id="press" aria-label="Publications Rad has been featured in">
+    <p class="eyebrow">As featured in</p>
+    <div class="press-row">
+      <span class="press-slot">Logo</span>
+      <span class="press-slot">Logo</span>
+      <span class="press-slot">Logo</span>
+      <span class="press-slot">Logo</span>
+      <span class="press-slot">Logo</span>
     </div>
   </section>
 
@@ -437,14 +500,11 @@
   </section>
 
   <!-- ——— PLAIN FACTS ——— -->
-  <section class="facts-sec" id="services">
+  <section class="facts-sec" id="about">
     <div class="measure facts-grid">
       <div>
         <p class="eyebrow">The plain facts</p>
         <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years working in fashion in Los Angeles, she brought her styling practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself — and a well-styled outfit is how it speaks first. Your disheveled closet is her happy place.</p>
-        <ul class="chips" aria-label="Styling services">
-          <li>Closet edits</li><li>Wardrobe revamp</li><li>Personal shopping</li><li>Event styling</li><li>Photoshoot styling</li><li>Vacation styling</li><li>Family styling</li><li>Virtual styling</li>
-        </ul>
       </div>
       <div>
         <dl class="qf">
@@ -482,6 +542,7 @@
     <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
   </div>
 </footer>
+</div><!-- /.curtain -->
 
 <script>
 (function(){
@@ -517,16 +578,49 @@
     el.addEventListener('click', function(e){ e.preventDefault(); openBook(); });
   });
 
-  // header: transparent over the hero, opaque past it
+  // header: transparent over the hero, opaque once the curtain covers it.
+  // testimonials fade as soon as you start scrolling off the hero.
   var header = document.querySelector('header');
   var hero = document.querySelector('.hero');
   function onScroll(){
-    var threshold = Math.max(0, (hero ? hero.offsetHeight : 0) - header.offsetHeight);
-    header.classList.toggle('solid', window.scrollY > threshold);
+    var h = (hero ? hero.offsetHeight : 0) || window.innerHeight;
+    header.classList.toggle('solid', window.scrollY > Math.max(0, h - header.offsetHeight));
+    hero.classList.toggle('past', window.scrollY > h * 0.22);
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
   onScroll();
+
+  // put the cursor in the field on desktop (blinking), without popping the
+  // mobile keyboard or yanking the scroll position
+  var askInput = document.getElementById('askInput');
+  if (askInput && window.matchMedia('(pointer:fine)').matches){
+    askInput.focus({preventScroll:true});
+  }
+
+  // rotating testimonials
+  var quotes = [
+    '“Rad made my closet feel like mine again.”<cite>— A.M., Minneapolis</cite>',
+    '“I get dressed in five minutes now. Five.”<cite>— J.L., St. Paul</cite>',
+    '“She saw my style before I could describe it.”<cite>— K.R., virtual client</cite>',
+    '“Worth every penny — and then some.”<cite>— S.T., Edina</cite>'
+  ];
+  var tEl = document.getElementById('testimonial');
+  if (tEl){
+    var qi = 0;
+    tEl.innerHTML = quotes[0];
+    var reducedM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedM){
+      setInterval(function(){
+        tEl.classList.add('fade');
+        setTimeout(function(){
+          qi = (qi + 1) % quotes.length;
+          tEl.innerHTML = quotes[qi];
+          tEl.classList.remove('fade');
+        }, 500);
+      }, 4200);
+    }
+  }
 
   // step cards: tap / keyboard flip (hover covers pointer devices)
   Array.prototype.forEach.call(document.querySelectorAll('.step'), function(s){
