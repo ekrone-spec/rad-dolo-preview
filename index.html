@@ -182,12 +182,16 @@
   .facts a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;transition:opacity .2s}
   .facts a:hover{opacity:.55}
 
-  /* rotating testimonials, just under the menu; fade out past the hero */
-  .testimonials{position:absolute;top:clamp(4.8rem,9vh,7rem);left:50%;transform:translateX(-50%);z-index:2;width:min(640px,88vw);text-align:center;pointer-events:none;transition:opacity .5s ease}
-  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1.05rem,2.3vw,1.45rem);line-height:1.32;color:var(--ink);transition:opacity .5s ease}
+  /* rotating testimonials — small, right side on desktop; fade past the hero */
+  .testimonials{position:absolute;top:clamp(6rem,12vh,8.5rem);right:clamp(1.2rem,4vw,3rem);z-index:2;width:min(320px,52vw);text-align:right;pointer-events:none;transition:opacity .5s ease}
+  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;color:var(--ink);transition:opacity .5s ease}
   .testimonial.fade{opacity:0}
-  .testimonial cite{display:block;font-family:var(--label);font-style:normal;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.65rem}
   .hero.past .testimonials{opacity:0}
+  @media (max-width:760px){
+    /* left-justified under the logo on mobile */
+    .testimonials{top:clamp(4.3rem,13vw,5.4rem);right:auto;left:clamp(.9rem,4vw,1.4rem);width:min(280px,64vw);text-align:left}
+    .testimonial{font-size:clamp(.82rem,3.3vw,1rem)}
+  }
   @media (max-width:640px){
     .ask{padding-left:1.1rem}
     .ask button{min-width:44px;height:44px;padding:0 .4rem}
@@ -307,9 +311,20 @@
   }
 
   /* ————— press / featured in ————— */
-  .press{padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem);border-top:1px solid var(--hair);text-align:center}
-  .press-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1rem,3vw,2.2rem);max-width:920px;margin:1.8rem auto 0}
-  .press-slot{width:clamp(116px,17vw,158px);height:58px;border:1px dashed var(--hair);display:grid;place-items:center;font-family:var(--label);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#BDBDBD}
+  .press{padding:clamp(3.5rem,8vw,6rem) clamp(1.2rem,4vw,3rem);border-top:1px solid var(--hair)}
+  .press .eyebrow{text-align:center;margin-bottom:2rem}
+  .press-list{max-width:820px;margin:0 auto;list-style:none;border-top:1px solid var(--ink)}
+  .press-list li{border-bottom:1px solid var(--hair)}
+  .press-list a{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1rem,3vw,2.5rem);align-items:baseline;padding:clamp(1rem,2vw,1.4rem) .2rem;text-decoration:none;color:var(--ink);transition:padding .3s ease}
+  .press-list a:hover,.press-list a:focus-visible{padding-left:.7rem}
+  .press-list .outlet{font-family:var(--label);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .press-list .title{font-family:var(--display);font-size:clamp(1.1rem,2.3vw,1.6rem);line-height:1.12;letter-spacing:.005em}
+  .press-list a:hover .title{text-decoration:underline;text-underline-offset:4px}
+  .press-list .ar{align-self:center}
+  @media (max-width:640px){
+    .press-list a{grid-template-columns:1fr auto;gap:.25rem .8rem}
+    .press-list .outlet{grid-column:1 / -1}
+  }
 
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -441,16 +456,14 @@
   </section>
 
   <!-- ——— PRESS / FEATURED IN ——— -->
-  <!-- Placeholder logo slots — send Rad's real publications (names or logo files) and I'll drop them in. -->
   <section class="press" id="press" aria-label="Publications Rad has been featured in">
     <p class="eyebrow">As featured in</p>
-    <div class="press-row">
-      <span class="press-slot">Logo</span>
-      <span class="press-slot">Logo</span>
-      <span class="press-slot">Logo</span>
-      <span class="press-slot">Logo</span>
-      <span class="press-slot">Logo</span>
-    </div>
+    <ul class="press-list">
+      <li><a href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer"><span class="outlet">Twin Cities Live · KSTP</span><span class="title">Spring looks for the office</span><i class="ar" aria-hidden="true"></i></a></li>
+      <li><a href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer"><span class="outlet">CanvasRebel</span><span class="title">Gift guide &amp; services spotlight</span><i class="ar" aria-hidden="true"></i></a></li>
+      <li><a href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><span class="outlet">Mpls.St.Paul Magazine</span><span class="title">Wardrobe whisperer</span><i class="ar" aria-hidden="true"></i></a></li>
+      <li><a href="https://canvasrebel.com/meet-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><span class="outlet">CanvasRebel</span><span class="title">Meet Radmila Dolokhanova</span><i class="ar" aria-hidden="true"></i></a></li>
+    </ul>
   </section>
 
   <!-- ——— LATEST INSTAGRAM REEL ——— -->
@@ -600,10 +613,10 @@
 
   // rotating testimonials
   var quotes = [
-    '“Rad made my closet feel like mine again.”<cite>— A.M., Minneapolis</cite>',
-    '“I get dressed in five minutes now. Five.”<cite>— J.L., St. Paul</cite>',
-    '“She saw my style before I could describe it.”<cite>— K.R., virtual client</cite>',
-    '“Worth every penny — and then some.”<cite>— S.T., Edina</cite>'
+    '“Rad made my closet feel like mine again.”',
+    '“I get dressed in five minutes now. Five.”',
+    '“She saw my style before I could describe it.”',
+    '“Worth every penny — and then some.”'
   ];
   var tEl = document.getElementById('testimonial');
   if (tEl){
