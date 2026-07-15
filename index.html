@@ -290,7 +290,9 @@
   .faq details[open] summary::after{transform:rotate(45deg)}
   .faq details p{padding:0 0 1.3rem;color:#444444;max-width:62ch;font-size:.95rem}
 
-  footer{border-top:1px solid var(--hair);padding:2.2rem clamp(1.2rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+  footer{border-top:1px solid var(--ink);padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem) 2.2rem}
+  footer .eyebrow{margin-bottom:1rem}
+  footer .footer-bottom{max-width:1100px;margin:2.5rem auto 0;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--muted);border-top:1px solid var(--hair);padding-top:1.6rem}
   footer .social{display:flex;gap:1.4rem}
   footer a{text-decoration:none}
   footer a:hover{color:var(--accent)}
@@ -310,21 +312,58 @@
     .svc .desc{grid-column:1 / -1;text-align:left;max-width:none;opacity:.85;font-size:.86rem}
   }
 
-  /* ————— press / featured in ————— */
-  .press{padding:clamp(3.5rem,8vw,6rem) clamp(1.2rem,4vw,3rem);border-top:1px solid var(--hair)}
-  .press .eyebrow{text-align:center;margin-bottom:2rem}
-  .press-list{max-width:820px;margin:0 auto;list-style:none;border-top:1px solid var(--ink)}
-  .press-list li{border-bottom:1px solid var(--hair)}
-  .press-list a{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1rem,3vw,2.5rem);align-items:baseline;padding:clamp(1rem,2vw,1.4rem) .2rem;text-decoration:none;color:var(--ink);transition:padding .3s ease}
-  .press-list a:hover,.press-list a:focus-visible{padding-left:.7rem}
-  .press-list .outlet{font-family:var(--label);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-  .press-list .title{font-family:var(--display);font-size:clamp(1.1rem,2.3vw,1.6rem);line-height:1.12;letter-spacing:.005em}
-  .press-list a:hover .title{text-decoration:underline;text-underline-offset:4px}
-  .press-list .ar{align-self:center}
-  @media (max-width:640px){
-    .press-list a{grid-template-columns:1fr auto;gap:.25rem .8rem}
-    .press-list .outlet{grid-column:1 / -1}
-  }
+  /* ————— split sections (2/3 · 1/3) ————— */
+  .split{max-width:1150px;margin:0 auto;padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem);display:grid;gap:clamp(2rem,5vw,4.5rem);align-items:start}
+  .split-work{grid-template-columns:2fr 1fr}
+  .split-work .svc .name{font-size:clamp(1.25rem,2.3vw,1.9rem)}
+  .split-work .svc .desc{max-width:26ch}
+  .split-shop{grid-template-columns:1fr 2fr}
+  @media (max-width:820px){.split{grid-template-columns:1fr;gap:2.6rem}}
+
+  /* CTA button — square, not a pill */
+  .cta-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:2rem;font-family:var(--label);font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);padding:.9rem 1.5rem;transition:background .2s,color .2s}
+  .cta-btn:hover{background:var(--ink);color:var(--paper)}
+  .cta-btn .ar{margin-left:0}
+
+  /* reel in the 1/3 column */
+  .reel-col .eyebrow{margin-bottom:1rem}
+  .reel-col .reel-frame{width:100%;max-width:none;margin:0 auto}
+  .reel-col .reel-cta{display:inline-block;margin-top:1.1rem}
+
+  /* vertical steps in the 1/3 column */
+  .steps-vert{margin-top:2rem;border-top:1px solid var(--ink)}
+  .step-item{padding:1.2rem 0;border-bottom:1px solid var(--hair)}
+  .step-item .n{font-family:var(--label);font-size:.68rem;letter-spacing:.2em;color:var(--muted);display:block;margin-bottom:.5rem}
+  .step-item h3{font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.55rem);text-transform:uppercase;line-height:1.05;margin-bottom:.4rem}
+  .step-item p{font-size:.92rem;color:#555555}
+
+  /* shop cards — uniform size in the 2/3 column */
+  .split-shop .shop-head{margin-bottom:1.4rem}
+  .split-shop .shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .split-shop .shop-card .pic{aspect-ratio:3/4}
+  .split-shop .shop-card .pic img{width:100%;height:100%;object-fit:contain}
+  @media (max-width:520px){.split-shop .shop-grid{grid-template-columns:1fr 1fr} .split-shop .shop-grid a:nth-child(3){grid-column:1 / -1}}
+
+  /* ————— featured-in marquee ————— */
+  .featured{padding:clamp(3rem,6vw,4.5rem) 0;border-top:1px solid var(--hair)}
+  .featured .eyebrow{text-align:center;margin-bottom:1.8rem}
+  .marquee{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .mq-track{display:flex;width:max-content;align-items:center;animation:mq 24s linear infinite}
+  .marquee:hover .mq-track{animation-play-state:paused}
+  .mq-item{font-family:var(--display);font-size:clamp(1.4rem,3vw,2.4rem);text-transform:uppercase;letter-spacing:.02em;color:var(--ink);text-decoration:none;white-space:nowrap;padding:0 clamp(1.6rem,4vw,3rem);opacity:.82;transition:opacity .2s}
+  .mq-item:hover{opacity:1;text-decoration:underline;text-underline-offset:5px}
+  .mq-star{color:var(--muted);font-size:.7em}
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.mq-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:1rem}}
+
+  /* ————— footer w/ plain facts ————— */
+  footer .footer-facts{max-width:1100px;margin:0 auto 2.5rem;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2rem,5vw,3rem)}
+  @media (max-width:760px){footer .footer-facts{grid-template-columns:1fr;gap:2rem}}
+  footer .footer-facts .lede{font-size:1rem;max-width:52ch;color:#333333;margin:0}
+  footer dl.qf div{display:flex;gap:1rem;border-bottom:1px solid var(--hair);padding:.7rem 0}
+  footer dl.qf dt{flex:0 0 8.5rem;font-family:var(--label);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+  footer dl.qf dd{font-size:.92rem}
+  footer dl.qf a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -370,43 +409,32 @@
 
 <div class="curtain">
 <main>
-  <!-- ——— SHOP (ShopMy) ——— -->
-  <section class="shop-sec" id="shop" aria-label="Shop Rad's picks on ShopMy">
-    <div class="shop-head">
-      <p>Wearing it, linking it</p>
-      <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop all my picks<i class="ar" aria-hidden="true"></i></a>
-    </div>
-    <div class="shop-grid">
-      <a class="shop-card" href="https://shopmy.us/shop/collections/5713711" rel="noopener">
-        <span class="pic"><img src="shop-1.jpg" alt="Rad's sandal and slide picks" loading="lazy"></span>
-        <span class="cap"><span>Sandals &amp; slides</span><span class="arw" aria-hidden="true"></span></span>
-      </a>
-      <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" rel="noopener">
-        <span class="pic"><img src="shop-2.jpg" alt="Rad's dress edit" loading="lazy"></span>
-        <span class="cap"><span>The dress edit</span><span class="arw" aria-hidden="true"></span></span>
-      </a>
-      <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" rel="noopener">
-        <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
-        <span class="cap"><span>Summer favorites</span><span class="arw" aria-hidden="true"></span></span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ——— SERVICES (unique list) ——— -->
-  <section class="services" id="services">
-    <div class="measure">
+  <!-- ——— SECTION 1: The work (2/3) + reel (1/3) ——— -->
+  <section class="split split-work" id="services">
+    <div class="col-work">
       <p class="eyebrow">What I do</p>
       <h2>The <em>work.</em></h2>
+      <div class="svc-list">
+        <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Pare it down to what you love and actually wear.</span></div>
+        <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Wardrobe revamp</span><span class="desc">A full reset, rebuilt around your real life.</span></div>
+        <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
+        <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
+        <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
+        <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
+        <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Family styling</span><span class="desc">Everyone pulled together, no one matchy.</span></div>
+        <div class="svc" tabindex="0"><span class="n">08</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
+      </div>
+      <a class="cta-btn book-open" href="#">Book a free call<i class="ar" aria-hidden="true"></i></a>
     </div>
-    <div class="svc-list">
-      <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Pare it down to what you love and actually wear.</span></div>
-      <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Wardrobe revamp</span><span class="desc">A full reset, rebuilt around your real life.</span></div>
-      <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
-      <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
-      <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
-      <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
-      <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Family styling</span><span class="desc">Everyone pulled together, no one matchy.</span></div>
-      <div class="svc" tabindex="0"><span class="n">08</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
+    <div class="col-1 reel-col">
+      <p class="eyebrow">Latest reel</p>
+      <a class="reel-frame" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer" aria-label="Watch Rad's latest reel on Instagram">
+        <i style="background-image:url('reel-cover.jpg')"></i>
+        <span class="play"><b></b></span>
+        <span class="tag">@raddydolo · Latest reel</span>
+      </a>
+      <!-- Swap in a real reel: set the <i> background to reel-cover.jpg and point href at the specific reel (or wire the IG Graph API for a true auto-latest). -->
+      <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer">Watch on Instagram<i class="ar" aria-hidden="true"></i></a>
     </div>
   </section>
 
@@ -455,79 +483,35 @@
     </div>
   </section>
 
-  <!-- ——— PRESS / FEATURED IN ——— -->
-  <section class="press" id="press" aria-label="Publications Rad has been featured in">
-    <p class="eyebrow">As featured in</p>
-    <ul class="press-list">
-      <li><a href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer"><span class="outlet">Twin Cities Live · KSTP</span><span class="title">Spring looks for the office</span><i class="ar" aria-hidden="true"></i></a></li>
-      <li><a href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer"><span class="outlet">CanvasRebel</span><span class="title">Gift guide &amp; services spotlight</span><i class="ar" aria-hidden="true"></i></a></li>
-      <li><a href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><span class="outlet">Mpls.St.Paul Magazine</span><span class="title">Wardrobe whisperer</span><i class="ar" aria-hidden="true"></i></a></li>
-      <li><a href="https://canvasrebel.com/meet-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><span class="outlet">CanvasRebel</span><span class="title">Meet Radmila Dolokhanova</span><i class="ar" aria-hidden="true"></i></a></li>
-    </ul>
-  </section>
-
-  <!-- ——— LATEST INSTAGRAM REEL ——— -->
-  <section class="reel-sec" id="reel" aria-label="Rad's latest Instagram reel">
-    <div class="reel-wrap">
-      <div class="reel-copy">
-        <p class="eyebrow">On Instagram</p>
-        <h2>Latest <em>reel.</em></h2>
-        <p>Closet edits, fitting-room finds and outfit formulas — new on Instagram every week.</p>
-        <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" rel="noopener">Watch on Instagram<i class="ar" aria-hidden="true"></i></a>
-      </div>
-      <!-- Swap the reel: set the background-image on <i> to a reel cover (reel-cover.jpg) and point href to the specific reel; or wire the Instagram Graph API for a true auto-latest. -->
-      <a class="reel-frame" href="https://www.instagram.com/raddydolo/reels/" rel="noopener" aria-label="Watch Rad's latest reel on Instagram">
-        <i style="background-image:url('reel-cover.jpg')"></i>
-        <span class="play"><b></b></span>
-        <span class="tag">@raddydolo · Latest reel</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ——— HOW IT WORKS ——— -->
-  <section id="process">
-    <div class="measure">
+  <!-- ——— SECTION 3: Three steps (1/3) + Shop (2/3) ——— -->
+  <section class="split split-shop" id="process">
+    <div class="col-1">
       <p class="eyebrow">How it works</p>
       <h2>Three steps. Zero <em>judgment.</em></h2>
-      <div class="steps">
-        <article class="step" tabindex="0" aria-label="Step one: you dish, she listens. Flip for details.">
-          <div class="step-in">
-            <div class="step-face"><h3>You dish, she listens</h3></div>
-            <div class="step-face step-back"><p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p></div>
-          </div>
-        </article>
-        <article class="step" tabindex="0" aria-label="Step two: she builds your plan. Flip for details.">
-          <div class="step-in">
-            <div class="step-face"><h3>She builds your plan</h3></div>
-            <div class="step-face step-back"><p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
-          </div>
-        </article>
-        <article class="step" tabindex="0" aria-label="Step three: you create the looks. Flip for details.">
-          <div class="step-in">
-            <div class="step-face"><h3>You create the looks</h3></div>
-            <div class="step-face step-back"><p>Together you build outfits that work for your body and your budget. Confidence included.</p></div>
-          </div>
-        </article>
+      <div class="steps-vert">
+        <div class="step-item"><span class="n">01</span><h3>You dish, she listens</h3><p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p></div>
+        <div class="step-item"><span class="n">02</span><h3>She builds your plan</h3><p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
+        <div class="step-item"><span class="n">03</span><h3>You create the looks</h3><p>Together you build outfits that work for your body and your budget. Confidence included.</p></div>
       </div>
     </div>
-  </section>
-
-  <!-- ——— PLAIN FACTS ——— -->
-  <section class="facts-sec" id="about">
-    <div class="measure facts-grid">
-      <div>
-        <p class="eyebrow">The plain facts</p>
-        <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years working in fashion in Los Angeles, she brought her styling practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself — and a well-styled outfit is how it speaks first. Your disheveled closet is her happy place.</p>
+    <div class="col-2">
+      <div class="shop-head">
+        <p>Wearing it, linking it</p>
+        <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop all my picks<i class="ar" aria-hidden="true"></i></a>
       </div>
-      <div>
-        <dl class="qf">
-          <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
-          <div><dt>Based in</dt><dd>Minneapolis, MN — serving the Twin Cities metro</dd></div>
-          <div><dt>Virtual</dt><dd>Yes — video-call styling anywhere in the world</dd></div>
-          <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call<i class="ar" aria-hidden="true"></i></a></dd></div>
-          <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
-          <div><dt>Shop her picks</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
-        </dl>
+      <div class="shop-grid">
+        <a class="shop-card" href="https://shopmy.us/shop/collections/5713711" rel="noopener">
+          <span class="pic"><img src="shop-1.jpg" alt="Rad's sandal and slide picks" loading="lazy"></span>
+          <span class="cap"><span>Sandals &amp; slides</span><span class="arw" aria-hidden="true"></span></span>
+        </a>
+        <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" rel="noopener">
+          <span class="pic"><img src="shop-2.jpg" alt="Rad's dress edit" loading="lazy"></span>
+          <span class="cap"><span>The dress edit</span><span class="arw" aria-hidden="true"></span></span>
+        </a>
+        <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" rel="noopener">
+          <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
+          <span class="cap"><span>Summer favorites</span><span class="arw" aria-hidden="true"></span></span>
+        </a>
       </div>
     </div>
   </section>
@@ -544,15 +528,44 @@
       <details><summary>What services do you offer?</summary><p>Closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling, vacation styling and family styling.</p></details>
     </div>
   </section>
+
+  <!-- ——— AS FEATURED IN (infinite marquee of publication logos) ——— -->
+  <section class="featured" id="press" aria-label="Publications Rad has been featured in">
+    <p class="eyebrow">As featured in</p>
+    <div class="marquee">
+      <div class="mq-track">
+        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer">Twin Cities Live</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer">CanvasRebel</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer">Mpls.St.Paul Magazine</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">Twin Cities Live</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">CanvasRebel</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">Mpls.St.Paul Magazine</a><span class="mq-star" aria-hidden="true">✶</span>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" rel="noopener">Tree Crown Studio</a>.</p>
-  <div class="social">
-    <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a>
-    <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
-    <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
-    <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
+  <p class="eyebrow">The plain facts</p>
+  <div class="footer-facts">
+    <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years working in fashion in Los Angeles, she brought her styling practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself — and a well-styled outfit is how it speaks first. Your disheveled closet is her happy place.</p>
+    <dl class="qf">
+      <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
+      <div><dt>Based in</dt><dd>Minneapolis, MN — Twin Cities metro</dd></div>
+      <div><dt>Virtual</dt><dd>Yes — anywhere in the world</dd></div>
+      <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call<i class="ar" aria-hidden="true"></i></a></dd></div>
+      <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
+      <div><dt>Shop</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
+    </dl>
+  </div>
+  <div class="footer-bottom">
+    <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" rel="noopener">Tree Crown Studio</a>.</p>
+    <div class="social">
+      <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a>
+      <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
+      <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
+    </div>
   </div>
 </footer>
 </div><!-- /.curtain -->
