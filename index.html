@@ -350,9 +350,9 @@
   .marquee{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
   .mq-track{display:flex;width:max-content;align-items:center;animation:mq 24s linear infinite}
   .marquee:hover .mq-track{animation-play-state:paused}
-  .mq-item{font-family:var(--display);font-size:clamp(1.4rem,3vw,2.4rem);text-transform:uppercase;letter-spacing:.02em;color:var(--ink);text-decoration:none;white-space:nowrap;padding:0 clamp(1.6rem,4vw,3rem);opacity:.82;transition:opacity .2s}
-  .mq-item:hover{opacity:1;text-decoration:underline;text-underline-offset:5px}
-  .mq-star{color:var(--muted);font-size:.7em}
+  .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(1.8rem,5vw,4rem)}
+  .mq-item img{height:clamp(30px,4vw,46px);width:auto;display:block;filter:grayscale(1);opacity:.72;transition:opacity .25s,filter .25s}
+  .mq-item:hover img{filter:grayscale(0);opacity:1}
   @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.mq-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:1rem}}
 
@@ -534,12 +534,12 @@
     <p class="eyebrow">As featured in</p>
     <div class="marquee">
       <div class="mq-track">
-        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer">Twin Cities Live</a><span class="mq-star" aria-hidden="true">✶</span>
-        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer">CanvasRebel</a><span class="mq-star" aria-hidden="true">✶</span>
-        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer">Mpls.St.Paul Magazine</a><span class="mq-star" aria-hidden="true">✶</span>
-        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">Twin Cities Live</a><span class="mq-star" aria-hidden="true">✶</span>
-        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">CanvasRebel</a><span class="mq-star" aria-hidden="true">✶</span>
-        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">Mpls.St.Paul Magazine</a><span class="mq-star" aria-hidden="true">✶</span>
+        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer"><img src="kstp5.png" alt="KSTP 5 Eyewitness News" loading="lazy"></a>
+        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer"><img src="canvasrebel.jpeg" alt="CanvasRebel" loading="lazy"></a>
+        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><img src="mspmag.png" alt="Mpls St Paul Magazine" loading="lazy"></a>
+        <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="kstp5.png" alt="" loading="lazy"></a>
+        <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="canvasrebel.jpeg" alt="" loading="lazy"></a>
+        <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="mspmag.png" alt="" loading="lazy"></a>
       </div>
     </div>
   </section>
