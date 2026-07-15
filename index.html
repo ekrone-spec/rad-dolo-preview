@@ -290,7 +290,7 @@
     <a class="txt" href="#services">Services</a>
     <a class="txt" href="#faq">FAQ</a>
     <a class="ltk txt" href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks&nbsp;&#8599;</a>
-    <a class="cta email-open" data-subject="Free styling call" href="#">Book a free call</a>
+    <a class="cta book-open" href="#">Book a free call</a>
     <span class="icons">
       <a href="https://www.instagram.com/raddydolo" rel="noopener" aria-label="Rad on Instagram">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>
@@ -446,7 +446,7 @@
           <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
           <div><dt>Based in</dt><dd>Minneapolis, MN — serving the Twin Cities metro</dd></div>
           <div><dt>Virtual</dt><dd>Yes — video-call styling anywhere in the world</dd></div>
-          <div><dt>First step</dt><dd><a class="email-open" data-subject="Free consultation call" href="#">A free consultation call &#8599;</a></dd></div>
+          <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call &#8599;</a></dd></div>
           <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note &#8599;</a></dd></div>
           <div><dt>Shop her picks</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
         </dl>
@@ -497,6 +497,19 @@
       e.preventDefault();
       openEmail(a.getAttribute('data-subject') || '', a.getAttribute('data-body') || '');
     });
+  });
+
+  // Booking link (Google Appointments) is assembled at runtime too, and opened
+  // in a new tab with noopener/noreferrer so the target can't reach this page
+  // (blocks reverse-tabnabbing) and no referrer URL leaks.
+  var BOOK = atob('aHR0cHM6Ly9jYWxlbmRhci5hcHAuZ29vZ2xlLzRTYXlQZno3ZWE5NktYeUw5');
+  function openBook(){
+    var a = document.createElement('a');
+    a.href = BOOK; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.book-open'), function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); openBook(); });
   });
 
   // header: transparent over the hero, opaque past it
