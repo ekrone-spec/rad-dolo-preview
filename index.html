@@ -43,7 +43,7 @@
     "sameAs": [
       "https://www.instagram.com/raddydolo",
       "https://www.tiktok.com/@raddydolo",
-      "https://www.shopltk.com/explore/raddydolo"
+      "https://shopmy.us/shop/raddydolo"
     ]
   },
   "makesOffer": [
@@ -181,30 +181,59 @@
     .facts{font-size:clamp(.44rem,2.2vw,.54rem);letter-spacing:.03em;white-space:nowrap}
   }
 
-  /* ————— LTK section ————— */
-  .ltk-sec{padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,5rem)}
-  .ltk-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;max-width:1050px;margin:0 auto 1.6rem;flex-wrap:wrap}
-  .ltk-head p{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
-  .ltk-head a{font-size:.78rem;font-weight:600;color:var(--accent);text-decoration:none;letter-spacing:.06em}
-  .ltk-head a:hover{text-decoration:underline;text-underline-offset:3px}
-  .ltk-tiles{display:flex;justify-content:center;gap:1rem;max-width:1050px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
-  .ltk-tiles::-webkit-scrollbar{display:none}
-  .ltk-tile{flex:0 0 auto;width:clamp(130px,20vw,190px);height:clamp(172px,26vw,250px);display:block;text-decoration:none;perspective:800px}
-  .tile-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.35,.1,.25,1)}
-  .ltk-tile:hover .tile-in,.ltk-tile:focus-visible .tile-in{transform:rotateY(180deg)}
-  .tile-face{position:absolute;inset:0;border-radius:12px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:flex-end;padding:.7rem}
-  .tile-face span{font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4)}
-  .tile-back{transform:rotateY(180deg);background:var(--paper);border:1.5px solid var(--ink);align-items:center;justify-content:center;text-align:center}
-  .tile-back span{color:var(--accent);text-shadow:none}
-  .p1 .tile-front{background:url('ltk-1.png') center/cover no-repeat,linear-gradient(160deg,#CFCFCF,#8A8A8A)}
-  .p2 .tile-front{background:url('ltk-2.png') center/cover no-repeat,linear-gradient(160deg,#C2C2C2,#7E7E7E)}
-  .p3 .tile-front{background:url('ltk-3.png') center/cover no-repeat,linear-gradient(160deg,#C8C8C8,#868686)}
-  .ltk-tile.more .tile-front{background:var(--paper);border:1.5px solid var(--ink);align-items:center;justify-content:center;text-align:center}
-  .ltk-tile.more .tile-front span{color:var(--ink);text-shadow:none}
-  .ltk-tile.more:hover .tile-front{border-color:var(--accent)}
-  .ltk-tile.more:hover .tile-front span{color:var(--accent)}
-  .ltk-tile.more:hover .tile-in{transform:none}
-  @media (prefers-reduced-motion:reduce){.tile-in{transition:none}}
+  /* ————— shop (ShopMy) section ————— */
+  .shop-sec{padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,5rem)}
+  .shop-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;max-width:1050px;margin:0 auto 1.8rem;flex-wrap:wrap}
+  .shop-head p{font-family:var(--label);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .shop-head a{font-family:var(--label);font-size:.74rem;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+  .shop-head a:hover{text-decoration:underline;text-underline-offset:3px}
+  .shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.5vw,1.8rem);max-width:1050px;margin:0 auto}
+  @media (max-width:760px){.shop-grid{grid-template-columns:1fr 1fr} .shop-grid a:nth-child(3){grid-column:1 / -1}}
+  @media (max-width:460px){.shop-grid{grid-template-columns:1fr} .shop-grid a:nth-child(3){grid-column:auto}}
+  .shop-card{display:block;text-decoration:none;color:var(--ink)}
+  .shop-card .pic{display:block;aspect-ratio:4/5;background:#F5F5F5;border:1px solid var(--hair);overflow:hidden}
+  .shop-card .pic img{width:100%;height:100%;object-fit:contain;transition:transform .4s ease}
+  .shop-card:hover .pic img,.shop-card:focus-visible .pic img{transform:scale(1.04)}
+  .shop-card .cap{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.75rem;font-family:var(--label);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  .shop-card .arw{transition:transform .2s}
+  .shop-card:hover .arw{transform:translate(2px,-2px)}
+
+  /* ————— journal carousel ————— */
+  .journal{padding:clamp(3.5rem,8vw,6.5rem) 0;border-top:1px solid var(--hair)}
+  .journal-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;max-width:1050px;margin:0 auto 2rem;padding:0 clamp(1.2rem,4vw,3rem);flex-wrap:wrap}
+  .journal-head h2{margin-bottom:0}
+  .carousel-track{display:flex;gap:clamp(1rem,2.5vw,1.8rem);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:0 clamp(1.2rem,4vw,3rem) .3rem;-webkit-overflow-scrolling:touch}
+  .carousel-track::-webkit-scrollbar{display:none}
+  .post{flex:0 0 clamp(258px,78vw,360px);scroll-snap-align:start;text-decoration:none;color:var(--ink)}
+  .post .pic{display:block;aspect-ratio:3/2;background:#ECECEC;overflow:hidden}
+  .post .pic i{display:block;width:100%;height:100%;background-size:cover;background-position:center;transition:transform .5s ease}
+  .post:hover .pic i,.post:focus-visible .pic i{transform:scale(1.05)}
+  .post .meta{font-family:var(--label);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:.9rem 0 .5rem}
+  .post h3{font-family:var(--display);font-weight:600;font-size:1.4rem;line-height:1.12;text-transform:uppercase;letter-spacing:.005em;margin-bottom:.5rem}
+  .post p{font-size:.92rem;color:#444444;max-width:34ch}
+  .carousel-nav{display:flex;gap:.5rem;justify-content:flex-end;max-width:1050px;margin:1.4rem auto 0;padding:0 clamp(1.2rem,4vw,3rem)}
+  .carousel-nav button{width:46px;height:46px;border:1.5px solid var(--ink);background:none;color:var(--ink);cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:background .2s,color .2s,opacity .2s}
+  .carousel-nav button:hover{background:var(--ink);color:var(--paper)}
+  .carousel-nav button:disabled{opacity:.28;cursor:default}
+  .carousel-nav button:disabled:hover{background:none;color:var(--ink)}
+
+  /* ————— latest reel ————— */
+  .reel-sec{padding:clamp(3.5rem,8vw,6.5rem) clamp(1.2rem,4vw,3rem);border-top:1px solid var(--hair)}
+  .reel-wrap{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+  @media (max-width:760px){.reel-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  .reel-copy h2{margin-bottom:1.2rem}
+  .reel-copy p{max-width:38ch;color:#444444;margin-bottom:1.7rem}
+  .reel-cta{font-family:var(--label);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.22rem}
+  .reel-cta:hover{color:var(--muted);border-color:var(--muted)}
+  .reel-frame{position:relative;width:min(300px,78vw);aspect-ratio:9/16;background:#141414;overflow:hidden;display:block;text-decoration:none}
+  .reel-frame i{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.8;transition:opacity .3s,transform .6s ease}
+  .reel-frame:hover i{opacity:1;transform:scale(1.04)}
+  .reel-frame .play{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
+  .reel-frame .play b{width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;transition:transform .2s}
+  .reel-frame:hover .play b{transform:scale(1.08)}
+  .reel-frame .play b::after{content:"";border-left:19px solid var(--ink);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+  .reel-frame .tag{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1rem;font-family:var(--label);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+  @media (prefers-reduced-motion:reduce){.carousel-track{scroll-behavior:auto}}
 
   /* ————— below the fold ————— */
   section{padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem)}
@@ -261,7 +290,7 @@
     <a class="txt" href="#process">Process</a>
     <a class="txt" href="#services">Services</a>
     <a class="txt" href="#faq">FAQ</a>
-    <a class="ltk txt" href="https://www.shopltk.com/explore/raddydolo" rel="noopener">Shop my LTK&nbsp;&#8599;</a>
+    <a class="ltk txt" href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks&nbsp;&#8599;</a>
     <a class="cta" href="mailto:dolo.radmila@gmail.com?subject=Free%20styling%20call">Book a free call</a>
     <span class="icons">
       <a href="https://www.instagram.com/raddydolo" rel="noopener" aria-label="Rad on Instagram">
@@ -291,17 +320,87 @@
     </div>
   </section>
 
-  <!-- ——— LTK ——— -->
-  <section class="ltk-sec" id="shop" aria-label="Shop Rad's looks on LTK">
-    <div class="ltk-head">
+  <!-- ——— SHOP (ShopMy) ——— -->
+  <section class="shop-sec" id="shop" aria-label="Shop Rad's picks on ShopMy">
+    <div class="shop-head">
       <p>Wearing it, linking it</p>
-      <a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">All my looks on LTK &#8599;</a>
+      <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop all my picks &#8599;</a>
     </div>
-    <div class="ltk-tiles">
-      <a class="ltk-tile p1" href="https://www.shopltk.com/explore/raddydolo/posts/b84de15e-6eb3-11ed-9470-0242ac110003" rel="noopener"><span class="tile-in"><span class="tile-face tile-front"><span>Look 01</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span></a>
-      <a class="ltk-tile p2" href="https://www.shopltk.com/explore/raddydolo/posts/66671fdc-6ea7-11ed-a6b7-0242ac110004" rel="noopener"><span class="tile-in"><span class="tile-face tile-front"><span>Look 02</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span></a>
-      <a class="ltk-tile p3" href="https://www.shopltk.com/explore/raddydolo/posts/0495875e-6ea7-11ed-9470-0242ac110003" rel="noopener"><span class="tile-in"><span class="tile-face tile-front"><span>Look 03</span></span><span class="tile-face tile-back"><span>Shop this look &#8599;</span></span></span></a>
-      <a class="ltk-tile more" href="https://www.shopltk.com/explore/raddydolo" rel="noopener"><span class="tile-in"><span class="tile-face tile-front"><span>See all &#8599;</span></span></span></a>
+    <div class="shop-grid">
+      <a class="shop-card" href="https://shopmy.us/shop/collections/5713711" rel="noopener">
+        <span class="pic"><img src="shop-1.jpg" alt="Rad's sandal and slide picks" loading="lazy"></span>
+        <span class="cap"><span>Sandals &amp; slides</span><span class="arw">&#8599;</span></span>
+      </a>
+      <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" rel="noopener">
+        <span class="pic"><img src="shop-2.jpg" alt="Rad's dress edit" loading="lazy"></span>
+        <span class="cap"><span>The dress edit</span><span class="arw">&#8599;</span></span>
+      </a>
+      <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" rel="noopener">
+        <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
+        <span class="cap"><span>Summer favorites</span><span class="arw">&#8599;</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ——— JOURNAL (carousel) ——— -->
+  <section class="journal" id="journal" aria-label="Short notes from Rad">
+    <div class="journal-head">
+      <div>
+        <p class="eyebrow">The journal</p>
+        <h2>Notes on getting <em>dressed.</em></h2>
+      </div>
+      <a class="shop-head-link" href="mailto:dolo.radmila@gmail.com?subject=Subscribe%20me%20to%20the%20journal" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email &#8599;</a>
+    </div>
+    <!-- Feature photos: drop blog-1.jpg … blog-4.jpg into the folder to replace the gray placeholders. Post links point to real posts once the blog exists. -->
+    <div class="carousel">
+      <div class="carousel-track" id="journalTrack" tabindex="0" aria-label="Journal posts, scrollable">
+        <a class="post" href="#journal">
+          <span class="pic"><i style="background-image:url('blog-1.jpg')"></i></span>
+          <p class="meta">Closet edit · 4 min</p>
+          <h3>The ten-piece reset</h3>
+          <p>Pull everything, keep only what you actually reach for, and build back from the gaps — here's the order I work in.</p>
+        </a>
+        <a class="post" href="#journal">
+          <span class="pic"><i style="background-image:url('blog-2.jpg')"></i></span>
+          <p class="meta">Wardrobe · 3 min</p>
+          <h3>Dress for the week you have</h3>
+          <p>Your real calendar is the best stylist in the room. We start there, not on the mood board.</p>
+        </a>
+        <a class="post" href="#journal">
+          <span class="pic"><i style="background-image:url('blog-3.jpg')"></i></span>
+          <p class="meta">Packing · 5 min</p>
+          <h3>One bag, three weeks</h3>
+          <p>The capsule I pack for work, dinner and everything unplanned — without a second suitcase.</p>
+        </a>
+        <a class="post" href="#journal">
+          <span class="pic"><i style="background-image:url('blog-4.jpg')"></i></span>
+          <p class="meta">Shopping · 4 min</p>
+          <h3>Thrift like a stylist</h3>
+          <p>The five things I check on every rack before a single piece comes home with me.</p>
+        </a>
+      </div>
+    </div>
+    <div class="carousel-nav">
+      <button type="button" class="prev" data-track="journalTrack" aria-label="Previous posts">&larr;</button>
+      <button type="button" class="next" data-track="journalTrack" aria-label="More posts">&rarr;</button>
+    </div>
+  </section>
+
+  <!-- ——— LATEST INSTAGRAM REEL ——— -->
+  <section class="reel-sec" id="reel" aria-label="Rad's latest Instagram reel">
+    <div class="reel-wrap">
+      <div class="reel-copy">
+        <p class="eyebrow">On Instagram</p>
+        <h2>Latest <em>reel.</em></h2>
+        <p>Closet edits, fitting-room finds and outfit formulas — new on Instagram every week.</p>
+        <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" rel="noopener">Watch on Instagram &#8599;</a>
+      </div>
+      <!-- Swap the reel: set the background-image on <i> to a reel cover (reel-cover.jpg) and point href to the specific reel; or wire the Instagram Graph API for a true auto-latest. -->
+      <a class="reel-frame" href="https://www.instagram.com/raddydolo/reels/" rel="noopener" aria-label="Watch Rad's latest reel on Instagram">
+        <i style="background-image:url('reel-cover.jpg')"></i>
+        <span class="play"><b></b></span>
+        <span class="tag">@raddydolo · Latest reel</span>
+      </a>
     </div>
   </section>
 
@@ -350,7 +449,7 @@
           <div><dt>Virtual</dt><dd>Yes — video-call styling anywhere in the world</dd></div>
           <div><dt>First step</dt><dd>A free consultation call</dd></div>
           <div><dt>Email</dt><dd><a href="mailto:dolo.radmila@gmail.com">dolo.radmila@gmail.com</a></dd></div>
-          <div><dt>Shop her picks</dt><dd><a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">Shop my LTK</a></dd></div>
+          <div><dt>Shop her picks</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
         </dl>
       </div>
     </div>
@@ -373,7 +472,7 @@
 <footer>
   <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" rel="noopener">Tree Crown Studio</a>.</p>
   <div class="social">
-    <a href="https://www.shopltk.com/explore/raddydolo" rel="noopener">Shop my LTK</a>
+    <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a>
     <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
     <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
     <a href="mailto:dolo.radmila@gmail.com">Email</a>
@@ -401,6 +500,30 @@
     s.addEventListener('keydown', function(e){
       if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); s.classList.toggle('flipped'); }
     });
+  });
+
+  // journal carousel arrows
+  Array.prototype.forEach.call(document.querySelectorAll('.carousel-nav button'), function(btn){
+    var track = document.getElementById(btn.getAttribute('data-track'));
+    if (!track) return;
+    var dir = btn.classList.contains('prev') ? -1 : 1;
+    function step(){
+      var card = track.querySelector('.post');
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 24;
+      return (card ? card.offsetWidth : 300) + gap;
+    }
+    btn.addEventListener('click', function(){ track.scrollBy({left: dir * step(), behavior:'smooth'}); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.carousel-track'), function(track){
+    var wrap = track.closest('.journal') || document;
+    var prev = wrap.querySelector('.prev'), next = wrap.querySelector('.next');
+    function update(){
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    }
+    track.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
   });
 
   document.getElementById('askForm').addEventListener('submit', function(e){
