@@ -183,7 +183,7 @@
   .facts a:hover{opacity:.55}
 
   /* rotating testimonials — small, right side on desktop; fade past the hero */
-  .testimonials{position:absolute;top:clamp(6rem,12vh,8.5rem);right:clamp(1.2rem,4vw,3rem);z-index:2;width:min(320px,52vw);text-align:right;pointer-events:none;transition:opacity .5s ease}
+  .testimonials{position:absolute;top:5.4rem;right:clamp(1.5rem,4vw,3rem);z-index:2;width:min(300px,46vw);text-align:right;pointer-events:none;transition:opacity .5s ease}
   .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;color:var(--ink);transition:opacity .5s ease}
   .testimonial.fade{opacity:0}
   .hero.past .testimonials{opacity:0}
@@ -338,11 +338,11 @@
   .step-item p{font-size:.92rem;color:#555555}
 
   /* shop cards — uniform size in the 2/3 column */
+  /* shop cards — full-width images; 2 side by side, the 3rd full-width below */
   .split-shop .shop-head{margin-bottom:1.4rem}
-  .split-shop .shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-  .split-shop .shop-card .pic{aspect-ratio:3/4}
-  .split-shop .shop-card .pic img{width:100%;height:100%;object-fit:contain}
-  @media (max-width:520px){.split-shop .shop-grid{grid-template-columns:1fr 1fr} .split-shop .shop-grid a:nth-child(3){grid-column:1 / -1}}
+  .split-shop .shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+  .split-shop .shop-grid a:nth-child(3){grid-column:1 / -1}
+  @media (max-width:600px){.split-shop .shop-grid{grid-template-columns:1fr} .split-shop .shop-grid a:nth-child(3){grid-column:auto}}
 
   /* ————— featured-in marquee ————— */
   .featured{padding:clamp(3rem,6vw,4.5rem) 0;border-top:1px solid var(--hair)}
@@ -489,9 +489,9 @@
       <p class="eyebrow">How it works</p>
       <h2>Three steps. Zero <em>judgment.</em></h2>
       <div class="steps-vert">
-        <div class="step-item"><span class="n">01</span><h3>You dish, she listens</h3><p>You talk style, goals and what's actually in your closet. Rad tells you exactly how she can help.</p></div>
-        <div class="step-item"><span class="n">02</span><h3>She builds your plan</h3><p>A personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
-        <div class="step-item"><span class="n">03</span><h3>You create the looks</h3><p>Together you build outfits that work for your body and your budget. Confidence included.</p></div>
+        <div class="step-item"><span class="n">01</span><h3>You dish, I listen</h3><p>You talk style, goals and what's actually in your closet. I tell you exactly how I can help.</p></div>
+        <div class="step-item"><span class="n">02</span><h3>I build your plan</h3><p>I map out a personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
+        <div class="step-item"><span class="n">03</span><h3>We create the looks</h3><p>Together we build outfits that work for your body and your budget. Confidence included.</p></div>
       </div>
     </div>
     <div class="col-2">
@@ -623,6 +623,27 @@
   if (askInput && window.matchMedia('(pointer:fine)').matches){
     askInput.focus({preventScroll:true});
   }
+
+  // place the testimonials just under the menu, right edge aligned to the
+  // "Shop my picks" nav item (desktop); CSS handles the mobile left position.
+  var tWrap = document.querySelector('.testimonials');
+  var ltkItem = document.querySelector('nav .ltk');
+  function positionTestimonials(){
+    if (!tWrap) return;
+    if (window.matchMedia('(max-width:760px)').matches){
+      tWrap.style.right = ''; tWrap.style.left = ''; tWrap.style.top = '';
+      return;
+    }
+    if (ltkItem){
+      var r = ltkItem.getBoundingClientRect();
+      tWrap.style.right = Math.max(12, Math.round(window.innerWidth - r.right)) + 'px';
+      tWrap.style.left = 'auto';
+    }
+    tWrap.style.top = Math.round(header.getBoundingClientRect().bottom + 6) + 'px';
+  }
+  positionTestimonials();
+  window.addEventListener('resize', positionTestimonials);
+  window.addEventListener('load', positionTestimonials);
 
   // rotating testimonials
   var quotes = [
