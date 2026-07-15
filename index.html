@@ -17,7 +17,7 @@
 <meta name="twitter:image" content="https://www.raddolo.com/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -72,14 +72,15 @@
 <style>
   :root{
     --paper:#FFFFFF;
-    --ink:#17130E;
-    --muted:#837B6F;
-    --hair:#E9E4DC;
-    --accent:#8C4A1F;
-    --accent-deep:#6E3917;
-    --display:"Archivo Black","Archivo","Helvetica Neue",Arial,sans-serif;
-    --ui:"Archivo","Helvetica Neue",Arial,sans-serif;
-    --logo:"Cormorant Garamond", "Times New Roman", Georgia, serif;
+    --ink:#141414;
+    --muted:#6E6E6E;
+    --hair:#E4E4E4;
+    --accent:#141414;      /* no color — black & white only */
+    --accent-deep:#141414;
+    --logo:"Cormorant Garamond", Georgia, serif;             /* primary */
+    --display:"Cormorant Garamond", Georgia, serif;          /* primary — headings */
+    --ui:"Proza Libre","Helvetica Neue",Arial,sans-serif;    /* secondary — body */
+    --label:"Montserrat","Helvetica Neue",Arial,sans-serif;  /* tertiary — labels */
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -95,7 +96,14 @@
     position:fixed;inset:0 0 auto 0;z-index:50;
     display:flex;align-items:center;justify-content:space-between;gap:1rem;
     padding:1.1rem clamp(1.2rem,4vw,3rem);
-    background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,0));
+    background:transparent;transition:background .3s ease;
+  }
+  header.solid{background:var(--paper)} /* opaque past the hero, no border */
+
+  /* tertiary font — uppercase labels & nav */
+  nav a, .wordmark .tagline, .facts, .eyebrow, dl.qf dt,
+  .tile-face span, .ltk-head p, .ltk-head a, .step-face::before{
+    font-family:var(--label);
   }
   .wordmark{font-family:var(--logo);font-weight:600;font-size:clamp(1.7rem,3vw,2.5rem);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;line-height:1}
   .wordmark em{font-style:normal;color:var(--accent)}
@@ -135,9 +143,9 @@
   }
   .hero-ui{
     position:absolute;left:50%;transform:translateX(-50%);
-    bottom:clamp(9%,12vh,15%);z-index:2;
+    bottom:clamp(1.1rem,3vh,2.4rem);z-index:2;
     width:min(560px,90vw);
-    display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:.85rem;text-align:center;
   }
   .hero-ui .ask{width:100%}
   .ask{
@@ -153,7 +161,7 @@
     font-family:var(--ui);font-style:italic;font-size:clamp(1rem,2.2vw,1.18rem);
     color:var(--ink);padding:.7rem 0;caret-color:var(--accent);
   }
-  .ask input::placeholder{color:#9A9184;opacity:1}
+  .ask input::placeholder{color:#9A9A9A;opacity:1}
   .ask button{
     flex:none;min-width:48px;height:48px;border:0;cursor:pointer;
     background:none;color:var(--ink);font-size:1.5rem;
@@ -188,9 +196,9 @@
   .tile-face span{font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4)}
   .tile-back{transform:rotateY(180deg);background:var(--paper);border:1.5px solid var(--ink);align-items:center;justify-content:center;text-align:center}
   .tile-back span{color:var(--accent);text-shadow:none}
-  .p1 .tile-front{background:url('ltk-1.png') center/cover no-repeat,linear-gradient(160deg,#C89A63,#8C5A2B)}
-  .p2 .tile-front{background:url('ltk-2.png') center/cover no-repeat,linear-gradient(160deg,#7793AE,#3E5063)}
-  .p3 .tile-front{background:url('ltk-3.png') center/cover no-repeat,linear-gradient(160deg,#8A8F7E,#4E5346)}
+  .p1 .tile-front{background:url('ltk-1.png') center/cover no-repeat,linear-gradient(160deg,#CFCFCF,#8A8A8A)}
+  .p2 .tile-front{background:url('ltk-2.png') center/cover no-repeat,linear-gradient(160deg,#C2C2C2,#7E7E7E)}
+  .p3 .tile-front{background:url('ltk-3.png') center/cover no-repeat,linear-gradient(160deg,#C8C8C8,#868686)}
   .ltk-tile.more .tile-front{background:var(--paper);border:1.5px solid var(--ink);align-items:center;justify-content:center;text-align:center}
   .ltk-tile.more .tile-front span{color:var(--ink);text-shadow:none}
   .ltk-tile.more:hover .tile-front{border-color:var(--accent)}
@@ -202,7 +210,7 @@
   section{padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem)}
   .measure{max-width:1050px;margin:0 auto}
   .eyebrow{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
-  h2{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,3.8vw,2.7rem);line-height:1.06;letter-spacing:-.01em;margin-bottom:2.4rem;max-width:22ch;text-transform:uppercase}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,3.1rem);line-height:1.04;letter-spacing:.01em;margin-bottom:2.4rem;max-width:22ch;text-transform:uppercase}
   h2 em{font-style:normal;color:var(--accent)}
 
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem;counter-reset:step}
@@ -214,13 +222,13 @@
   .step-face::before{content:"0" counter(step);display:block;font-size:.72rem;letter-spacing:.22em;color:var(--accent);margin-bottom:.9rem;font-weight:600}
   .step-back{transform:rotateY(180deg)}
   .step h3{font-family:var(--ui);font-size:1.15rem;font-weight:700}
-  .step p{color:#4C463D;font-size:.95rem;max-width:34ch}
+  .step p{color:#444444;font-size:.95rem;max-width:34ch}
   @media (prefers-reduced-motion:reduce){.step-in{transition:none}}
 
   .facts-sec{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .facts-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem}
   @media (max-width:760px){.facts-grid{grid-template-columns:1fr}}
-  .lede{font-size:1.05rem;max-width:52ch;color:#3B362E;margin-bottom:1.4rem}
+  .lede{font-size:1.05rem;max-width:52ch;color:#333333;margin-bottom:1.4rem}
   .chips{display:flex;flex-wrap:wrap;column-gap:.6rem;row-gap:.35rem;list-style:none;align-items:baseline}
   .chips li{font-size:.88rem;letter-spacing:.03em}
   .chips li + li::before{content:"·";color:var(--muted);margin-right:.6rem}
@@ -234,7 +242,7 @@
   .faq summary::-webkit-details-marker{display:none}
   .faq summary::after{content:"+";color:var(--accent);font-size:1.3rem;transition:transform .25s}
   .faq details[open] summary::after{transform:rotate(45deg)}
-  .faq details p{padding:0 0 1.3rem;color:#4C463D;max-width:62ch;font-size:.95rem}
+  .faq details p{padding:0 0 1.3rem;color:#444444;max-width:62ch;font-size:.95rem}
 
   footer{border-top:1px solid var(--hair);padding:2.2rem clamp(1.2rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--muted)}
   footer .social{display:flex;gap:1.4rem}
@@ -375,6 +383,17 @@
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // header: transparent over the hero, opaque past it
+  var header = document.querySelector('header');
+  var hero = document.querySelector('.hero');
+  function onScroll(){
+    var threshold = Math.max(0, (hero ? hero.offsetHeight : 0) - header.offsetHeight);
+    header.classList.toggle('solid', window.scrollY > threshold);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
 
   // step cards: tap / keyboard flip (hover covers pointer devices)
   Array.prototype.forEach.call(document.querySelectorAll('.step'), function(s){
