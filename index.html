@@ -27,7 +27,6 @@
   "url": "https://www.raddolo.com/",
   "image": "https://www.raddolo.com/hero.jpg",
   "description": "Personal stylist offering closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling and vacation styling. In person across Minneapolis–St. Paul and virtually anywhere.",
-  "email": "dolo.radmila@gmail.com",
   "priceRange": "$$",
   "address": { "@type": "PostalAddress", "addressLocality": "Minneapolis", "addressRegion": "MN", "addressCountry": "US" },
   "areaServed": [
@@ -291,7 +290,7 @@
     <a class="txt" href="#services">Services</a>
     <a class="txt" href="#faq">FAQ</a>
     <a class="ltk txt" href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks&nbsp;&#8599;</a>
-    <a class="cta" href="mailto:dolo.radmila@gmail.com?subject=Free%20styling%20call">Book a free call</a>
+    <a class="cta email-open" data-subject="Free styling call" href="#">Book a free call</a>
     <span class="icons">
       <a href="https://www.instagram.com/raddydolo" rel="noopener" aria-label="Rad on Instagram">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>
@@ -349,7 +348,7 @@
         <p class="eyebrow">The journal</p>
         <h2>Notes on getting <em>dressed.</em></h2>
       </div>
-      <a class="shop-head-link" href="mailto:dolo.radmila@gmail.com?subject=Subscribe%20me%20to%20the%20journal" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email &#8599;</a>
+      <a class="shop-head-link email-open" data-subject="Subscribe me to the journal" href="#" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email &#8599;</a>
     </div>
     <!-- Feature photos: drop blog-1.jpg … blog-4.jpg into the folder to replace the gray placeholders. Post links point to real posts once the blog exists. -->
     <div class="carousel">
@@ -447,8 +446,8 @@
           <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
           <div><dt>Based in</dt><dd>Minneapolis, MN — serving the Twin Cities metro</dd></div>
           <div><dt>Virtual</dt><dd>Yes — video-call styling anywhere in the world</dd></div>
-          <div><dt>First step</dt><dd>A free consultation call</dd></div>
-          <div><dt>Email</dt><dd><a href="mailto:dolo.radmila@gmail.com">dolo.radmila@gmail.com</a></dd></div>
+          <div><dt>First step</dt><dd><a class="email-open" data-subject="Free consultation call" href="#">A free consultation call &#8599;</a></dd></div>
+          <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note &#8599;</a></dd></div>
           <div><dt>Shop her picks</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
         </dl>
       </div>
@@ -475,13 +474,30 @@
     <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a>
     <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
     <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
-    <a href="mailto:dolo.radmila@gmail.com">Email</a>
+    <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
   </div>
 </footer>
 
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Email is assembled at runtime from an encoded string, so the address
+  // never appears in the page source for spam bots / harvesters to scrape.
+  var EMAIL = atob('ZG9sby5yYWRtaWxhQGdtYWlsLmNvbQ==');
+  function openEmail(subject, body){
+    var url = 'mailto:' + EMAIL, q = [];
+    if (subject) q.push('subject=' + encodeURIComponent(subject));
+    if (body) q.push('body=' + encodeURIComponent(body));
+    if (q.length) url += '?' + q.join('&');
+    window.location.href = url;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.email-open'), function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      openEmail(a.getAttribute('data-subject') || '', a.getAttribute('data-body') || '');
+    });
+  });
 
   // header: transparent over the hero, opaque past it
   var header = document.querySelector('header');
@@ -532,9 +548,7 @@
     var reply = document.getElementById('askReply');
     if (!val){ reply.textContent = 'Go on — even "my closet is chaos" counts.'; return; }
     reply.textContent = 'Love it already. Opening your email — Rad reads every note herself.';
-    var subject = encodeURIComponent('Styling note from raddolo.com');
-    var body = encodeURIComponent(val + '\n\n— sent from the raddolo.com homepage');
-    window.location.href = 'mailto:dolo.radmila@gmail.com?subject=' + subject + '&body=' + body;
+    openEmail('Styling note from raddolo.com', val + '\n\n— sent from the raddolo.com homepage');
   });
 })();
 </script>
