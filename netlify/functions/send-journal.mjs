@@ -48,10 +48,13 @@ export default async function handler() {
       "",
       "—Rad",
     ].join("\n");
+    // JOURNAL_EMAIL_MODE=send → emails go out automatically.
+    // Anything else (default) → created as a DRAFT in Buttondown for review.
+    const status = process.env.JOURNAL_EMAIL_MODE === "send" ? "about_to_send" : "draft";
     const res = await fetch(`${API}/emails`, {
       method: "POST",
       headers: auth,
-      body: JSON.stringify({ subject: item.title, body, status: "about_to_send" }),
+      body: JSON.stringify({ subject: item.title, body, status }),
     });
     console.log(`sent "${item.title}":`, res.status);
     break;
