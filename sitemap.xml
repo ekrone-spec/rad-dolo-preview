@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.raddolo.com/journal/welcome/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.raddolo.com/journal/keep-donate-maybe/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
