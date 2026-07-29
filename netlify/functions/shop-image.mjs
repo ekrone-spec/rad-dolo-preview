@@ -15,22 +15,33 @@ const ALLOWED_HOSTS = new Set(["shopmy.us", "www.shopmy.us"]);
 const CACHE = "public, max-age=86400, s-maxage=604800"; // browser 1d, CDN 7d
 const FALLBACK = "/shop-fallback.svg";
 
-async function streamImage(url) {
-  const res = await fetch(url, { redirect: "follow" });
-  if (!res.ok) return null;
-  const type = res.headers.get("content-type") || "";
-  if (!type.startsWith("image/")) return null;
-  return new Response(res.body, {
-    status: 200,
-    headers: { "Content-Type": type, "Cache-Control": CACHE, "X-Content-Type-Options": "nosniff" },
-  });
+async function streamImage(url, trace) {
+  try {
+    const res = await fetch(url, { redirect: "follow", headers: { "User-Agent": "Mozilla/5.0" } });
+    const type = res.headers.get("content-type") || "";
+    if (trace) trace.push(`${url.slice(0, 90)} -> ${res.status} ${type}`);
+    if (!res.ok) return null;
+    if (!type.startsWith("image/")) return null;
+    return new Response(res.body, {
+      status: 200,
+      headers: { "Content-Type": type, "Cache-Control": CACHE, "X-Content-Type-Options": "nosniff" },
+    });
+  } catch (e) {
+    if (trace) trace.push(`${url.slice(0, 90)} -> ERR ${e.message}`);
+    return null;
+  }
 }
 
 export default async function handler(req) {
+  const params = new URL(req.url).searchParams;
+  const debug = params.get("debug") === "1";
+  const trace = debug ? [] : null;
   const fallback = () =>
-    new Response(null, { status: 302, headers: { Location: FALLBACK, "Cache-Control": "public, max-age=3600" } });
+    debug
+      ? new Response(JSON.stringify(trace, null, 2), { status: 200, headers: { "Content-Type": "application/json" } })
+      : new Response(null, { status: 302, headers: { Location: FALLBACK, "Cache-Control": "public, max-age=3600" } });
 
-  const u = new URL(req.url).searchParams.get("u") || "";
+  const u = params.get("u") || "";
   let target;
   try { target = new URL(u); } catch { return fallback(); }
   if (target.protocol !== "https:" || !ALLOWED_HOSTS.has(target.hostname)) {
@@ -46,6 +57,7 @@ export default async function handler(req) {
       const api = await fetch(`https://api.shopmy.us/api/collections/${idMatch[1]}`, {
         headers: { "User-Agent": "Mozilla/5.0 (compatible; RadDoloSite/1.0)" },
       });
+      if (trace) trace.push("api " + api.status);
       if (api.ok) {
         const data = await api.json();
         const candidates = [];
@@ -55,8 +67,8 @@ export default async function handler(req) {
         }
         for (const img of candidates) {
           if (!img.startsWith("https://")) continue;
-          const out = await streamImage(img);
-          if (out) return out;
+          const out = await streamImage(img, trace);
+          if (out && !debug) return out;
         }
       }
     }
@@ -73,8 +85,8 @@ export default async function handler(req) {
       if (og) {
         const imgUrl = new URL(og[1], target.href);
         if (imgUrl.protocol === "https:") {
-          const out = await streamImage(imgUrl.href);
-          if (out) return out;
+          const out = await streamImage(imgUrl.href, trace);
+          if (out && !debug) return out;
         }
       }
     }
