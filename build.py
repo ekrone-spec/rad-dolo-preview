@@ -31,6 +31,8 @@ EXCLUDE = {
     # archives / working docs — not for production
     "hero-video.html", "experimental.html", "Snap.mp4", "YOUR ENERGY.mp4",
     "VIDEO-BRIEF.md", "blog-drafts.md", "testimonials.md",
+    # retired shop card photos (cards now use CMS links / springflats+springbags)
+    "shop-1.jpg", "shop-2.jpg",
     # generated fresh below
     "feed.xml", "sitemap.xml", "journal",
 }
