@@ -175,8 +175,17 @@
     transition:color .2s,transform .2s;
   }
   .ask button:hover{color:var(--accent);transform:translateX(4px)}
-  .ask-reply{font-style:italic;color:var(--accent);font-size:1rem;min-height:0}
-  .ask-reply:empty{display:none}
+  /* confirmation sits ON TOP of the field, legible, once sent */
+  .ask{position:relative}
+  .ask-reply{
+    position:absolute;inset:0;z-index:4;display:none;
+    align-items:center;justify-content:center;text-align:center;padding:0 1rem;
+    background:rgba(255,255,255,.97);
+    font-family:var(--display);font-style:italic;font-weight:500;
+    font-size:clamp(1.05rem,2.3vw,1.35rem);color:var(--ink);
+  }
+  .ask.sent .ask-reply{display:flex}
+  .ask.sent input,.ask.sent button{visibility:hidden}
   .facts{
     font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);
     white-space:nowrap;
@@ -185,14 +194,14 @@
   .facts a:hover{opacity:.55}
 
   /* rotating testimonials — small, right side on desktop; fade past the hero */
-  .testimonials{position:absolute;top:5.4rem;right:clamp(1.5rem,4vw,3rem);z-index:2;width:min(300px,46vw);text-align:right;pointer-events:none;transition:opacity .5s ease}
-  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;color:var(--ink);transition:opacity .5s ease}
+  .testimonials{position:absolute;top:5.4rem;right:clamp(1.5rem,4vw,3rem);z-index:2;width:auto;max-width:min(92vw,520px);text-align:right;pointer-events:none;transition:opacity .5s ease}
+  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;color:var(--ink);white-space:nowrap;transition:opacity .5s ease}
   .testimonial.fade{opacity:0}
   .hero.past .testimonials{opacity:0}
   @media (max-width:760px){
     /* left-justified under the logo on mobile */
-    .testimonials{top:clamp(4.3rem,13vw,5.4rem);right:auto;left:clamp(.9rem,4vw,1.4rem);width:min(280px,64vw);text-align:left}
-    .testimonial{font-size:clamp(.82rem,3.3vw,1rem)}
+    .testimonials{top:clamp(4.3rem,13vw,5.4rem);right:auto;left:clamp(.9rem,4vw,1.4rem);width:auto;max-width:calc(100vw - 1.8rem);text-align:left}
+    .testimonial{font-size:clamp(.74rem,3.2vw,.95rem)}
   }
   @media (max-width:640px){
     .ask{padding-left:1.1rem}
@@ -352,7 +361,7 @@
   .marquee{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
   .mq-track{display:flex;width:max-content;align-items:center;animation:mq 24s linear infinite}
   .marquee:hover .mq-track{animation-play-state:paused}
-  .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(1.8rem,5vw,4rem)}
+  .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(.9rem,2.4vw,1.9rem)}
   .mq-item img{height:clamp(30px,4vw,46px);width:auto;display:block;filter:grayscale(1);opacity:.72;transition:opacity .25s,filter .25s}
   .mq-item:hover img{filter:grayscale(0);opacity:1}
   @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -378,13 +387,13 @@
     <a class="txt" href="#process">Process</a>
     <a class="txt" href="#services">Services</a>
     <a class="txt" href="#faq">FAQ</a>
-    <a class="ltk txt" href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks<i class="ar" aria-hidden="true"></i></a>
+    <a class="ltk txt" href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks<i class="ar" aria-hidden="true"></i></a>
     <a class="cta book-open" href="#">Book a free call</a>
     <span class="icons">
-      <a href="https://www.instagram.com/raddydolo" rel="noopener" aria-label="Rad on Instagram">
+      <a href="https://www.instagram.com/raddydolo" target="_blank" rel="noopener noreferrer" aria-label="Rad on Instagram">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>
       </a>
-      <a href="https://www.tiktok.com/@raddydolo" rel="noopener" aria-label="Rad on TikTok">
+      <a href="https://www.tiktok.com/@raddydolo" target="_blank" rel="noopener noreferrer" aria-label="Rad on TikTok">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 3c.3 2.2 1.6 3.7 3.7 3.9v2.6c-1.3.1-2.5-.3-3.7-1v5.9c0 4-3.3 6.4-6.7 5.4-3-.9-4.2-4.5-2.4-7 .9-1.3 2.4-2 4-1.9v2.7c-.4-.1-.8-.1-1.2 0-1.1.3-1.8 1.3-1.5 2.4.3 1.3 1.8 1.9 2.9 1.1.7-.5.9-1.2.9-2V3h3z"/></svg>
       </a>
     </span>
@@ -399,11 +408,11 @@
     <p class="testimonial" id="testimonial"></p>
   </div>
   <div class="hero-ui">
-    <p class="ask-reply" id="askReply" aria-live="polite"></p>
     <form class="ask" id="askForm">
       <label class="sr-only" for="askInput">Tell Rad about your closet concerns</label>
       <input id="askInput" name="ask" type="text" autocomplete="off" placeholder="Tell me about your closet concerns…">
       <button type="submit" aria-label="Send your note to Rad">&rarr;</button>
+      <span class="ask-reply" id="askReply" aria-live="polite"></span>
     </form>
     <p class="facts">In Person In Minneapolis &nbsp;·&nbsp; Virtual Anywhere &nbsp;·&nbsp; <a class="book-open" href="#">First Call Is Free</a></p>
   </div>
@@ -417,14 +426,13 @@
       <p class="eyebrow">What I do</p>
       <h2>The <em>work.</em></h2>
       <div class="svc-list">
-        <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Pare it down to what you love and actually wear.</span></div>
-        <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Wardrobe revamp</span><span class="desc">A full reset, rebuilt around your real life.</span></div>
-        <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
-        <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
-        <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
-        <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
-        <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Family styling</span><span class="desc">Everyone pulled together, no one matchy.</span></div>
-        <div class="svc" tabindex="0"><span class="n">08</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
+        <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Streamline your wardrobe.</span></div>
+        <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
+        <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
+        <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
+        <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
+        <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Family styling</span><span class="desc">Everyone pulled together for a cohesive look.</span></div>
+        <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
       </div>
       <a class="cta-btn book-open" href="#">Book a free call<i class="ar" aria-hidden="true"></i></a>
     </div>
@@ -497,26 +505,26 @@
       <p class="eyebrow">How it works</p>
       <h2>Three steps. Zero <em>judgment.</em></h2>
       <div class="steps-vert">
-        <div class="step-item"><span class="n">01</span><h3>You dish, I listen</h3><p>You talk style, goals and what's actually in your closet. I tell you exactly how I can help.</p></div>
-        <div class="step-item"><span class="n">02</span><h3>I build your plan</h3><p>I map out a personalized plan to revamp your wardrobe — built around your life, not a trend cycle.</p></div>
+        <div class="step-item"><span class="n">01</span><h3>You dish, I listen</h3><p>You tell me what you're struggling with, and I tell you exactly how I can help.</p></div>
+        <div class="step-item"><span class="n">02</span><h3>I build your plan</h3><p>I map out a personalized plan to revamp your wardrobe, built around your life, not a trend cycle.</p></div>
         <div class="step-item"><span class="n">03</span><h3>We create the looks</h3><p>Together we build outfits that work for your body and your budget. Confidence included.</p></div>
       </div>
     </div>
     <div class="col-2">
       <div class="shop-head">
         <p>Wearing it, linking it</p>
-        <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop all my picks<i class="ar" aria-hidden="true"></i></a>
+        <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop all my picks<i class="ar" aria-hidden="true"></i></a>
       </div>
       <div class="shop-grid">
-        <a class="shop-card" href="https://shopmy.us/shop/collections/5713711" rel="noopener">
-          <span class="pic"><img src="shop-1.jpg" alt="Rad's sandal and slide picks" loading="lazy"></span>
-          <span class="cap"><span>Sandals &amp; slides</span><span class="arw" aria-hidden="true"></span></span>
+        <a class="shop-card" href="https://shopmy.us/shop/collections/4718894" target="_blank" rel="noopener noreferrer">
+          <span class="pic"><img src="shop-1.jpg" alt="Rad's spring flats picks" loading="lazy"></span>
+          <span class="cap"><span>Spring Flats</span><span class="arw" aria-hidden="true"></span></span>
         </a>
-        <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" rel="noopener">
+        <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" target="_blank" rel="noopener noreferrer">
           <span class="pic"><img src="shop-2.jpg" alt="Rad's dress edit" loading="lazy"></span>
           <span class="cap"><span>The dress edit</span><span class="arw" aria-hidden="true"></span></span>
         </a>
-        <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" rel="noopener">
+        <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" target="_blank" rel="noopener noreferrer">
           <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
           <span class="cap"><span>Summer favorites</span><span class="arw" aria-hidden="true"></span></span>
         </a>
@@ -529,10 +537,10 @@
     <div class="measure">
       <p class="eyebrow">Questions, answered</p>
       <h2>Before you <em>ask.</em></h2>
-      <details><summary>Where do you offer personal styling?</summary><p>In person across Minneapolis, St. Paul and the Twin Cities metro — and virtually anywhere in the world over video call.</p></details>
-      <details><summary>How does virtual styling work?</summary><p>You hop on a video call and walk me through your closet and your goals. I build a personalized plan — looks, shopping lists and outfit formulas — that works for your body and your budget, wherever you live.</p></details>
+      <details><summary>Where do you offer personal styling?</summary><p>In person across Minneapolis, St. Paul and the Twin Cities metro, and virtually anywhere in the world over video call.</p></details>
+      <details><summary>How does virtual styling work?</summary><p>You hop on a video call and walk me through your closet and your goals. I build a personalized plan of looks, shopping lists and outfit formulas that works for your body and your budget, wherever you live.</p></details>
       <details><summary>How do I start?</summary><p>With a free call. You dish about your style and goals; I tell you exactly how I can help. Then I build your plan and we start creating looks.</p></details>
-      <details><summary>Do I need a big budget?</summary><p>No. Every plan is built around your budget — and often starts with a closet edit of pieces you already own. Your disheveled closet is my happy place.</p></details>
+      <details><summary>Do I need a big budget?</summary><p>No. Every plan is built around your budget, and often starts with a closet edit of pieces you already own. Your disheveled closet is my happy place.</p></details>
       <details><summary>What services do you offer?</summary><p>Closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling, vacation styling and family styling.</p></details>
     </div>
   </section>
@@ -556,22 +564,22 @@
 <footer>
   <p class="eyebrow">The plain facts</p>
   <div class="footer-facts">
-    <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years working in fashion in Los Angeles, she brought her styling practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself — and a well-styled outfit is how it speaks first. Your disheveled closet is her happy place.</p>
+    <p class="lede">Rad Dolo is a <strong>personal stylist in Minneapolis, Minnesota</strong>. After several years working in fashion in Los Angeles, she brought her styling practice home to the Twin Cities. She works <strong>in person across Minneapolis and St. Paul</strong> and <strong>virtually with clients anywhere</strong>. Her philosophy: your energy introduces you before you introduce yourself, and a well styled outfit is how it speaks first. Your disheveled closet is her happy place.</p>
     <dl class="qf">
       <div><dt>Stylist</dt><dd>Radmila "Rad" Dolo</dd></div>
-      <div><dt>Based in</dt><dd>Minneapolis, MN — Twin Cities metro</dd></div>
-      <div><dt>Virtual</dt><dd>Yes — anywhere in the world</dd></div>
+      <div><dt>Based in</dt><dd>Minneapolis, MN. Twin Cities metro</dd></div>
+      <div><dt>Virtual</dt><dd>Yes, anywhere in the world</dd></div>
       <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call<i class="ar" aria-hidden="true"></i></a></dd></div>
       <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
-      <div><dt>Shop</dt><dd><a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a></dd></div>
+      <div><dt>Shop</dt><dd><a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a></dd></div>
     </dl>
   </div>
   <div class="footer-bottom">
-    <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" rel="noopener">Tree Crown Studio</a>.</p>
+    <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" target="_blank" rel="noopener noreferrer">Tree Crown Studio</a>.</p>
     <div class="social">
-      <a href="https://shopmy.us/shop/raddydolo" rel="noopener">Shop my picks</a>
-      <a href="https://www.instagram.com/raddydolo" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@raddydolo" rel="noopener">TikTok</a>
+      <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a>
+      <a href="https://www.instagram.com/raddydolo" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.tiktok.com/@raddydolo" target="_blank" rel="noopener noreferrer">TikTok</a>
       <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
     </div>
   </div>
@@ -655,32 +663,24 @@
 
   // rotating testimonials
   // Standout line from each real client testimonial (full versions in testimonials.md)
+  // short one-liners pulled from her real reviews (full text in testimonials.md)
   var quotes = [
-    '“I left feeling prepared, confident, comfortable and beautiful.”',
-    '“Everyone was commenting on my elevated outfits.”',
-    '“An effortless eye for fashion — and really fun to work with.”',
-    '“Surprisingly enjoyable, and definitely worth it.”',
-    '“Fashion-forward, and it still felt like me.”',
-    '“So much more enjoyable and painless than I imagined.”',
-    '“Eleven out of ten. Highly recommend.”',
-    '“She helped me see pieces I’d kept for years in a totally new light.”',
-    '“Walking into my organized closet every morning helped more than I imagined.”',
-    '“Worth every penny.”',
-    '“Truly the best experience — I’ll definitely do it again.”',
-    '“It felt like the retail therapy session I badly needed.”',
-    '“Now I wear everything in my closet, and shop less.”',
-    '“She pulled outfit after outfit from things I already own.”',
-    '“Her looks helped me stand out from the crowd.”',
-    '“I had a lot of clothes, but nothing to wear. Not anymore.”',
     '“Radmila is RAD.”',
-    '“A newfound sense of clarity and peace with my wardrobe.”',
-    '“She streamlined and simplified my mornings.”',
-    '“The best system for clearing out everything that wasn’t me.”',
-    '“Worth it for your closet, your style, and your sanity.”',
-    '“From overstuffed to minimalist — without compromising my style.”',
+    '“Worth every penny.”',
     '“One of my best gift ideas yet.”',
-    '“Fewer clothes, but so many more that I actually wear.”',
-    '“For the first time, I have a grasp on my closet and my style.”'
+    '“Everyone noticed my elevated outfits.”',
+    '“The retail therapy I badly needed.”',
+    '“She simplified my mornings.”',
+    '“Fewer clothes, so many more I wear.”',
+    '“Now I wear everything I own.”',
+    '“Fashion forward, and still felt like me.”',
+    '“Surprisingly enjoyable, and worth it.”',
+    '“Eleven out of ten. Highly recommend.”',
+    '“I left feeling confident and beautiful.”',
+    '“She showed my clothes in a new light.”',
+    '“Outfit after outfit from what I owned.”',
+    '“Finally, I understand my own style.”',
+    '“Worth it for your closet and sanity.”'
   ];
   var tEl = document.getElementById('testimonial');
   if (tEl){
@@ -731,13 +731,15 @@
     update();
   });
 
-  document.getElementById('askForm').addEventListener('submit', function(e){
+  var askForm = document.getElementById('askForm');
+  askForm.addEventListener('submit', function(e){
     e.preventDefault();
-    var val = document.getElementById('askInput').value.trim();
-    var reply = document.getElementById('askReply');
-    if (!val){ reply.textContent = 'Go on — even "my closet is chaos" counts.'; return; }
-    reply.textContent = 'Love it already. Opening your email — Rad reads every note herself.';
-    openEmail('Styling note from raddolo.com', val + '\n\n— sent from the raddolo.com homepage');
+    var input = document.getElementById('askInput');
+    var val = input.value.trim();
+    if (!val){ input.focus(); return; }
+    document.getElementById('askReply').textContent = 'Thank you, gorgeous. I’ll reach out soon!';
+    askForm.classList.add('sent');
+    openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage');
   });
 })();
 </script>
