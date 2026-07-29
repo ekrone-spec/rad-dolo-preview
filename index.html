@@ -61,10 +61,10 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Where does Rad Dolo offer personal styling?", "acceptedAnswer": { "@type": "Answer", "text": "In person across Minneapolis, St. Paul and the Twin Cities metro, and virtually anywhere in the world over video call." } },
-    { "@type": "Question", "name": "How does virtual styling work?", "acceptedAnswer": { "@type": "Answer", "text": "You hop on a video call, walk Rad through your closet and goals, and she builds a personalized plan — looks, shopping lists and outfit formulas — that works for your body and your budget, wherever you live." } },
-    { "@type": "Question", "name": "How do I start working with a personal stylist?", "acceptedAnswer": { "@type": "Answer", "text": "Start with a free call. You dish about your style and goals, Rad tells you exactly how she can help, then builds a personalized plan to revamp your wardrobe." } },
-    { "@type": "Question", "name": "Do I need a big budget to work with a stylist?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every plan is built around your body and your budget — often starting with a closet edit of pieces you already own." } },
-    { "@type": "Question", "name": "What kinds of styling does Rad offer?", "acceptedAnswer": { "@type": "Answer", "text": "Closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling, vacation styling and family styling — in person in Minneapolis or virtual anywhere." } }
+    { "@type": "Question", "name": "How does virtual shopping work?", "acceptedAnswer": { "@type": "Answer", "text": "Rad puts together complete head to toe looks that work for your body and your budget without you ever having to set foot in a store." } },
+    { "@type": "Question", "name": "How do I start working with a personal stylist?", "acceptedAnswer": { "@type": "Answer", "text": "Email or book a call with Rad and tell her what you're struggling with, and she will tell you exactly how she can help." } },
+    { "@type": "Question", "name": "Do I need a big budget to work with a stylist?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every plan is built around your body and your budget, often starting with a closet edit of pieces you already own." } },
+    { "@type": "Question", "name": "What kinds of styling does Rad offer?", "acceptedAnswer": { "@type": "Answer", "text": "Closet edits, wardrobe revamps, personal shopping, virtual shopping, event styling, photoshoot styling, vacation styling and family styling, in person in Minneapolis or virtual anywhere." } }
   ]
 }
 </script>
@@ -251,6 +251,7 @@
   @media (max-width:760px){.reel-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
   .reel-copy h2{margin-bottom:1.2rem}
   .reel-copy p{max-width:38ch;color:#444444;margin-bottom:1.7rem}
+  behold-widget{display:block;width:100%;margin-bottom:1.2rem}
   .reel-cta{font-family:var(--label);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.22rem}
   .reel-cta:hover{color:var(--muted);border-color:var(--muted)}
   .reel-frame{position:relative;width:min(300px,78vw);aspect-ratio:9/16;background:#141414;overflow:hidden;display:block;text-decoration:none}
@@ -361,7 +362,7 @@
   .marquee{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
   .mq-track{display:flex;width:max-content;align-items:center;animation:mq 24s linear infinite}
   .marquee:hover .mq-track{animation-play-state:paused}
-  .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(.9rem,2.4vw,1.9rem)}
+  .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(3rem,8.5vw,7rem)}
   .mq-item img{height:clamp(30px,4vw,46px);width:auto;display:block;filter:grayscale(1);opacity:.72;transition:opacity .25s,filter .25s}
   .mq-item:hover img{filter:grayscale(0);opacity:1}
   @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -438,12 +439,8 @@
     </div>
     <div class="col-1 reel-col">
       <p class="eyebrow">Latest reel</p>
-      <a class="reel-frame" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer" aria-label="Watch Rad's latest reel on Instagram">
-        <i style="background-image:url('reel-cover.jpg')"></i>
-        <span class="play"><b></b></span>
-        <span class="tag">@raddydolo · Latest reel</span>
-      </a>
-      <!-- Swap in a real reel: set the <i> background to reel-cover.jpg and point href at the specific reel (or wire the IG Graph API for a true auto-latest). -->
+      <!-- Behold pulls her latest Instagram posts automatically -->
+      <behold-widget feed-id="rMpkIGps8rwhMrKweip0"></behold-widget>
       <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer">Watch on Instagram<i class="ar" aria-hidden="true"></i></a>
     </div>
   </section>
@@ -517,12 +514,12 @@
       </div>
       <div class="shop-grid">
         <a class="shop-card" href="https://shopmy.us/shop/collections/4718894" target="_blank" rel="noopener noreferrer">
-          <span class="pic"><img src="shop-1.jpg" alt="Rad's spring flats picks" loading="lazy"></span>
+          <span class="pic"><img src="springflats.jpg" alt="Rad's spring flats picks" loading="lazy"></span>
           <span class="cap"><span>Spring Flats</span><span class="arw" aria-hidden="true"></span></span>
         </a>
-        <a class="shop-card" href="https://shopmy.us/shop/collections/5156352" target="_blank" rel="noopener noreferrer">
-          <span class="pic"><img src="shop-2.jpg" alt="Rad's dress edit" loading="lazy"></span>
-          <span class="cap"><span>The dress edit</span><span class="arw" aria-hidden="true"></span></span>
+        <a class="shop-card" href="https://shopmy.us/collections/4719047" target="_blank" rel="noopener noreferrer">
+          <span class="pic"><img src="springbags.jpg" alt="Rad's cute spring bag picks" loading="lazy"></span>
+          <span class="cap"><span>Cute Spring Bags</span><span class="arw" aria-hidden="true"></span></span>
         </a>
         <a class="shop-card" href="https://shopmy.us/shop/raddydolo?tab=popular" target="_blank" rel="noopener noreferrer">
           <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
@@ -538,10 +535,10 @@
       <p class="eyebrow">Questions, answered</p>
       <h2>Before you <em>ask.</em></h2>
       <details><summary>Where do you offer personal styling?</summary><p>In person across Minneapolis, St. Paul and the Twin Cities metro, and virtually anywhere in the world over video call.</p></details>
-      <details><summary>How does virtual styling work?</summary><p>You hop on a video call and walk me through your closet and your goals. I build a personalized plan of looks, shopping lists and outfit formulas that works for your body and your budget, wherever you live.</p></details>
-      <details><summary>How do I start?</summary><p>With a free call. You dish about your style and goals; I tell you exactly how I can help. Then I build your plan and we start creating looks.</p></details>
+      <details><summary>How does virtual shopping work?</summary><p>I put together complete head to toe looks that work for your body and your budget without ever having to set foot in a store.</p></details>
+      <details><summary>How do I start?</summary><p>Email or book a call with me and tell me what you're struggling with, and I will tell you exactly how I can help.</p></details>
       <details><summary>Do I need a big budget?</summary><p>No. Every plan is built around your budget, and often starts with a closet edit of pieces you already own. Your disheveled closet is my happy place.</p></details>
-      <details><summary>What services do you offer?</summary><p>Closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling, vacation styling and family styling.</p></details>
+      <details><summary>What services do you offer?</summary><p>Closet edits, wardrobe revamps, personal shopping, virtual shopping, event styling, photoshoot styling, vacation styling and family styling.</p></details>
     </div>
   </section>
 
@@ -551,10 +548,14 @@
     <div class="marquee">
       <div class="mq-track">
         <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer"><img src="kstp5.png" alt="KSTP 5 Eyewitness News" loading="lazy"></a>
+        <a class="mq-item" href="https://www.minnesotamonthly.com/lifestyle/style-shopping/style-101-ask-the-expert/" target="_blank" rel="noopener noreferrer"><img src="MinnesotaMonthly.png" alt="Minnesota Monthly" loading="lazy"></a>
         <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer"><img src="canvasrebel.jpeg" alt="CanvasRebel" loading="lazy"></a>
+        <a class="mq-item" href="https://www.kare11.com/video/news/local/kare11-saturday/how-to-audit-your-closet/89-803a30be-ada3-4f6f-b85b-bde12900b108" target="_blank" rel="noopener noreferrer"><img src="Kare11.png" alt="KARE 11" loading="lazy"></a>
         <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer"><img src="mspmag.png" alt="Mpls St Paul Magazine" loading="lazy"></a>
         <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="kstp5.png" alt="" loading="lazy"></a>
+        <a class="mq-item" href="https://www.minnesotamonthly.com/lifestyle/style-shopping/style-101-ask-the-expert/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="MinnesotaMonthly.png" alt="" loading="lazy"></a>
         <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="canvasrebel.jpeg" alt="" loading="lazy"></a>
+        <a class="mq-item" href="https://www.kare11.com/video/news/local/kare11-saturday/how-to-audit-your-closet/89-803a30be-ada3-4f6f-b85b-bde12900b108" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="Kare11.png" alt="" loading="lazy"></a>
         <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="mspmag.png" alt="" loading="lazy"></a>
       </div>
     </div>
@@ -742,6 +743,13 @@
     openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage');
   });
 })();
+</script>
+<script>
+  (() => {
+    if(window.__bhldScript)return;window.__bhldScript=true;
+    const d=document,s=d.createElement("script");s.type="module";
+    s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
+  })();
 </script>
 </body>
 </html>
