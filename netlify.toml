@@ -1,0 +1,36 @@
+# Rad Dolo — Netlify configuration
+# Static site: no build step, publish the repo root.
+
+[build]
+  publish = "."
+
+# ————— Security headers (TC Studio baseline) —————
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    # Allows: Google Fonts, the Behold Instagram widget (script + feed +
+    # Instagram CDN images/video). Everything else is same-origin.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://w.behold.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; media-src 'self' https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; connect-src 'self' https://feeds.behold.so https://w.behold.so; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+
+# Long cache for static assets (HTML stays default so updates land fast)
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
+  for = "/*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

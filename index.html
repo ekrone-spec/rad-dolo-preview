@@ -6,6 +6,7 @@
 <title>Rad Dolo — Personal Stylist in Minneapolis & Virtual Styling Anywhere</title>
 <meta name="description" content="Rad Dolo is a Minneapolis personal stylist offering closet edits, wardrobe revamps, event and photoshoot styling — in person across the Twin Cities and virtually anywhere. Book a free call.">
 <link rel="canonical" href="https://www.raddolo.com/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rad Dolo — Personal Stylist, Minneapolis & Virtual">
 <meta property="og:description" content="Your energy introduces you before you ever say a word. Personal styling in Minneapolis and virtually anywhere — closet edits, wardrobe revamps, event styling.">
@@ -195,7 +196,7 @@
 
   /* rotating testimonials — small, right side on desktop; fade past the hero */
   .testimonials{position:absolute;top:5.4rem;right:clamp(1.5rem,4vw,3rem);z-index:2;width:auto;max-width:min(92vw,520px);text-align:right;pointer-events:none;transition:opacity .5s ease}
-  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;color:var(--ink);white-space:nowrap;transition:opacity .5s ease}
+  .testimonial{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.35;height:1.35em;overflow:hidden;color:var(--ink);white-space:nowrap;text-overflow:ellipsis;max-width:100%;transition:opacity .45s ease}
   .testimonial.fade{opacity:0}
   .hero.past .testimonials{opacity:0}
   @media (max-width:760px){
@@ -226,6 +227,19 @@
   .shop-card .arw{transition:transform .2s}
   .shop-card:hover .arw{transform:translate(2px,-2px)}
 
+  /* newsletter signup (journal head) */
+  .nl{position:relative;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+  .nl-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .nl-label{font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  .nl input[type=email]{border:0;border-bottom:1.5px solid var(--ink);background:transparent;outline:0;font-family:var(--ui);font-size:.92rem;padding:.35rem 0;width:min(200px,52vw);border-radius:0}
+  .nl input[type=email]:focus{border-color:var(--muted)}
+  .nl input[type=email]::placeholder{color:#9A9A9A}
+  .nl button{border:0;background:none;color:var(--ink);font-size:1.15rem;cursor:pointer;padding:.3rem .4rem;min-width:44px;min-height:40px;transition:transform .2s}
+  .nl button:hover{transform:translateX(3px)}
+  .nl-done{font-family:var(--ui);font-style:italic;font-size:.9rem;color:var(--ink)}
+  .nl-done:empty{display:none}
+  .nl.sent input[type=email],.nl.sent button,.nl.sent .nl-label{display:none}
+
   /* ————— journal carousel ————— */
   .journal{padding:clamp(3.5rem,8vw,6.5rem) 0;border-top:1px solid var(--hair)}
   .journal-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;max-width:1050px;margin:0 auto 2rem;padding:0 clamp(1.2rem,4vw,3rem);flex-wrap:wrap}
@@ -251,7 +265,10 @@
   @media (max-width:760px){.reel-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
   .reel-copy h2{margin-bottom:1.2rem}
   .reel-copy p{max-width:38ch;color:#444444;margin-bottom:1.7rem}
-  behold-widget{display:block;width:100%;margin-bottom:1.2rem}
+  /* size the IG widget like the old reel frame; on desktop JS stretches it
+     to align with the services list (top of 01 to bottom of the last row) */
+  behold-widget{display:block;width:min(300px,78vw);min-height:min(533px,138vw);margin:0 auto 1.2rem;overflow:hidden}
+  @media (min-width:821px){behold-widget{margin-left:0}}
   .reel-cta{font-family:var(--label);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.22rem}
   .reel-cta:hover{color:var(--muted);border-color:var(--muted)}
   .reel-frame{position:relative;width:min(300px,78vw);aspect-ratio:9/16;background:#141414;overflow:hidden;display:block;text-decoration:none}
@@ -363,7 +380,7 @@
   .mq-track{display:flex;width:max-content;align-items:center;animation:mq 24s linear infinite}
   .marquee:hover .mq-track{animation-play-state:paused}
   .mq-item{display:flex;align-items:center;text-decoration:none;padding:0 clamp(3rem,8.5vw,7rem)}
-  .mq-item img{height:clamp(30px,4vw,46px);width:auto;display:block;filter:grayscale(1);opacity:.72;transition:opacity .25s,filter .25s}
+  .mq-item img{height:clamp(38px,4.8vw,58px);width:auto;display:block;filter:grayscale(1);opacity:.72;transition:opacity .25s,filter .25s}
   .mq-item:hover img{filter:grayscale(0);opacity:1}
   @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.mq-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:1rem}}
@@ -452,8 +469,18 @@
         <p class="eyebrow">The journal</p>
         <h2>Notes on getting <em>dressed.</em></h2>
       </div>
-      <!-- Newsletter: recommend Substack (free, doubles as the blog host). Replace with her real URL once created. -->
-      <a class="shop-head-link" href="https://raddydolo.substack.com" target="_blank" rel="noopener noreferrer" style="font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.2rem">Get them by email<i class="ar" aria-hidden="true"></i></a>
+      <!-- Newsletter signup — Netlify Form (submissions land in the Netlify
+           dashboard w/ email notifications; honeypot for spam). On the GitHub
+           preview it falls back to an email compose. -->
+      <form class="nl" id="nlForm" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p class="nl-hp" aria-hidden="true"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <span class="nl-label">Get them by email</span>
+        <label class="sr-only" for="nlEmail">Your email address</label>
+        <input id="nlEmail" type="email" name="email" required placeholder="you@email.com" autocomplete="email">
+        <button type="submit" aria-label="Sign up for the journal">&rarr;</button>
+        <span class="nl-done" id="nlDone" aria-live="polite"></span>
+      </form>
     </div>
     <!-- Feature photos: drop blog-1.jpg … blog-4.jpg into the folder to replace the gray placeholders. Post links point to real posts once the blog exists. -->
     <div class="carousel">
@@ -662,6 +689,30 @@
   window.addEventListener('resize', positionTestimonials);
   window.addEventListener('load', positionTestimonials);
 
+  // desktop: stretch the IG widget so its top aligns with the first service
+  // row and its bottom with the last (mobile keeps the natural size)
+  var beholdEl = document.querySelector('behold-widget');
+  var svcList = document.querySelector('.svc-list');
+  function sizeReel(){
+    if (!beholdEl || !svcList) return;
+    if (window.innerWidth <= 820){
+      beholdEl.style.marginTop = ''; beholdEl.style.height = ''; beholdEl.style.width = '';
+      return;
+    }
+    beholdEl.style.marginTop = '0px';
+    var lr = svcList.getBoundingClientRect();
+    var wr = beholdEl.getBoundingClientRect();
+    beholdEl.style.marginTop = Math.max(0, Math.round(lr.top - wr.top)) + 'px';
+    beholdEl.style.height = Math.round(lr.height) + 'px';
+    var col = beholdEl.parentElement;
+    beholdEl.style.width = Math.min(col.clientWidth, Math.round(lr.height * 9 / 16)) + 'px';
+  }
+  sizeReel();
+  window.addEventListener('resize', sizeReel);
+  window.addEventListener('load', sizeReel);
+  // the widget loads async; re-measure as its content arrives
+  [800, 2000, 4000].forEach(function(ms){ setTimeout(sizeReel, ms); });
+
   // rotating testimonials
   // Standout line from each real client testimonial (full versions in testimonials.md)
   // short one-liners pulled from her real reviews (full text in testimonials.md)
@@ -685,17 +736,26 @@
   ];
   var tEl = document.getElementById('testimonial');
   if (tEl){
-    var qi = 0;
-    tEl.innerHTML = quotes[0];
+    var qi = 0, swapping = false;
+    tEl.textContent = quotes[0];
     var reducedM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reducedM){
       setInterval(function(){
+        // skip while hidden — throttled background timers desync the fade
+        if (document.hidden || swapping) return;
+        swapping = true;
         tEl.classList.add('fade');
         setTimeout(function(){
           qi = (qi + 1) % quotes.length;
-          tEl.innerHTML = quotes[qi];
-          tEl.classList.remove('fade');
-        }, 500);
+          tEl.textContent = quotes[qi];
+          // force a frame at opacity 0 before fading back in
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              tEl.classList.remove('fade');
+              swapping = false;
+            });
+          });
+        }, 480);
       }, 4200);
     }
   }
@@ -731,6 +791,31 @@
     window.addEventListener('resize', update);
     update();
   });
+
+  // newsletter signup: AJAX to Netlify Forms in production; on the GitHub
+  // preview (no form backend) fall back to an email compose
+  var nlForm = document.getElementById('nlForm');
+  if (nlForm){
+    nlForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('nlEmail').value.trim();
+      if (!email) return;
+      function done(){
+        document.getElementById('nlDone').textContent = 'You’re on the list!';
+        nlForm.classList.add('sent');
+      }
+      if (/github\.io$/.test(location.hostname)){
+        openEmail('Subscribe me to the journal', 'Please add ' + email + ' to the journal list.');
+        done();
+        return;
+      }
+      var body = 'form-name=newsletter&email=' + encodeURIComponent(email) + '&bot-field=' +
+                 encodeURIComponent((nlForm.querySelector('[name="bot-field"]')||{}).value || '');
+      fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
+        .then(done)
+        .catch(function(){ openEmail('Subscribe me to the journal', 'Please add ' + email + ' to the journal list.'); done(); });
+    });
+  }
 
   var askForm = document.getElementById('askForm');
   askForm.addEventListener('submit', function(e){

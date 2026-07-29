@@ -1,0 +1,7 @@
+# Old Wix URLs → new home (301s preserve her search equity).
+# TODO: complete from the Wix sitemap crawl before launch.
+/blank            /#press        301
+/reviews          /#press        301
+
+# Canonical host: apex → www (matches the canonical tags)
+https://raddolo.com/*  https://www.raddolo.com/:splat  301!

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Rad Dolo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Proza+Libre:wght@400;500;600&family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FFFFFF;--ink:#141414;--muted:#6E6E6E;--hair:#E4E4E4;
+    --display:"Cormorant Garamond",Georgia,serif;
+    --ui:"Proza Libre","Helvetica Neue",Arial,sans-serif;
+    --label:"Montserrat","Helvetica Neue",Arial,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--ui);color:var(--ink);background:var(--paper);min-height:100svh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem clamp(1.2rem,4vw,3rem);border-bottom:1px solid var(--hair)}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(1.2rem,2.2vw,1.7rem);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;line-height:1}
+  .wordmark span{display:block;font-family:var(--label);font-weight:500;font-size:.54rem;letter-spacing:.3em;color:var(--muted);margin-top:.35rem}
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem clamp(1.2rem,4vw,3rem)}
+  .code{font-family:var(--label);font-size:.72rem;font-weight:600;letter-spacing:.3em;color:var(--muted);margin-bottom:1.2rem}
+  h1{font-family:var(--display);font-weight:600;font-size:clamp(2.2rem,6vw,4.2rem);line-height:1.02;text-transform:uppercase;max-width:16ch}
+  p{max-width:44ch;color:#444444;margin:1.4rem 0 2.2rem;font-size:1.05rem;line-height:1.6}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--label);font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);padding:.9rem 1.5rem;transition:background .2s,color .2s}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  footer{border-top:1px solid var(--hair);padding:1.6rem clamp(1.2rem,4vw,3rem);font-size:.78rem;color:var(--muted);text-align:center}
+  footer a{text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+<header>
+  <a class="wordmark" href="/">RAD DOLO<span>Personal Stylist</span></a>
+</header>
+<main>
+  <p class="code">404</p>
+  <h1>This look doesn't exist.</h1>
+  <p>The page you're after was donated in the last closet edit. Let's get you back to something that fits.</p>
+  <a class="btn" href="/">Back to the closet</a>
+</main>
+<footer>
+  &copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" target="_blank" rel="noopener noreferrer">Tree Crown Studio</a>.
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
