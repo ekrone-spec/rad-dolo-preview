@@ -115,15 +115,19 @@ def shop_img_src(item):
 # ---------- index.html ----------
 doc = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
 
+def post_img_ok(p):
+    return bool(p["image"]) and os.path.exists(os.path.join(ROOT, p["image"]))
+
 cards = []
 for p in posts:
+    pic = "<i style=\"background-image:url('%s')\"></i>" % html.escape(p["image"]) if post_img_ok(p) else "<i></i>"
     cards.append(
         '        <a class="post" href="journal/%s/">\n'
-        "          <span class=\"pic\"><i style=\"background-image:url('%s')\"></i></span>\n"
+        "          <span class=\"pic\">%s</span>\n"
         "          <p class=\"meta\">%s · %s min</p>\n"
         "          <h3>%s</h3>\n"
         "          <p>%s</p>\n"
-        "        </a>" % (p["slug"], html.escape(p["image"]), html.escape(p["category"]),
+        "        </a>" % (p["slug"], pic, html.escape(p["category"]),
                           p["minutes"], html.escape(p["title"]), html.escape(p["description"])))
 doc = replace_region(doc, "JOURNAL_CARDS", "\n".join(cards))
 
@@ -158,7 +162,12 @@ for i, p in enumerate(posts):
     more = "\n".join(
         '          <li><a href="../%s/">%s<i class="ar" aria-hidden="true"></i></a></li>'
         % (q["slug"], html.escape(q["title"])) for q in others)
-    page = (tpl.replace("{{TITLE_JSON}}", p["title"].replace('"', '\\"'))
+    page = tpl
+    if not post_img_ok(p):
+        # photo not added yet: gray feature block, real hero as the share image
+        page = page.replace("<i style=\"background-image:url('../../{{IMAGE_BASENAME}}')\"></i>", "<i></i>")
+        page = page.replace("{{IMAGE_BASENAME}}", "hero.jpg")
+    page = (page.replace("{{TITLE_JSON}}", p["title"].replace('"', '\\"'))
                .replace("{{TITLE_URL}}", urlenc(p["title"]))
                .replace("{{TITLE}}", html.escape(p["title"]))
                .replace("{{SLUG}}", p["slug"])
