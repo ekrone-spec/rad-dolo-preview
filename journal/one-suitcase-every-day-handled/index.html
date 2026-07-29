@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One suitcase, every day handled — Rad Dolo, Personal Stylist in Minneapolis</title>
+<title>One suitcase, every day handled | Rad Dolo, Personal Stylist in Minneapolis</title>
 <meta name="description" content="How a stylist packs: start with the calendar, pick three words, and build whole outfits before you zip the bag.">
 <link rel="canonical" href="https://www.raddolo.com/journal/one-suitcase-every-day-handled/">
 <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="One suitcase, every day handled — Rad Dolo">
+<meta property="og:title" content="One suitcase, every day handled | Rad Dolo">
 <meta property="og:description" content="How a stylist packs: start with the calendar, pick three words, and build whole outfits before you zip the bag.">
 <meta property="og:url" content="https://www.raddolo.com/journal/one-suitcase-every-day-handled/">
 <meta property="og:image" content="https://www.raddolo.com/blog-4.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="One suitcase, every day handled — Rad Dolo">
+<meta name="twitter:title" content="One suitcase, every day handled | Rad Dolo">
 <meta name="twitter:description" content="How a stylist packs: start with the calendar, pick three words, and build whole outfits before you zip the bag.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,24 +61,41 @@
     </div>
 
     <div class="wrap prose">
-<p class="lead">More than half my work is trips. London, Mexico, a safari, back-to-back business travel. The pattern is always the same.</p>
+<p class="lead">More than half my work is trips. London, Mexico, a safari, constant business travel. The pattern is always the same.</p>
 <p>People don't overpack because they have too many clothes. They overpack because they haven't decided anything yet.</p>
-<p>A suitcase is just a closet with a hard deadline. Every "just in case" item you throw in is a decision you're refusing to make, and you pay for it later — in weight, in wrinkles, in standing over an open bag in a hotel room with nothing to wear.</p>
+<p>A suitcase is just a closet with a hard deadline. Every "just in case" item you throw in is a decision you're refusing to make, and you pay for it later, in weight, in wrinkles, in standing over an open bag in a hotel room with nothing to wear.</p>
 <h2>How I pack a client</h2>
-<p><strong>Start with the calendar, not the clothes.</strong> Write out the actual days. Dinner Thursday. Walking all day Friday. One nice night. That list is your packing list — not the weather app, not Pinterest.</p>
+<p><strong>Start with the calendar, not the clothes.</strong> Write out the actual days. Dinner Thursday. Walking all day Friday. One nice night. That list is your packing list, not the weather app, not Pinterest.</p>
 <p><strong>Pick three or four words.</strong> With one client heading to London it was <em>effortless, crisp, layers</em>. Those words end arguments at the suitcase. A piece either sounds like the words or it doesn't come.</p>
 <p><strong>Everything must work with everything.</strong> If a top only goes with one bottom, it isn't earning its space. One palette, shoes that repeat, one thing that feels like an event.</p>
-<p><strong>Build the outfits before you zip the bag.</strong> Whole looks — shoes, jacket, jewelry — not a pile of components you'll assemble at 7am in a time zone you don't live in.</p>
+<p><strong>Build the outfits before you zip the bag.</strong> Whole looks, shoes, jacket, jewelry, not a pile of components you'll assemble at 7am in a time zone you don't live in.</p>
 <h2>The point isn't a smaller bag</h2>
 <p>It's that you get to be <em>present</em> on your trip instead of negotiating with your luggage. One client put it best: she was able to be present on her trip and not stress about what she was wearing. Another said it's simply one less thing to worry about.</p>
-<p>That's the whole product. Not outfits — attention. Pack so you can stop thinking about it.</p>
+<p>That's the whole product. Not outfits, attention. Pack so you can stop thinking about it.</p>
     </div>
 
     <div class="wrap">
+      <div class="post-share">
+        <span class="lbl">Share this note</span>
+        <a class="share-btn" href="https://twitter.com/intent/tweet?text=One%20suitcase%2C%20every%20day%20handled&url=https%3A//www.raddolo.com/journal/one-suitcase-every-day-handled/" target="_blank" rel="noopener noreferrer">Share on X<i class="ar" aria-hidden="true"></i></a>
+        <button class="share-btn share-ig" type="button" data-url="https://www.raddolo.com/journal/one-suitcase-every-day-handled/">Share to Instagram</button>
+        <span class="share-done" aria-live="polite"></span>
+      </div>
+
       <div class="post-cta">
         <p>Your disheveled closet is my happy place.</p>
         <a class="cta-btn book" href="#">Book a free call<i class="ar" aria-hidden="true"></i></a>
       </div>
+
+      <form class="nl" id="nlForm" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p class="nl-hp" aria-hidden="true"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <span class="nl-label">Get notes like this by email</span>
+        <label class="sr-only" for="nlEmail">Your email address</label>
+        <input id="nlEmail" type="email" name="email" required placeholder="you@email.com" autocomplete="email" maxlength="200">
+        <button type="submit" aria-label="Sign up for the journal">&rarr;</button>
+        <span class="nl-done" id="nlDone" aria-live="polite"></span>
+      </form>
 
       <div class="more">
         <p class="eyebrow">More from the journal</p>
@@ -114,6 +131,36 @@
   Array.prototype.forEach.call(document.querySelectorAll('.book'), function(el){
     el.addEventListener('click', function(e){ e.preventDefault(); openBook(); });
   });
+
+  // share buttons
+  var shareIg = document.querySelector('.share-ig');
+  if (shareIg){
+    shareIg.addEventListener('click', function(){
+      var u = shareIg.getAttribute('data-url');
+      var done = document.querySelector('.share-done');
+      if (navigator.share){ navigator.share({url:u}).catch(function(){}); return; }
+      (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject())
+        .then(function(){ done.textContent = 'Link copied. Paste it in your Story!'; })
+        .catch(function(){ done.textContent = u; });
+    });
+  }
+  // newsletter signup (Netlify Forms in production; email fallback on the preview)
+  var nlForm = document.getElementById('nlForm');
+  if (nlForm){
+    nlForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var em = document.getElementById('nlEmail').value.trim();
+      if (!em) return;
+      function ok(){ document.getElementById('nlDone').textContent = 'You\u2019re on the list!'; nlForm.classList.add('sent'); }
+      if (/github\.io$/.test(location.hostname)){
+        var EM = atob('ZG9sby5yYWRtaWxhQGdtYWlsLmNvbQ==');
+        location.href = 'mailto:' + EM + '?subject=' + encodeURIComponent('Subscribe me to the journal') + '&body=' + encodeURIComponent('Please add ' + em + ' to the journal list.');
+        ok(); return;
+      }
+      fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'form-name=newsletter&email=' + encodeURIComponent(em)}).then(ok).catch(ok);
+    });
+  }
 })();
 </script>
 </body>

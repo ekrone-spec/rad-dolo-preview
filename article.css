@@ -52,8 +52,29 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(2.1rem,5.2vw,3.6re
 .prose h2{font-family:var(--display);font-weight:600;font-size:clamp(1.4rem,3vw,1.9rem);text-transform:uppercase;line-height:1.1;margin:2.4rem 0 1rem}
 .lead{font-size:1.2rem !important;color:#333}
 
+/* share row */
+.post-share{margin:clamp(2.2rem,5vw,3.4rem) 0 0;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--hair);padding-top:1.4rem}
+.post-share .lbl{font-family:var(--label);font-size:.66rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.share-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;background:none;border:1.5px solid var(--ink);padding:.55rem .9rem;cursor:pointer;transition:background .2s,color .2s}
+.share-btn:hover{background:var(--ink);color:var(--paper)}
+.share-done{font-family:var(--ui);font-style:italic;font-size:.85rem;color:var(--muted)}
+.share-done:empty{display:none}
+
+/* newsletter signup */
+.nl{position:relative;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:1.6rem;border-top:1px solid var(--hair);padding-top:1.4rem}
+.nl-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.nl-label{font-family:var(--label);font-size:.66rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.nl input[type=email]{border:0;border-bottom:1.5px solid var(--ink);background:transparent;outline:0;font-family:var(--ui);font-size:.95rem;padding:.35rem 0;width:min(220px,56vw);border-radius:0}
+.nl input[type=email]:focus{border-color:var(--muted)}
+.nl input[type=email]::placeholder{color:#9A9A9A}
+.nl button{border:0;background:none;color:var(--ink);font-size:1.15rem;cursor:pointer;padding:.3rem .4rem;min-width:44px;min-height:40px;transition:transform .2s}
+.nl button:hover{transform:translateX(3px)}
+.nl-done{font-family:var(--ui);font-style:italic;font-size:.9rem;color:var(--ink)}
+.nl-done:empty{display:none}
+.nl.sent input[type=email],.nl.sent button,.nl.sent .nl-label{display:none}
+
 /* CTA */
-.post-cta{margin:clamp(3rem,7vw,5rem) 0 0;padding:clamp(2rem,4vw,2.8rem);border:1px solid var(--ink);text-align:center}
+.post-cta{margin:clamp(2rem,4vw,3rem) 0 0;padding:clamp(2rem,4vw,2.8rem);border:1px solid var(--ink);text-align:center}
 .post-cta p{font-family:var(--display);font-size:clamp(1.3rem,3vw,1.8rem);text-transform:uppercase;line-height:1.1;margin-bottom:1.4rem}
 .cta-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--label);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1.5px solid var(--ink);padding:.85rem 1.4rem;transition:background .2s,color .2s}
 .cta-btn:hover{background:var(--ink);color:var(--paper)}
