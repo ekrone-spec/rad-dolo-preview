@@ -1,7 +1,9 @@
-# Old Wix URLs → new home (301s preserve her search equity).
-# TODO: complete from the Wix sitemap crawl before launch.
+# Old Wix URLs → new equivalents (301s preserve her search equity).
+# Complete map from the Wix sitemap: /, /blank (Reviews), /blank-1 (Contact).
 /blank            /#press        301
+/blank-1          /#faq          301
 /reviews          /#press        301
+/contact          /#faq          301
 
 # Canonical host: apex → www (matches the canonical tags)
 https://raddolo.com/*  https://www.raddolo.com/:splat  301!
