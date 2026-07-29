@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "name": "KSTP 5 Eyewitness News",
+      "url": "https://kstp.com/tcl/spring-looks-for-the-office/",
+      "logo": "/kstp5.png"
+    },
+    {
+      "name": "Minnesota Monthly",
+      "url": "https://www.minnesotamonthly.com/lifestyle/style-shopping/style-101-ask-the-expert/",
+      "logo": "/MinnesotaMonthly.png"
+    },
+    {
+      "name": "CanvasRebel",
+      "url": "https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/",
+      "logo": "/canvasrebel.jpeg"
+    },
+    {
+      "name": "KARE 11",
+      "url": "https://www.kare11.com/video/news/local/kare11-saturday/how-to-audit-your-closet/89-803a30be-ada3-4f6f-b85b-bde12900b108",
+      "logo": "/Kare11.png"
+    },
+    {
+      "name": "Mpls St Paul Magazine",
+      "url": "https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/",
+      "logo": "/mspmag.png"
+    }
+  ]
+}

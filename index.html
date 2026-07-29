@@ -31,6 +31,12 @@
   "description": "Personal stylist offering closet edits, wardrobe revamps, personal shopping, event styling, photoshoot styling and vacation styling. In person across Minneapolis–St. Paul and virtually anywhere.",
   "priceRange": "$$",
   "address": { "@type": "PostalAddress", "addressLocality": "Minneapolis", "addressRegion": "MN", "addressCountry": "US" },
+  "hasMap": "https://maps.app.goo.gl/Pcst3UnSE3Bmyx3o7",
+  "sameAs": [
+    "https://maps.app.goo.gl/Pcst3UnSE3Bmyx3o7",
+    "https://www.instagram.com/raddydolo",
+    "https://www.tiktok.com/@raddydolo"
+  ],
   "areaServed": [
     { "@type": "City", "name": "Minneapolis" },
     { "@type": "City", "name": "St. Paul" },
@@ -487,6 +493,7 @@
     <!-- Feature photos: drop blog-1.jpg … blog-4.jpg into the folder to replace the gray placeholders. Post links point to real posts once the blog exists. -->
     <div class="carousel">
       <div class="carousel-track" id="journalTrack" tabindex="0" aria-label="Journal posts, scrollable">
+<!-- BUILD:JOURNAL_CARDS -->
         <a class="post" href="journal/welcome/">
           <span class="pic"><i style="background-image:url('blog-welcome.jpg')"></i></span>
           <p class="meta">The journal · 1 min</p>
@@ -523,6 +530,7 @@
           <h3>Worse than the dentist</h3>
           <p>You don't have to enjoy shopping. You just have to stop dreading your closet.</p>
         </a>
+<!-- /BUILD:JOURNAL_CARDS -->
       </div>
     </div>
     <div class="carousel-nav">
@@ -548,6 +556,7 @@
         <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop all my picks<i class="ar" aria-hidden="true"></i></a>
       </div>
       <div class="shop-grid">
+<!-- BUILD:SHOP_CARDS -->
         <a class="shop-card" href="https://shopmy.us/shop/collections/4718894" target="_blank" rel="noopener noreferrer">
           <span class="pic"><img src="springflats.jpg" alt="Rad's spring flats picks" loading="lazy"></span>
           <span class="cap"><span>Spring Flats</span><span class="arw" aria-hidden="true"></span></span>
@@ -560,6 +569,7 @@
           <span class="pic"><img src="shop-3.jpg" alt="Rad's most-loved summer picks" loading="lazy"></span>
           <span class="cap"><span>Summer favorites</span><span class="arw" aria-hidden="true"></span></span>
         </a>
+<!-- /BUILD:SHOP_CARDS -->
       </div>
     </div>
   </section>
@@ -582,6 +592,7 @@
     <p class="eyebrow">As featured in</p>
     <div class="marquee">
       <div class="mq-track">
+<!-- BUILD:MARQUEE -->
         <a class="mq-item" href="https://kstp.com/tcl/spring-looks-for-the-office/" target="_blank" rel="noopener noreferrer"><img src="kstp5.png" alt="KSTP 5 Eyewitness News" loading="lazy"></a>
         <a class="mq-item" href="https://www.minnesotamonthly.com/lifestyle/style-shopping/style-101-ask-the-expert/" target="_blank" rel="noopener noreferrer"><img src="MinnesotaMonthly.png" alt="Minnesota Monthly" loading="lazy"></a>
         <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer"><img src="canvasrebel.jpeg" alt="CanvasRebel" loading="lazy"></a>
@@ -592,6 +603,7 @@
         <a class="mq-item" href="https://canvasrebel.com/gift-guide-services-spotlight-with-radmila-dolokhanova-of-rad-styling/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="canvasrebel.jpeg" alt="" loading="lazy"></a>
         <a class="mq-item" href="https://www.kare11.com/video/news/local/kare11-saturday/how-to-audit-your-closet/89-803a30be-ada3-4f6f-b85b-bde12900b108" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="Kare11.png" alt="" loading="lazy"></a>
         <a class="mq-item" href="https://mspmag.com/shop-and-style/stylist-and-closet-consultant-radmila-dolokhanova/" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1"><img src="mspmag.png" alt="" loading="lazy"></a>
+<!-- /BUILD:MARQUEE -->
       </div>
     </div>
   </section>
@@ -608,6 +620,7 @@
       <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call<i class="ar" aria-hidden="true"></i></a></dd></div>
       <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
       <div><dt>Shop</dt><dd><a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a></dd></div>
+      <div><dt>Find me</dt><dd><a href="https://maps.app.goo.gl/Pcst3UnSE3Bmyx3o7" target="_blank" rel="noopener noreferrer">RAD styling on Google Maps</a></dd></div>
     </dl>
   </div>
   <div class="footer-bottom">
@@ -623,6 +636,7 @@
 </div><!-- /.curtain -->
 
 <script>
+if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) location.replace("/admin/" + location.hash);
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -648,6 +662,9 @@
   // (blocks reverse-tabnabbing) and no referrer URL leaks.
   var BOOK = atob('aHR0cHM6Ly9jYWxlbmRhci5hcHAuZ29vZ2xlLzRTYXlQZno3ZWE5NktYeUw5');
   function openBook(){
+    if (window.goatcounter && goatcounter.count){
+      goatcounter.count({path: 'book-call', title: 'Book a free call', event: true});
+    }
     var a = document.createElement('a');
     a.href = BOOK; a.target = '_blank'; a.rel = 'noopener noreferrer';
     document.body.appendChild(a); a.click(); a.remove();
@@ -739,6 +756,7 @@
   // Standout line from each real client testimonial (full versions in testimonials.md)
   // short one-liners pulled from her real reviews (full text in testimonials.md)
   var quotes = [
+// BUILD:QUOTES
     '“Radmila is RAD.”',
     '“Worth every penny.”',
     '“One of my best gift ideas yet.”',
@@ -755,6 +773,7 @@
     '“Outfit after outfit from what I owned.”',
     '“Finally, I understand my own style.”',
     '“Worth it for your closet and sanity.”'
+  // /BUILD:QUOTES
   ];
   var tEl = document.getElementById('testimonial');
   if (tEl){
@@ -858,5 +877,6 @@
     s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
   })();
 </script>
+<script data-goatcounter="https://raddolo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -123,6 +123,9 @@
   // booking link assembled at runtime; opened with noopener/noreferrer
   var BOOK = atob('aHR0cHM6Ly9jYWxlbmRhci5hcHAuZ29vZ2xlLzRTYXlQZno3ZWE5NktYeUw5');
   function openBook(){
+    if (window.goatcounter && goatcounter.count){
+      goatcounter.count({path: 'book-call', title: 'Book a free call', event: true});
+    }
     var a = document.createElement('a');
     a.href = BOOK; a.target = '_blank'; a.rel = 'noopener noreferrer';
     document.body.appendChild(a); a.click(); a.remove();
@@ -162,5 +165,6 @@
   }
 })();
 </script>
+<script data-goatcounter="https://raddolo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

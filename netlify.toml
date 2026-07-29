@@ -2,7 +2,8 @@
 # Static site: no build step, publish the repo root.
 
 [build]
-  publish = "."
+  command = "python3 -m pip install --user markdown && python3 build.py"
+  publish = "dist"
 
 # ————— Security headers (TC Studio baseline) —————
 [[headers]]
@@ -15,8 +16,15 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     # Allows: Google Fonts, the Behold Instagram widget (script + feed +
     # Instagram CDN images/video). Everything else is same-origin.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://w.behold.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; media-src 'self' https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; connect-src 'self' https://feeds.behold.so https://w.behold.so; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://w.behold.so https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net https://raddolo.goatcounter.com; media-src 'self' https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; connect-src 'self' https://feeds.behold.so https://w.behold.so https://raddolo.goatcounter.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
     Cross-Origin-Opener-Policy = "same-origin"
+
+# The CMS admin needs its own scripts (Decap from unpkg, Netlify Identity)
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://identity.netlify.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://identity.netlify.com https://*.netlify.app https://api.netlify.com; frame-ancestors 'none'; base-uri 'self'"
+    X-Robots-Tag = "noindex"
 
 # Long cache for static assets (HTML stays default so updates land fast)
 [[headers]]

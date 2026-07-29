@@ -1,0 +1,74 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: "CMS: add {{collection}} — {{slug}}"
+    update: "CMS: update {{collection}} — {{slug}}"
+    delete: "CMS: delete {{collection}} — {{slug}}"
+    uploadMedia: "CMS: upload {{path}}"
+
+site_url: https://www.raddolo.com
+logo_url: /favicon.svg
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: journal
+    label: "Journal"
+    label_singular: "Journal note"
+    folder: "content/journal"
+    create: true
+    slug: "{{slug}}"
+    description: "Notes on the journal. Publishing rebuilds the site and adds the note to the email feed. House rule: no hyphens or dashes in the text."
+    fields:
+      - { name: title, label: Title, widget: string, hint: "No hyphens or dashes." }
+      - { name: date, label: "Publish date", widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - name: category
+        label: Category
+        widget: select
+        options: ["Closet edit", "Wardrobe", "Shopping", "Packing", "Men's styling", "Events", "The journal"]
+        default: "Wardrobe"
+      - { name: minutes, label: "Minutes to read", widget: number, default: 2, value_type: int, min: 1, max: 15 }
+      - { name: description, label: "One line teaser", widget: text, hint: "Shows on the homepage card, in search results and in the email." }
+      - { name: image, label: "Feature photo", widget: image, required: false, hint: "Landscape works best (3:2)." }
+      - { name: body, label: "The note", widget: markdown, hint: "The first paragraph becomes the large opening line." }
+
+  - name: pages
+    label: "Homepage sections"
+    files:
+      - name: shop
+        label: "Shop my picks"
+        file: "content/shop.json"
+        description: "The three shop cards. Paste a ShopMy link and the photo is pulled automatically; only add a photo if you want to override it."
+        fields:
+          - name: items
+            label: "Shop features"
+            widget: list
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: url, label: "ShopMy link", widget: string }
+              - { name: image, label: "Photo (optional override)", widget: image, required: false }
+
+      - name: publications
+        label: "As featured in"
+        file: "content/publications.json"
+        description: "Publication logos in the scrolling row. Add a logo and the article link."
+        fields:
+          - name: items
+            label: "Publications"
+            widget: list
+            fields:
+              - { name: name, label: "Publication name", widget: string }
+              - { name: url, label: "Article link", widget: string }
+              - { name: logo, label: "Logo", widget: image, hint: "Crop tight to the logo. Transparent PNG looks best." }
+
+      - name: quotes
+        label: "Client quotes"
+        file: "content/quotes.json"
+        description: "The rotating one line quotes at the top of the homepage. Keep them short."
+        fields:
+          - name: items
+            label: "Quotes"
+            widget: list
+            field: { name: quote, label: Quote, widget: string }
