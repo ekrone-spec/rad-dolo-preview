@@ -38,7 +38,9 @@ export default async function handler(req) {
   }
 
   try {
-    // 1) collection links → public API
+    // 1) collection links → public API. The collection "cover" often lives
+    //    on a private S3 bucket, so prefer it but fall back to the first
+    //    pin's image, which is served from ShopMy's public CDN.
     const idMatch = target.pathname.match(/\/collections\/(\d+)/);
     if (idMatch) {
       const api = await fetch(`https://api.shopmy.us/api/collections/${idMatch[1]}`, {
@@ -46,8 +48,13 @@ export default async function handler(req) {
       });
       if (api.ok) {
         const data = await api.json();
-        const img = data && typeof data.image === "string" ? data.image : "";
-        if (img.startsWith("https://")) {
+        const candidates = [];
+        if (typeof data.image === "string") candidates.push(data.image);
+        for (const pin of (data.pins || []).slice(0, 4)) {
+          if (pin && typeof pin.image === "string") candidates.push(pin.image);
+        }
+        for (const img of candidates) {
+          if (!img.startsWith("https://")) continue;
           const out = await streamImage(img);
           if (out) return out;
         }
