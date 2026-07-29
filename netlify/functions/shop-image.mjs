@@ -15,13 +15,22 @@ const ALLOWED_HOSTS = new Set(["shopmy.us", "www.shopmy.us"]);
 const CACHE = "public, max-age=86400, s-maxage=604800"; // browser 1d, CDN 7d
 const FALLBACK = "/shop-fallback.svg";
 
+const BARE_TYPES = { jpeg: "image/jpeg", jpg: "image/jpeg", png: "image/png",
+                     gif: "image/gif", webp: "image/webp", avif: "image/avif" };
+
 async function streamImage(url, trace) {
   try {
     const res = await fetch(url, { redirect: "follow", headers: { "User-Agent": "Mozilla/5.0" } });
-    const type = res.headers.get("content-type") || "";
-    if (trace) trace.push(`${url.slice(0, 90)} -> ${res.status} ${type}`);
-    if (!res.ok) return null;
-    if (!type.startsWith("image/")) return null;
+    const raw = (res.headers.get("content-type") || "").toLowerCase().split(";")[0].trim();
+    // ShopMy's CDN sends bare "jpeg" instead of "image/jpeg" — normalize,
+    // and as a last resort infer from the file extension.
+    let type = raw.startsWith("image/") ? raw : (BARE_TYPES[raw] || "");
+    if (!type) {
+      const ext = (url.split("?")[0].match(/\.(jpe?g|png|gif|webp|avif)$/i) || [])[1];
+      if (ext) type = BARE_TYPES[ext.toLowerCase()] || "";
+    }
+    if (trace) trace.push(`${url.slice(0, 90)} -> ${res.status} ${raw} => ${type || "REJECT"}`);
+    if (!res.ok || !type) return null;
     return new Response(res.body, {
       status: 200,
       headers: { "Content-Type": type, "Cache-Control": CACHE, "X-Content-Type-Options": "nosniff" },
