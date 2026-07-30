@@ -33,6 +33,8 @@ EXCLUDE = {
     "VIDEO-BRIEF.md", "blog-drafts.md", "testimonials.md",
     # retired shop card photos (cards now use CMS links / springflats+springbags)
     "shop-1.jpg", "shop-2.jpg",
+    # heavy photo originals (web versions are blog-*.jpg)
+    "WelcomeToRadsJournal.png", "whygettingdressedfeelsexhausting.png", "KEEPDONATEMAYBE.JPG",
     # generated fresh below
     "feed.xml", "sitemap.xml", "journal",
 }
