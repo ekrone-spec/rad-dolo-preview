@@ -5,6 +5,5 @@
 /reviews          /#press        301
 /contact          /#faq          301
 
-# TEMPORARILY DISABLED while Netlify's cert for www is stuck — serving on apex.
-# Re-enable (and set www back as primary) once the cert covers www:
-# https://raddolo.com/*  https://www.raddolo.com/:splat  301!
+# Canonical host: apex → www (matches the canonical tags)
+https://raddolo.com/*  https://www.raddolo.com/:splat  301!
