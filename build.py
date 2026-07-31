@@ -35,6 +35,7 @@ EXCLUDE = {
     "shop-1.jpg", "shop-2.jpg",
     # heavy photo originals (web versions are blog-*.jpg)
     "WelcomeToRadsJournal.png", "whygettingdressedfeelsexhausting.png", "KEEPDONATEMAYBE.JPG",
+    "ShopYourClosetFirst.jpeg", "OneSuitcaseEveryDayHandled.jpeg", "WorseThanTheDentist.HEIC",
     # generated fresh below
     "feed.xml", "sitemap.xml", "journal",
 }
