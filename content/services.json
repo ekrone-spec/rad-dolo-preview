@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "name": "Closet edits", "desc": "Streamline your wardrobe.", "page": "closet-edits" },
+    { "name": "Personal shopping", "desc": "I find the pieces; you skip the guesswork.", "page": "personal-shopping" },
+    { "name": "Wedding styling", "desc": "Every look the weekend asks for.", "page": "wedding-styling" },
+    { "name": "Event styling", "desc": "Walk into the big night knowing you nailed it.", "page": "" },
+    { "name": "Photoshoot styling", "desc": "Looks that read on camera, head to toe.", "page": "" },
+    { "name": "Vacation styling", "desc": "One suitcase, every day handled.", "page": "" },
+    { "name": "Family styling", "desc": "Everyone pulled together for a cohesive look.", "page": "" },
+    { "name": "Virtual styling", "desc": "The same eye, anywhere in the world.", "page": "virtual-styling" }
+  ]
+}

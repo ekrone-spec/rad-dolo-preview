@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy | Rad Dolo, Personal Stylist in Minneapolis</title>
+<meta name="description" content="What Rad Dolo collects when you use this site, why, and how to have it removed. Short version: analytics without cookies, and your email only if you hand it over.">
+<link rel="canonical" href="https://www.raddolo.com/privacy/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy | Rad Dolo">
+<meta property="og:description" content="What this site collects, why, and how to have it removed.">
+<meta property="og:url" content="https://www.raddolo.com/privacy/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../article.css">
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="../">RAD DOLO<span>Personal Stylist</span></a>
+  <nav>
+    <a class="hide" href="../#services">Services</a>
+    <a class="hide" href="../#journal">Journal</a>
+    <a class="hide" href="../#faq">FAQ</a>
+    <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a>
+    <a class="book" href="#">Book a free call</a>
+  </nav>
+</header>
+
+<main>
+  <article>
+    <div class="wrap post-head">
+      <a class="back" href="../"><i class="ar back" aria-hidden="true"></i>Home</a>
+      <p class="post-meta">Last updated August 2026</p>
+      <h1>Privacy</h1>
+      <p class="svc-lead">The short version: this site does not track you across the internet, does not use advertising cookies, and does not sell anything about you to anyone.</p>
+    </div>
+
+    <div class="wrap prose">
+      <h2>What gets collected</h2>
+
+      <p><strong>Visit statistics.</strong> This site uses GoatCounter, a privacy focused analytics tool, to count page views. It does not use cookies, does not fingerprint your device and does not collect anything that identifies you personally. It records the page you visited, roughly where in the world the visit came from, and which site referred you, all in aggregate. There is no way for me to tell who you are from it.</p>
+
+      <p><strong>Your email address, only if you give it.</strong> If you sign up for the journal, your email address is stored so the journal can be sent to you. If you email me or book a call, I have whatever you chose to put in that message. That is it. I do not buy email lists and I do not sell, rent or share yours.</p>
+
+      <p><strong>Server logs.</strong> This site is hosted by Netlify, who keep standard technical logs including IP addresses for security and to keep the site online. That is normal infrastructure and is not something I look at.</p>
+
+      <h2>What is not collected</h2>
+
+      <p>No advertising cookies. No tracking pixels. No social media trackers. No profile of you built up over time. Nothing is sold or shared for marketing purposes, ever.</p>
+
+      <h2>Third parties on this site</h2>
+
+      <p>A few things load from elsewhere, and each one sees only that you loaded it:</p>
+
+      <ul>
+        <li><strong>Behold</strong> displays my latest Instagram posts.</li>
+        <li><strong>Google Fonts</strong> serves the typefaces.</li>
+        <li><strong>Google Calendar</strong> handles booking, if you click to book a call. Anything you enter there is covered by Google's own privacy policy.</li>
+        <li><strong>ShopMy</strong> hosts my shopping picks. If you buy something through those links I may earn a commission, at no extra cost to you.</li>
+        <li><strong>Buttondown</strong> sends the journal emails to subscribers.</li>
+      </ul>
+
+      <h2>Your choices</h2>
+
+      <p>Every journal email has an unsubscribe link, and using it removes you immediately. If you would like me to delete your email address or anything else you have sent me, just ask and I will do it. You do not need a reason and I will not try to talk you out of it.</p>
+
+      <h2>Children</h2>
+
+      <p>This site is not directed at children under 13, and I do not knowingly collect anything from them.</p>
+
+      <h2>Changes</h2>
+
+      <p>If this policy changes in any meaningful way, the date at the top of this page changes with it.</p>
+
+      <h2>Getting in touch</h2>
+
+      <p>Questions about any of this, or a request to remove something, can go straight to me.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="post-cta">
+        <p>Ask me anything.</p>
+        <a class="cta-btn email-open" data-subject="Privacy question" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" target="_blank" rel="noopener noreferrer">Tree Crown Studio</a>.</p>
+  <div class="social">
+    <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a>
+    <a href="https://www.instagram.com/raddydolo" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.tiktok.com/@raddydolo" target="_blank" rel="noopener noreferrer">TikTok</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var BOOK = atob('aHR0cHM6Ly9jYWxlbmRhci5hcHAuZ29vZ2xlLzRTYXlQZno3ZWE5NktYeUw5');
+  var EM = atob('ZG9sby5yYWRtaWxhQGdtYWlsLmNvbQ==');
+  Array.prototype.forEach.call(document.querySelectorAll('.book'), function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      if (window.goatcounter && goatcounter.count){
+        goatcounter.count({path: 'book-call', title: 'Book a free call', event: true});
+      }
+      var a = document.createElement('a');
+      a.href = BOOK; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.email-open'), function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      location.href = 'mailto:' + EM + '?subject=' + encodeURIComponent(el.getAttribute('data-subject') || 'Hello Rad');
+    });
+  });
+})();
+</script>
+<script data-goatcounter="https://raddolo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

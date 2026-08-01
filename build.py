@@ -80,6 +80,58 @@ posts = load_posts()
 shop = json.load(open(os.path.join(ROOT, "content", "shop.json"), encoding="utf-8"))["items"]
 pubs = json.load(open(os.path.join(ROOT, "content", "publications.json"), encoding="utf-8"))["items"]
 quotes = json.load(open(os.path.join(ROOT, "content", "quotes.json"), encoding="utf-8"))["items"]
+svc_list = json.load(open(os.path.join(ROOT, "content", "services.json"), encoding="utf-8"))["items"]
+
+def load_services():
+    """Service detail pages: content/services/<slug>.md, same frontmatter style
+    as the journal. A '## Common questions' section with '### ' headings is
+    turned into FAQ structured data as well as visible prose."""
+    out, cdir = [], os.path.join(ROOT, "content", "services")
+    if not os.path.isdir(cdir):
+        return out
+    for fn in sorted(os.listdir(cdir)):
+        if not fn.endswith(".md"):
+            continue
+        raw = open(os.path.join(cdir, fn), encoding="utf-8").read()
+        m = re.match(r"---\n([\s\S]*?)\n---\n?([\s\S]*)", raw)
+        if not m:
+            continue
+        fm, body = m.groups()
+        meta = {}
+        for line in fm.splitlines():
+            if ":" in line:
+                k, v = line.split(":", 1)
+                meta[k.strip()] = v.strip().strip('"')
+        out.append({
+            "slug": fn[:-3],
+            "title": meta.get("title", "Untitled"),
+            "order": int(meta.get("order", "99") or 99),
+            "seo_title": meta.get("seo_title", meta.get("title", "")),
+            "description": meta.get("description", ""),
+            "lead": meta.get("lead", ""),
+            "image": (meta.get("image", "") or "").lstrip("/"),
+            "body_md": body.strip(),
+        })
+    out.sort(key=lambda x: x["order"])
+    return out
+
+services = load_services()
+
+def faq_schema(body_md):
+    """Pull '### Question' + following paragraph pairs out of the questions
+    section and emit FAQPage JSON-LD. Returns '' when there are none."""
+    sec = re.split(r"^## .*questions.*$", body_md, flags=re.I | re.M)
+    if len(sec) < 2:
+        return ""
+    pairs = re.findall(r"^### (.+?)\n+([^\n#][^\n]*(?:\n(?!#)[^\n]+)*)", sec[-1], flags=re.M)
+    if not pairs:
+        return ""
+    qs = ",\n".join(
+        '    { "@type": "Question", "name": %s, "acceptedAnswer": { "@type": "Answer", "text": %s } }'
+        % (json.dumps(q.strip()), json.dumps(re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", a).strip()))
+        for q, a in pairs)
+    return ('<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n'
+            '  "@type": "FAQPage",\n  "mainEntity": [\n%s\n  ]\n}\n</script>' % qs)
 
 # ---------- dist skeleton ----------
 if os.path.exists(DIST):
@@ -157,6 +209,26 @@ def mq(items, hidden=False):
     return "\n".join(out)
 doc = replace_region(doc, "MARQUEE", mq(pubs) + "\n" + mq(pubs, hidden=True))
 
+svc_rows = []
+for i, it in enumerate(svc_list, 1):
+    n = "%02d" % i
+    page = (it.get("page") or "").strip()
+    if page:
+        svc_rows.append(
+            '        <a class="svc" href="services/%s/">'
+            '<span class="n">%s</span>'
+            '<span class="name">%s<i class="ar" aria-hidden="true"></i></span>'
+            '<span class="desc">%s</span></a>'
+            % (page, n, html.escape(it["name"]), html.escape(it["desc"])))
+    else:
+        svc_rows.append(
+            '        <div class="svc" tabindex="0">'
+            '<span class="n">%s</span>'
+            '<span class="name">%s</span>'
+            '<span class="desc">%s</span></div>'
+            % (n, html.escape(it["name"]), html.escape(it["desc"])))
+doc = replace_region(doc, "SERVICES", "\n".join(svc_rows))
+
 doc = js_region(doc, "QUOTES", ",\n".join("    '%s'" % q.replace("'", "\\'") for q in quotes))
 open(os.path.join(DIST, "index.html"), "w", encoding="utf-8").write(doc)
 
@@ -183,6 +255,27 @@ for i, p in enumerate(posts):
                .replace("{{PROSE}}", prose_html(p))
                .replace("{{MORE_ITEMS}}", more))
     d = os.path.join(DIST, "journal", p["slug"])
+    os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(page)
+
+# ---------- service pages ----------
+stpl = open(os.path.join(ROOT, "templates", "service.html"), encoding="utf-8").read()
+for sv in services:
+    others = "\n".join(
+        '          <li><a href="../%s/">%s<i class="ar" aria-hidden="true"></i></a></li>'
+        % (o["slug"], html.escape(o["title"])) for o in services if o["slug"] != sv["slug"])
+    img = sv["image"] if (sv["image"] and os.path.exists(os.path.join(ROOT, sv["image"]))) else "hero.jpg"
+    page = (stpl.replace("{{FAQ_SCHEMA}}", faq_schema(sv["body_md"]))
+                .replace("{{TITLE_JSON}}", sv["title"].replace('"', '\\"'))
+                .replace("{{SEO_TITLE}}", html.escape(sv["seo_title"]))
+                .replace("{{TITLE}}", html.escape(sv["title"]))
+                .replace("{{SLUG}}", sv["slug"])
+                .replace("{{DESCRIPTION}}", html.escape(sv["description"]))
+                .replace("{{LEAD}}", html.escape(sv["lead"]))
+                .replace("{{IMAGE_BASENAME}}", img)
+                .replace("{{PROSE}}", markdown.markdown(sv["body_md"]))
+                .replace("{{OTHER_ITEMS}}", others))
+    d = os.path.join(DIST, "services", sv["slug"])
     os.makedirs(d, exist_ok=True)
     open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(page)
 
@@ -215,7 +308,10 @@ open(os.path.join(DIST, "feed.xml"), "w", encoding="utf-8").write(
 # ---------- sitemap.xml ----------
 urls = ["  <url>\n    <loc>%s/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>" % SITE]
 urls += ["  <url>\n    <loc>%s/journal/%s/</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.8</priority>\n  </url>" % (SITE, p["slug"]) for p in posts]
+urls += ["  <url>\n    <loc>%s/services/%s/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>" % (SITE, sv["slug"]) for sv in services]
+urls += ["  <url>\n    <loc>%s/privacy/</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.2</priority>\n  </url>" % SITE]
 open(os.path.join(DIST, "sitemap.xml"), "w", encoding="utf-8").write(
 '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n' % "\n".join(urls))
 
-print("build ok: %d posts, %d shop, %d publications, %d quotes" % (len(posts), len(shop), len(pubs), len(quotes)))
+print("build ok: %d posts, %d service pages, %d shop, %d publications, %d quotes"
+      % (len(posts), len(services), len(shop), len(pubs), len(quotes)))

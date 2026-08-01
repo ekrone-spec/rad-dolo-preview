@@ -34,9 +34,38 @@ collections:
       - { name: image, label: "Feature photo", widget: image, required: false, hint: "Landscape works best (3:2)." }
       - { name: body, label: "The note", widget: markdown, hint: "The first paragraph becomes the large opening line." }
 
+  - name: services
+    label: "Service pages"
+    label_singular: "Service page"
+    folder: "content/services"
+    create: true
+    slug: "{{slug}}"
+    description: "The detail pages behind the service list on the homepage. The file name becomes the web address, so raddolo.com/services/closet-edits/. House rule: no hyphens or dashes in the text."
+    fields:
+      - { name: title, label: "Service name", widget: string, hint: "Shows as the page heading. Keep it short." }
+      - { name: order, label: "Order", widget: number, default: 1, value_type: int, min: 1, max: 20, hint: "Controls the order these appear in the 'also from the work' list." }
+      - { name: seo_title, label: "Search engine title", widget: string, hint: "What Google shows as the blue link. Include Minneapolis where it fits naturally." }
+      - { name: description, label: "Search engine description", widget: text, hint: "The grey text under the Google link. Two sentences, written for a person deciding whether to click." }
+      - { name: lead, label: "Opening line", widget: text, hint: "The large line under the heading. One or two sentences." }
+      - { name: image, label: "Feature photo", widget: image, required: false, hint: "Landscape works best (3:2)." }
+      - { name: body, label: "The page", widget: markdown, hint: "Use Heading 2 for section titles. To get a questions section, add a Heading 2 called 'Common questions' and put each question in a Heading 3 with the answer underneath. Those questions are what Google and AI assistants quote." }
+
   - name: pages
     label: "Homepage sections"
     files:
+      - name: services_list
+        label: "Service list (homepage)"
+        file: "content/services.json"
+        description: "The numbered list of services on the homepage. Leave the page field empty for a service that has no detail page yet."
+        fields:
+          - name: items
+            label: "Services"
+            widget: list
+            fields:
+              - { name: name, label: "Service name", widget: string }
+              - { name: desc, label: "One line description", widget: string }
+              - { name: page, label: "Detail page address", widget: string, required: false, hint: "Must match a service page file name exactly, for example closet-edits. Leave empty for no link." }
+
       - name: shop
         label: "Shop my picks"
         file: "content/shop.json"

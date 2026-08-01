@@ -323,6 +323,9 @@
   .svc .n{font-family:var(--label);font-size:.7rem;letter-spacing:.18em;color:var(--muted)}
   .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em}
   .svc .desc{font-size:.9rem;color:#6A6A6A;text-align:right;max-width:34ch;opacity:.5;transition:opacity .3s ease}
+  a.svc{text-decoration:none;color:inherit}
+  .svc .name .ar{opacity:.3;transition:opacity .3s ease;font-size:.5em;vertical-align:.35em}
+  a.svc:hover .name .ar,a.svc:focus-visible .name .ar{opacity:1}
   .svc:hover,.svc:focus-within{padding-left:.7rem}
   .svc:hover .desc,.svc:focus-within .desc{opacity:1}
   @media (max-width:700px){
@@ -432,13 +435,8 @@
       <p class="eyebrow">What I do</p>
       <h2>The <em>work.</em></h2>
       <div class="svc-list">
-        <div class="svc" tabindex="0"><span class="n">01</span><span class="name">Closet edits</span><span class="desc">Streamline your wardrobe.</span></div>
-        <div class="svc" tabindex="0"><span class="n">02</span><span class="name">Personal shopping</span><span class="desc">I find the pieces; you skip the guesswork.</span></div>
-        <div class="svc" tabindex="0"><span class="n">03</span><span class="name">Event styling</span><span class="desc">Walk into the big night knowing you nailed it.</span></div>
-        <div class="svc" tabindex="0"><span class="n">04</span><span class="name">Photoshoot styling</span><span class="desc">Looks that read on camera, head to toe.</span></div>
-        <div class="svc" tabindex="0"><span class="n">05</span><span class="name">Vacation styling</span><span class="desc">One suitcase, every day handled.</span></div>
-        <div class="svc" tabindex="0"><span class="n">06</span><span class="name">Family styling</span><span class="desc">Everyone pulled together for a cohesive look.</span></div>
-        <div class="svc" tabindex="0"><span class="n">07</span><span class="name">Virtual styling</span><span class="desc">The same eye, anywhere in the world.</span></div>
+<!-- BUILD:SERVICES -->
+<!-- /BUILD:SERVICES -->
       </div>
       <a class="cta-btn book-open" href="#">Book a free call<i class="ar" aria-hidden="true"></i></a>
     </div>
@@ -605,7 +603,7 @@
     </dl>
   </div>
   <div class="footer-bottom">
-    <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" target="_blank" rel="noopener noreferrer">Tree Crown Studio</a>.</p>
+    <p class="credit">&copy; <span id="year"></span> Rad Dolo. Site by <a href="https://tcstudio.io" target="_blank" rel="noopener noreferrer">Tree Crown Studio</a>. <a href="privacy/">Privacy</a>.</p>
     <div class="social">
       <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a>
       <a href="https://www.instagram.com/raddydolo" target="_blank" rel="noopener noreferrer">Instagram</a>
