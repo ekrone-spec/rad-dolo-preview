@@ -1,5 +1,8 @@
 # Rad Dolo — master listing copy
 
+**Status: bios approved by Erik on behalf of Rad (Aug 1 2026). Hours confirmed.
+Venmo confirmed. Bridal starting price is a placeholder pending Rad's nod.**
+
 Everything below gets pasted into every directory **exactly as written**.
 Identical details across listings is most of what local ranking is made of, so
 resist improving the wording on individual sites. If something needs to change,
@@ -19,9 +22,11 @@ Phone:              [Google Voice number, pending]
 Address:            not published (service area business)
 City / region:      Minneapolis, MN 55401
 Service area:       Minneapolis and Saint Paul metro area, plus virtual worldwide
-Hours:              9:00 AM to 5:00 PM, seven days a week      ← CONFIRM WITH RAD
+Hours:              9:00 AM to 5:00 PM, seven days a week
+                    (add "flexible hours available by appointment" wherever
+                     a site has a free text field for it)
 Founded:            2011 (15 years of styling)
-Payment:            Venmo
+Payment:            Venmo, @Radmila-Dolokhanova
 Language:           English
 Price range:        $$
 Instagram:          https://www.instagram.com/raddydolo
@@ -125,5 +130,12 @@ For Instagram, LinkedIn's about section, and anywhere the voice should be hers.
 - If a site demands a street address, choose "hide address / service area
   business" wherever that option exists. Only if it is truly required should we
   ask Rad how she wants to handle it.
-- If a site asks for starting prices, do not invent one. Ask Rad first.
+- Pricing: leave it off everywhere it is optional, since Rad prices per client.
+  The Knot and WeddingWire both require a figure before they will publish, so
+  those two use **"Bridal packages start at $500"** and nothing more specific.
+  This is a placeholder chosen to sit mid market for the Twin Cities: high
+  enough not to attract people shopping on price alone, low enough not to scare
+  off a bridesmaid party. Rad should confirm it, and it can be edited on both
+  sites at any time without resubmitting the listing.
+- No other site gets a price. If one demands it, ask before inventing one.
 - Upload at least 5 photos on every listing that allows them, headshot first.
