@@ -2,7 +2,7 @@
 title: "Closet edits"
 order: "1"
 seo_title: "Closet Edits in Minneapolis | Wardrobe Editing with Rad Dolo"
-description: "A closet edit with Minneapolis personal stylist Rad Dolo. We go through everything you own, keep what works for the person you are now, and build real outfits from what stays."
+description: "A closet edit with Minneapolis stylist Rad Dolo. We go through everything you own, keep what works for who you are now, and build outfits from what stays."
 lead: "Most people own more than they think and wear less than they want to. A closet edit fixes that before you spend a dollar."
 image: "/blog-1.jpg"
 ---

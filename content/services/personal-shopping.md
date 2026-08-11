@@ -2,7 +2,7 @@
 title: "Personal shopping"
 order: "2"
 seo_title: "Personal Shopper in Minneapolis | Rad Dolo Personal Styling"
-description: "Personal shopping with Minneapolis stylist Rad Dolo. I find the pieces, in stores or online, that fit your body, your budget and the life you actually lead. You skip the guesswork."
+description: "Personal shopping with Minneapolis stylist Rad Dolo. I find the pieces, in store or online, that fit your body, your budget and your real life."
 lead: "Shopping is not the fun part for most people. It is four hours, three stores and a bag of things you will return. Let me do it instead."
 image: "/blog-4.jpg"
 ---

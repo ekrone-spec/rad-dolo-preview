@@ -1,8 +1,8 @@
 ---
 title: "Virtual styling"
 order: "4"
-seo_title: "Virtual Personal Stylist | Online Styling Anywhere with Rad Dolo"
-description: "Virtual styling and online personal shopping with stylist Rad Dolo. Complete head to toe looks for your body and your budget, without ever setting foot in a store. Anywhere in the world."
+seo_title: "Virtual Personal Stylist Anywhere | Rad Dolo"
+description: "Virtual styling and online personal shopping with Rad Dolo. Complete head to toe looks for your body and your budget, from anywhere in the world."
 lead: "The same eye, over video, anywhere in the world. It works better than people expect."
 image: "/blog-2.jpg"
 ---

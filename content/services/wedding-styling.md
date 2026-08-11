@@ -2,7 +2,7 @@
 title: "Wedding styling"
 order: "3"
 seo_title: "Wedding and Bridal Stylist in Minneapolis | Rad Dolo"
-description: "Bridal and wedding party styling in Minneapolis with stylist Rad Dolo. Brides, wedding parties, mothers of the bride and groom, guests, and every look the weekend asks for."
+description: "Bridal and wedding party styling in Minneapolis with Rad Dolo. Brides, wedding parties, mothers, guests, and every look the weekend asks for."
 lead: "The dress is handled. It is everything around the dress that tends to fall apart."
 image: "/hero.jpg"
 ---
