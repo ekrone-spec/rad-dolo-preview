@@ -191,3 +191,17 @@ Not because they're bad instincts, but because they backfire:
 Everything else is on us. Realistically: your Google map listing can start
 moving within a few weeks, and search rankings build over three to six months.
 The reviews are what accelerate all of it.
+
+---
+
+## One rule for the "Latest reel" on your website
+
+The reel on your homepage pulls automatically from Instagram, but Instagram
+only hands over reels whose music it hasn't flagged as copyrighted. Business
+accounts are licensed for Instagram's royalty free library only, and the app
+still suggests trending commercial songs that get flagged afterward. When that
+happens the reel plays fine on Instagram but never reaches the website.
+
+So: if you want a reel to show on raddolo.com, use original audio or a track
+from the "royalty free" section of the music picker. Anything with a commercial
+song will be skipped and the site keeps showing the last eligible reel.
