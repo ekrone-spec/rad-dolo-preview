@@ -26,7 +26,7 @@ DIST = os.path.join(ROOT, "dist")
 SITE = "https://www.raddolo.com"
 
 EXCLUDE = {
-    "dist", ".git", ".gitignore", "content", "templates", "netlify", "build.py", "qa",
+    "dist", ".git", ".gitignore", "content", "templates", "netlify", "build.py", "qa", "scripts",
     "netlify.toml", "package.json",
     # archives / working docs — not for production
     "hero-video.html", "experimental.html", "Snap.mp4", "YOUR ENERGY.mp4",
