@@ -118,7 +118,7 @@ check("shop cards", home.count('class="shop-card"') == EXPECT["shop"])
 check("press marquee", home.count('class="mq-item"') == EXPECT["marquee"])
 check("rotating quotes", len(re.findall(r"^    '", home, re.M)) == EXPECT["quotes"])
 check("service links", home.count('class="svc" href="services/') == EXPECT["services"])
-for token in ["behold-widget", "gc.zgo.at", "maps.app.goo.gl", "curtain",
+for token in ["reel-media", "gc.zgo.at", "maps.app.goo.gl", "curtain",
               'name="newsletter"', 'href="privacy/"', "BUILT:SERVICES"]:
     check("homepage retains " + token, token in home)
 check("feed items", open(os.path.join(DIST, "feed.xml"), encoding="utf-8").read().count("<item>") == EXPECT["posts"])

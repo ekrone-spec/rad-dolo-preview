@@ -30,7 +30,7 @@ EXCLUDE = {
     "netlify.toml", "package.json",
     # archives / working docs — not for production
     "hero-video.html", "experimental.html", "Snap.mp4", "YOUR ENERGY.mp4",
-    "VIDEO-BRIEF.md", "blog-drafts.md", "testimonials.md", "RAD-SETUP.md", "LISTING-COPY.md",
+    "VIDEO-BRIEF.md", "blog-drafts.md", "testimonials.md", "RAD-SETUP.md", "LISTING-COPY.md", "INSTAGRAM-SETUP.md",
     # retired shop card photos (cards now use CMS links / springflats+springbags)
     "shop-1.jpg", "shop-2.jpg",
     # heavy photo originals (web versions are blog-*.jpg)
@@ -81,6 +81,7 @@ shop = json.load(open(os.path.join(ROOT, "content", "shop.json"), encoding="utf-
 pubs = json.load(open(os.path.join(ROOT, "content", "publications.json"), encoding="utf-8"))["items"]
 quotes = json.load(open(os.path.join(ROOT, "content", "quotes.json"), encoding="utf-8"))["items"]
 svc_list = json.load(open(os.path.join(ROOT, "content", "services.json"), encoding="utf-8"))["items"]
+reel = json.load(open(os.path.join(ROOT, "content", "reel.json"), encoding="utf-8"))
 
 def load_services():
     """Service detail pages: content/services/<slug>.md, same frontmatter style
@@ -228,6 +229,9 @@ for i, it in enumerate(svc_list, 1):
             '<span class="desc">%s</span></div>'
             % (n, html.escape(it["name"]), html.escape(it["desc"])))
 doc = replace_region(doc, "SERVICES", "\n".join(svc_rows))
+
+reel_permalink = (reel.get("permalink") or "").strip()
+doc = replace_region(doc, "REEL", '<div class="reel-media" data-override="%s"></div>' % html.escape(reel_permalink, quote=True))
 
 doc = js_region(doc, "QUOTES", ",\n".join("    '%s'" % q.replace("'", "\\'") for q in quotes))
 open(os.path.join(DIST, "index.html"), "w", encoding="utf-8").write(doc)

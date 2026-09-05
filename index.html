@@ -442,8 +442,9 @@
     </div>
     <div class="col-1 reel-col">
       <p class="eyebrow">Latest reel</p>
-      <!-- Behold pulls her latest Instagram posts automatically -->
-      <div class="reel-clip"><behold-widget feed-id="rMpkIGps8rwhMrKweip0"></behold-widget></div>
+      <!-- Prefers Instagram's own embed of a permalink (CMS override, else
+           the latest-reel function); falls back to the Behold widget. -->
+      <div class="reel-clip"><!-- BUILD:REEL --><!-- /BUILD:REEL --></div>
       <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer">Watch on Instagram<i class="ar" aria-hidden="true"></i></a>
     </div>
   </section>
@@ -693,32 +694,34 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
   window.addEventListener('resize', positionTestimonials);
   window.addEventListener('load', positionTestimonials);
 
-  // desktop: scale the IG widget inside its clip frame so its top aligns
-  // with the first service row and its bottom with the last. We measure the
-  // widget's natural aspect ratio, then widen it until it's tall enough and
-  // crop the horizontal overflow (mobile keeps the natural size).
-  var beholdEl = document.querySelector('behold-widget');
+  // desktop: scale whatever is inside .reel-media (the Behold widget, or the
+  // iframe Instagram's embed.js swaps in for the blockquote) inside its clip
+  // frame so its top aligns with the first service row and its bottom with
+  // the last. We measure the natural aspect ratio, then widen until it's
+  // tall enough and crop the horizontal overflow (mobile keeps natural size).
   var reelClip = document.querySelector('.reel-clip');
+  var reelMedia = document.querySelector('.reel-media');
   var svcList = document.querySelector('.svc-list');
   function sizeReel(){
-    if (!beholdEl || !svcList || !reelClip) return;
+    var mediaEl = reelMedia && reelMedia.firstElementChild;
+    if (!mediaEl || !svcList || !reelClip) return;
     if (window.innerWidth <= 820){
       reelClip.style.marginTop = ''; reelClip.style.height = '';
-      beholdEl.style.width = ''; beholdEl.style.marginLeft = '';
+      mediaEl.style.width = ''; mediaEl.style.marginLeft = '';
       return;
     }
     // natural measurement pass
     reelClip.style.height = '';
-    beholdEl.style.width = reelClip.clientWidth + 'px';
-    beholdEl.style.marginLeft = '0px';
-    var natW = beholdEl.offsetWidth, natH = beholdEl.offsetHeight;
+    mediaEl.style.width = reelClip.clientWidth + 'px';
+    mediaEl.style.marginLeft = '0px';
+    var natW = mediaEl.offsetWidth, natH = mediaEl.offsetHeight;
     if (natW < 40 || natH < 40) return; // feed not rendered yet; retry later
     var ratio = natH / natW;
     var targetH = Math.round(svcList.getBoundingClientRect().height);
     var neededW = Math.ceil(targetH / ratio);
     var clipW = reelClip.clientWidth;
-    beholdEl.style.width = neededW + 'px';
-    beholdEl.style.marginLeft = Math.min(0, Math.round((clipW - neededW) / 2)) + 'px';
+    mediaEl.style.width = neededW + 'px';
+    mediaEl.style.marginLeft = Math.min(0, Math.round((clipW - neededW) / 2)) + 'px';
     reelClip.style.height = targetH + 'px';
     // align tops
     reelClip.style.marginTop = '0px';
@@ -728,8 +731,47 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
   sizeReel();
   window.addEventListener('resize', sizeReel);
   window.addEventListener('load', sizeReel);
-  // the widget loads async; re-measure as its content arrives
+  // the widget/embed loads async; re-measure as its content arrives
   [800, 1600, 3000, 5000, 8000].forEach(function(ms){ setTimeout(sizeReel, ms); });
+  if (reelMedia && window.MutationObserver){
+    new MutationObserver(function(){ sizeReel(); }).observe(reelMedia, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'height'] });
+    if (window.ResizeObserver){ new ResizeObserver(function(){ sizeReel(); }).observe(reelMedia); }
+  }
+
+  // Latest reel: prefer Instagram's own embed of a permalink (CMS override
+  // via data-override, else the newest reel from the latest-reel function).
+  // If neither yields a permalink, fall back to the Behold widget so music-
+  // flagged reels (which never reach Behold) can still be pinned manually.
+  (function(){
+    if (!reelMedia) return;
+    function loadBehold(){
+      var w = document.createElement('behold-widget');
+      w.setAttribute('feed-id', 'rMpkIGps8rwhMrKweip0');
+      reelMedia.appendChild(w);
+      if (window.__bhldScript) return;
+      window.__bhldScript = true;
+      var d = document, s = d.createElement('script');
+      s.type = 'module'; s.src = 'https://w.behold.so/widget.js';
+      setTimeout(function(){ d.head.append(s); }, 0);
+    }
+    function loadInstagram(permalink){
+      var bq = document.createElement('blockquote');
+      bq.className = 'instagram-media';
+      bq.setAttribute('data-instgrm-permalink', permalink);
+      bq.setAttribute('data-instgrm-version', '14');
+      bq.style.margin = '0';
+      reelMedia.appendChild(bq);
+      if (window.instgrm){ window.instgrm.Embeds.process(); return; }
+      var d = document, s = d.createElement('script');
+      s.async = true; s.src = 'https://www.instagram.com/embed.js';
+      d.head.append(s);
+    }
+    var override = (reelMedia.getAttribute('data-override') || '').trim();
+    if (override){ loadInstagram(override); return; }
+    fetch('/.netlify/functions/latest-reel').then(function(r){ return r.json(); }).then(function(json){
+      if (json && json.permalink){ loadInstagram(json.permalink); } else { loadBehold(); }
+    }).catch(function(){ loadBehold(); });
+  })();
 
   // rotating testimonials
   // Standout line from each real client testimonial (full versions in testimonials.md)
@@ -840,13 +882,6 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage');
   });
 })();
-</script>
-<script>
-  (() => {
-    if(window.__bhldScript)return;window.__bhldScript=true;
-    const d=document,s=d.createElement("script");s.type="module";
-    s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
-  })();
 </script>
 <script data-goatcounter="https://raddolo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

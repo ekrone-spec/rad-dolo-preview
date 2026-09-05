@@ -101,3 +101,9 @@ collections:
             label: "Quotes"
             widget: list
             field: { name: quote, label: Quote, widget: string }
+
+      - name: reel
+        label: "Latest reel (override)"
+        file: "content/reel.json"
+        fields:
+          - { name: permalink, label: "Reel link", widget: string, required: false, hint: "Paste an Instagram reel link to pin it on the homepage. Leave empty and the newest reel is found automatically." }
