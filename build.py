@@ -310,10 +310,29 @@ open(os.path.join(DIST, "feed.xml"), "w", encoding="utf-8").write(
 """ % (SITE, SITE, items))
 
 # ---------- sitemap.xml ----------
-urls = ["  <url>\n    <loc>%s/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>" % SITE]
-urls += ["  <url>\n    <loc>%s/journal/%s/</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.8</priority>\n  </url>" % (SITE, p["slug"]) for p in posts]
-urls += ["  <url>\n    <loc>%s/services/%s/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>" % (SITE, sv["slug"]) for sv in services]
-urls += ["  <url>\n    <loc>%s/privacy/</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.2</priority>\n  </url>" % SITE]
+def lastmod(path, fallback=None):
+    """Last commit date of a source file (YYYY-MM-DD); falls back to the given
+    date or today when git history is unavailable (shallow CI clones)."""
+    try:
+        import subprocess
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", path],
+                             capture_output=True, text=True, cwd=ROOT).stdout.strip()
+        if out:
+            return out
+    except Exception:
+        pass
+    return fallback or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+def url_entry(loc, mod, freq, prio):
+    return ("  <url>\n    <loc>%s</loc>\n    <lastmod>%s</lastmod>\n    <changefreq>%s</changefreq>\n"
+            "    <priority>%s</priority>\n  </url>" % (loc, mod, freq, prio))
+
+urls = [url_entry(SITE + "/", lastmod("index.html"), "monthly", "1.0")]
+urls += [url_entry("%s/journal/%s/" % (SITE, p["slug"]),
+                   lastmod(os.path.join("content", "journal", p["slug"] + ".md"), p["date"]), "yearly", "0.8") for p in posts]
+urls += [url_entry("%s/services/%s/" % (SITE, sv["slug"]),
+                   lastmod(os.path.join("content", "services", sv["slug"] + ".md")), "monthly", "0.9") for sv in services]
+urls += [url_entry(SITE + "/privacy/", lastmod(os.path.join("privacy", "index.html")), "yearly", "0.2")]
 open(os.path.join(DIST, "sitemap.xml"), "w", encoding="utf-8").write(
 '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n' % "\n".join(urls))
 
