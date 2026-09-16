@@ -286,6 +286,7 @@
   /* the IG widget; on desktop JS scales it inside .reel-clip so its top
      aligns with the first service row and its bottom with the last */
   .reel-clip{width:100%;overflow:hidden;margin-bottom:1.2rem}
+  .reel-media{min-height:320px}
   behold-widget{display:block;width:min(300px,78vw);margin:0 auto}
   @media (min-width:821px){behold-widget{margin-left:0}}
   .reel-cta{font-family:var(--label);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.22rem}
@@ -761,6 +762,14 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
       bq.setAttribute('data-instgrm-version', '14');
       bq.style.margin = '0';
       reelMedia.appendChild(bq);
+      // watchdog: if Instagram has not rendered a sized iframe within 12s
+      // (blocked embed, slow network), swap to the Behold widget instead
+      setTimeout(function(){
+        var f = reelMedia.querySelector('iframe');
+        if (f && f.offsetHeight > 50) return;
+        reelMedia.innerHTML = '';
+        loadBehold();
+      }, 12000);
       if (window.instgrm){ window.instgrm.Embeds.process(); return; }
       var d = document, s = d.createElement('script');
       s.async = true; s.src = 'https://www.instagram.com/embed.js';
