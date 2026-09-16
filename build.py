@@ -231,7 +231,7 @@ for i, it in enumerate(svc_list, 1):
 doc = replace_region(doc, "SERVICES", "\n".join(svc_rows))
 
 reel_permalink = (reel.get("permalink") or "").strip()
-doc = replace_region(doc, "REEL", '<div class="reel-media" data-override="%s"></div>' % html.escape(reel_permalink, quote=True))
+if "<!-- BUILD:REEL -->" in doc: doc = replace_region(doc, "REEL", '<div class="reel-media" data-override="%s"></div>' % html.escape(reel_permalink, quote=True))
 
 doc = js_region(doc, "QUOTES", ",\n".join("    '%s'" % q.replace("'", "\\'") for q in quotes))
 open(os.path.join(DIST, "index.html"), "w", encoding="utf-8").write(doc)

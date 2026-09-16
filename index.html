@@ -285,8 +285,7 @@
   .carousel-nav button:disabled:hover{background:none;color:var(--ink)}
   /* the IG widget; on desktop JS scales it inside .reel-clip so its top
      aligns with the first service row and its bottom with the last */
-  .reel-clip{width:100%;overflow:hidden;margin-bottom:1.2rem;opacity:0;transition:opacity .35s ease,height .4s ease} /* no margin-top transition: sizeReel measures position right after resetting it */
-  .reel-clip.ready{opacity:1}
+  .reel-clip{width:100%;overflow:hidden;margin-bottom:1.2rem}
   behold-widget{display:block;width:min(300px,78vw);margin:0 auto}
   @media (min-width:821px){behold-widget{margin-left:0}}
   .reel-cta{font-family:var(--label);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.22rem}
@@ -322,7 +321,7 @@
   .svc-list{max-width:1050px;margin:2.4rem auto 0;border-top:1px solid var(--ink)}
   .svc{display:grid;grid-template-columns:2.6rem 1fr auto;gap:clamp(.8rem,2vw,1.8rem);align-items:center;padding:clamp(1rem,2.2vw,1.5rem) 0;border-bottom:1px solid var(--hair);transition:padding .3s ease}
   .svc .n{font-family:var(--label);font-size:.7rem;letter-spacing:.18em;color:var(--muted)}
-  .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em;white-space:nowrap} /* names stay on one line; the muted description wraps instead */
+  .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em}
   .svc .desc{font-size:.9rem;color:#6A6A6A;text-align:right;max-width:34ch;opacity:.5;transition:opacity .3s ease}
   a.svc{text-decoration:none;color:inherit}
   .svc .name .ar{opacity:.3;transition:opacity .3s ease;font-size:.5em;vertical-align:.35em}
@@ -336,7 +335,7 @@
 
   /* ————— split sections (2/3 · 1/3) ————— */
   .split{max-width:1150px;margin:0 auto;padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem);display:grid;gap:clamp(2rem,5vw,4.5rem);align-items:start}
-  .split-work{grid-template-columns:minmax(0,1fr) minmax(0,36%)} /* minmax(0) stops the reel's overflow width from widening its column and rewrapping the service names */
+  .split-work{grid-template-columns:2fr 1fr}
   .split-work .svc .name{font-size:clamp(1.25rem,2.3vw,1.9rem)}
   .split-work .svc .desc{max-width:26ch}
   .split-shop{grid-template-columns:1fr 2fr}
@@ -443,9 +442,8 @@
     </div>
     <div class="col-1 reel-col">
       <p class="eyebrow">Latest reel</p>
-      <!-- Prefers Instagram's own embed of a permalink (CMS override, else
-           the latest-reel function); falls back to the Behold widget. -->
-      <div class="reel-clip"><!-- BUILD:REEL --><!-- /BUILD:REEL --></div>
+      <!-- Behold pulls her latest Instagram posts automatically -->
+      <div class="reel-clip"><behold-widget feed-id="rMpkIGps8rwhMrKweip0"></behold-widget></div>
       <a class="reel-cta" href="https://www.instagram.com/raddydolo/reels/" target="_blank" rel="noopener noreferrer">Watch on Instagram<i class="ar" aria-hidden="true"></i></a>
     </div>
   </section>
@@ -695,114 +693,43 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
   window.addEventListener('resize', positionTestimonials);
   window.addEventListener('load', positionTestimonials);
 
-  // desktop: scale whatever is inside .reel-media (the Behold widget, or the
-  // iframe Instagram's embed.js swaps in for the blockquote) inside its clip
-  // frame so its top aligns with the first service row and its bottom with
-  // the last. We measure the natural aspect ratio, then widen until it's
-  // tall enough and crop the horizontal overflow (mobile keeps natural size).
+  // desktop: scale the IG widget inside its clip frame so its top aligns
+  // with the first service row and its bottom with the last. We measure the
+  // widget's natural aspect ratio, then widen it until it's tall enough and
+  // crop the horizontal overflow (mobile keeps the natural size).
+  var beholdEl = document.querySelector('behold-widget');
   var reelClip = document.querySelector('.reel-clip');
-  var reelMedia = document.querySelector('.reel-media');
   var svcList = document.querySelector('.svc-list');
   function sizeReel(){
-    var mediaEl = reelMedia && reelMedia.firstElementChild;
-    if (!mediaEl || !svcList || !reelClip) return;
+    if (!beholdEl || !svcList || !reelClip) return;
     if (window.innerWidth <= 820){
       reelClip.style.marginTop = ''; reelClip.style.height = '';
-      mediaEl.style.width = ''; mediaEl.style.marginLeft = '';
-      reelClip.classList.add('ready');
+      beholdEl.style.width = ''; beholdEl.style.marginLeft = '';
       return;
     }
     // natural measurement pass
     reelClip.style.height = '';
-    mediaEl.style.width = reelClip.clientWidth + 'px';
-    mediaEl.style.marginLeft = '0px';
-    var natW = mediaEl.offsetWidth, natH = mediaEl.offsetHeight;
+    beholdEl.style.width = reelClip.clientWidth + 'px';
+    beholdEl.style.marginLeft = '0px';
+    var natW = beholdEl.offsetWidth, natH = beholdEl.offsetHeight;
     if (natW < 40 || natH < 40) return; // feed not rendered yet; retry later
     var ratio = natH / natW;
-    // measure the rows, not the list box: the column stretches to the reel's
-    // height, so using the box would feed back into itself
-    var rows = svcList.querySelectorAll('.svc');
-    var targetH = rows.length
-      ? Math.round(rows[rows.length - 1].getBoundingClientRect().bottom - rows[0].getBoundingClientRect().top)
-      : Math.round(svcList.getBoundingClientRect().height);
+    var targetH = Math.round(svcList.getBoundingClientRect().height);
     var neededW = Math.ceil(targetH / ratio);
     var clipW = reelClip.clientWidth;
-    mediaEl.style.width = neededW + 'px';
-    mediaEl.style.marginLeft = Math.min(0, Math.round((clipW - neededW) / 2)) + 'px';
+    beholdEl.style.width = neededW + 'px';
+    beholdEl.style.marginLeft = Math.min(0, Math.round((clipW - neededW) / 2)) + 'px';
     reelClip.style.height = targetH + 'px';
     // align tops
     reelClip.style.marginTop = '0px';
-    var dt = Math.round((rows.length ? rows[0] : svcList).getBoundingClientRect().top - reelClip.getBoundingClientRect().top);
+    var dt = Math.round(svcList.getBoundingClientRect().top - reelClip.getBoundingClientRect().top);
     if (dt > 0) reelClip.style.marginTop = dt + 'px';
-    reelClip.classList.add('ready');
   }
   sizeReel();
   window.addEventListener('resize', sizeReel);
   window.addEventListener('load', sizeReel);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeReel);
-  // the widget/embed loads async; re-measure as its content arrives
-  // Instagram's embed sizes its iframe up to ~15s after load; poll for a
-  // bounded period instead of observing style changes (sizeReel writes styles
-  // itself, so an observer would re-trigger it in a loop).
-  if (reelMedia){
-    // safety: never leave the slot hidden if the feed is slow or fails
-    setTimeout(function(){ reelClip.classList.add('ready'); }, 6000);
-    var reelPolls = 0, reelLast = '', reelStable = 0, reelSized = '';
-    var reelTimer = setInterval(function(){
-      var el = reelMedia.firstElementChild;
-      var rws = svcList.querySelectorAll('.svc'), rh = rws.length ? Math.round(rws[rws.length-1].getBoundingClientRect().bottom - rws[0].getBoundingClientRect().top) : 0;
-      var sig = el ? (el.tagName + ':' + el.offsetHeight + ':' + rh) : '';
-      if (sig === reelLast) reelStable++; else { reelStable = 0; reelLast = sig; }
-      // size only once the height has held for two ticks, and only if it changed
-      var fontsIn = !document.fonts || document.fonts.status === 'loaded';
-      if (fontsIn && reelStable >= 2 && sig && sig !== reelSized){ reelSized = sig; sizeReel(); }
-      if (++reelPolls >= 30) clearInterval(reelTimer);
-    }, 1000);
-  }
-
-  // Latest reel: prefer Instagram's own embed of a permalink (CMS override
-  // via data-override, else the newest reel from the latest-reel function).
-  // If neither yields a permalink, fall back to the Behold widget so music-
-  // flagged reels (which never reach Behold) can still be pinned manually.
-  (function(){
-    if (!reelMedia) return;
-    function loadBehold(){
-      var w = document.createElement('behold-widget');
-      w.setAttribute('feed-id', 'rMpkIGps8rwhMrKweip0');
-      reelMedia.appendChild(w);
-      if (window.__bhldScript) return;
-      window.__bhldScript = true;
-      var d = document, s = d.createElement('script');
-      s.type = 'module'; s.src = 'https://w.behold.so/widget.js';
-      setTimeout(function(){ d.head.append(s); }, 0);
-    }
-    function loadInstagram(permalink){
-      var bq = document.createElement('blockquote');
-      bq.className = 'instagram-media';
-      bq.setAttribute('data-instgrm-permalink', permalink);
-      bq.setAttribute('data-instgrm-version', '14');
-      bq.style.margin = '0';
-      reelMedia.appendChild(bq);
-      // watchdog: if Instagram has not rendered a sized iframe within 12s
-      // (blocked embed, slow network), swap to the Behold widget instead
-      setTimeout(function(){
-        var f = reelMedia.querySelector('iframe');
-        if (f && f.offsetHeight > 50) return;
-        reelMedia.innerHTML = '';
-        loadBehold();
-      }, 12000);
-      if (window.instgrm){ window.instgrm.Embeds.process(); return; }
-      var d = document, s = d.createElement('script');
-      s.async = true; s.src = 'https://www.instagram.com/embed.js';
-      d.head.append(s);
-    }
-    var override = (reelMedia.getAttribute('data-override') || '').trim();
-    if (override){ loadInstagram(override); return; }
-    if (true){ loadBehold(); return; } // TEMP: Instagram embed path disabled pending rebuild
-    fetch('/.netlify/functions/latest-reel').then(function(r){ return r.json(); }).then(function(json){
-      if (json && json.permalink){ loadInstagram(json.permalink); } else { loadBehold(); }
-    }).catch(function(){ loadBehold(); });
-  })();
+  // the widget loads async; re-measure as its content arrives
+  [800, 1600, 3000, 5000, 8000].forEach(function(ms){ setTimeout(sizeReel, ms); });
 
   // rotating testimonials
   // Standout line from each real client testimonial (full versions in testimonials.md)
@@ -913,6 +840,13 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage');
   });
 })();
+</script>
+<script>
+  (() => {
+    if(window.__bhldScript)return;window.__bhldScript=true;
+    const d=document,s=d.createElement("script");s.type="module";
+    s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
+  })();
 </script>
 <script data-goatcounter="https://raddolo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
