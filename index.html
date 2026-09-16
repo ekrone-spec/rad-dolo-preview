@@ -322,7 +322,7 @@
   .svc-list{max-width:1050px;margin:2.4rem auto 0;border-top:1px solid var(--ink)}
   .svc{display:grid;grid-template-columns:2.6rem 1fr auto;gap:clamp(.8rem,2vw,1.8rem);align-items:center;padding:clamp(1rem,2.2vw,1.5rem) 0;border-bottom:1px solid var(--hair);transition:padding .3s ease}
   .svc .n{font-family:var(--label);font-size:.7rem;letter-spacing:.18em;color:var(--muted)}
-  .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em}
+  .svc .name{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.6rem);text-transform:uppercase;line-height:1;letter-spacing:.01em;white-space:nowrap} /* names stay on one line; the muted description wraps instead */
   .svc .desc{font-size:.9rem;color:#6A6A6A;text-align:right;max-width:34ch;opacity:.5;transition:opacity .3s ease}
   a.svc{text-decoration:none;color:inherit}
   .svc .name .ar{opacity:.3;transition:opacity .3s ease;font-size:.5em;vertical-align:.35em}
@@ -336,7 +336,7 @@
 
   /* ————— split sections (2/3 · 1/3) ————— */
   .split{max-width:1150px;margin:0 auto;padding:clamp(3.5rem,8vw,7rem) clamp(1.2rem,4vw,3rem);display:grid;gap:clamp(2rem,5vw,4.5rem);align-items:start}
-  .split-work{grid-template-columns:minmax(0,2fr) minmax(0,1fr)} /* minmax(0) stops the reel's overflow width from widening its column and rewrapping the service names */
+  .split-work{grid-template-columns:minmax(0,1fr) minmax(0,36%)} /* minmax(0) stops the reel's overflow width from widening its column and rewrapping the service names */
   .split-work .svc .name{font-size:clamp(1.25rem,2.3vw,1.9rem)}
   .split-work .svc .desc{max-width:26ch}
   .split-shop{grid-template-columns:1fr 2fr}
