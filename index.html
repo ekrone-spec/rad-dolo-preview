@@ -785,6 +785,7 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     }
     var override = (reelMedia.getAttribute('data-override') || '').trim();
     if (override){ loadInstagram(override); return; }
+    if (true){ loadBehold(); return; } // TEMP: Instagram embed path disabled pending rebuild
     fetch('/.netlify/functions/latest-reel').then(function(r){ return r.json(); }).then(function(json){
       if (json && json.permalink){ loadInstagram(json.permalink); } else { loadBehold(); }
     }).catch(function(){ loadBehold(); });
