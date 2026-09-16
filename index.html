@@ -734,9 +734,17 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
   window.addEventListener('load', sizeReel);
   // the widget/embed loads async; re-measure as its content arrives
   [800, 1600, 3000, 5000, 8000].forEach(function(ms){ setTimeout(sizeReel, ms); });
-  if (reelMedia && window.MutationObserver){
-    new MutationObserver(function(){ sizeReel(); }).observe(reelMedia, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'height'] });
-    if (window.ResizeObserver){ new ResizeObserver(function(){ sizeReel(); }).observe(reelMedia); }
+  // Instagram's embed sizes its iframe up to ~15s after load; poll for a
+  // bounded period instead of observing style changes (sizeReel writes styles
+  // itself, so an observer would re-trigger it in a loop).
+  if (reelMedia){
+    var reelPolls = 0, reelLast = '';
+    var reelTimer = setInterval(function(){
+      var el = reelMedia.firstElementChild;
+      var sig = el ? (el.tagName + ':' + el.offsetHeight) : '';
+      if (sig !== reelLast){ reelLast = sig; sizeReel(); }
+      if (++reelPolls >= 30) clearInterval(reelTimer); // 30s, then stop
+    }, 1000);
   }
 
   // Latest reel: prefer Instagram's own embed of a permalink (CMS override
