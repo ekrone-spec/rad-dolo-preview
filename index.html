@@ -417,7 +417,7 @@
     <p class="testimonial" id="testimonial"></p>
   </div>
   <div class="hero-ui">
-    <form class="ask" id="askForm" name="inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form class="ask" id="askForm" data-anchor="ask" name="inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="inquiry">
       <input type="hidden" name="page" value="homepage">
       <p class="nl-hp" aria-hidden="true"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -600,7 +600,7 @@
       <div><dt>Based in</dt><dd>Minneapolis, MN. Twin Cities metro</dd></div>
       <div><dt>Virtual</dt><dd>Yes, anywhere in the world</dd></div>
       <div><dt>First step</dt><dd><a class="book-open" href="#">A free consultation call<i class="ar" aria-hidden="true"></i></a></dd></div>
-      <div><dt>Email</dt><dd><a class="email-open" data-subject="Hello Rad" href="#">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
+      <div><dt>Email</dt><dd><a class="ask-open" href="#ask">Send Rad a note<i class="ar" aria-hidden="true"></i></a></dd></div>
       <div><dt>Shop</dt><dd><a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a></dd></div>
       <div><dt>Find me</dt><dd><a href="https://maps.app.goo.gl/Pcst3UnSE3Bmyx3o7" target="_blank" rel="noopener noreferrer">RAD styling on Google Maps</a></dd></div>
     </dl>
@@ -611,7 +611,7 @@
       <a href="https://shopmy.us/shop/raddydolo" target="_blank" rel="noopener noreferrer">Shop my picks</a>
       <a href="https://www.instagram.com/raddydolo" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://www.tiktok.com/@raddydolo" target="_blank" rel="noopener noreferrer">TikTok</a>
-      <a class="email-open" data-subject="Hello Rad" href="#">Email</a>
+      <a class="ask-open" href="#ask">Email</a>
     </div>
   </div>
 </footer>
@@ -832,6 +832,11 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     });
   }
 
+  // 'Send Rad a note' links scroll to the ask box and focus it (works in every
+  // browser, unlike mailto: which Instagram's in-app browser blocks)
+  function focusAsk(){ window.scrollTo({top:0, behavior:'smooth'}); var i=document.getElementById('askInput'); if (i) setTimeout(function(){ i.focus(); }, 350); }
+  Array.prototype.forEach.call(document.querySelectorAll('.ask-open'), function(a){ a.addEventListener('click', function(e){ e.preventDefault(); focusAsk(); }); });
+  if (location.hash === '#ask'){ window.addEventListener('load', focusAsk); }
   var askForm = document.getElementById('askForm');
   askForm.addEventListener('submit', function(e){
     e.preventDefault();
