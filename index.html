@@ -417,9 +417,12 @@
     <p class="testimonial" id="testimonial"></p>
   </div>
   <div class="hero-ui">
-    <form class="ask" id="askForm">
+    <form class="ask" id="askForm" name="inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="inquiry">
+      <input type="hidden" name="page" value="homepage">
+      <p class="nl-hp" aria-hidden="true"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <label class="sr-only" for="askInput">Tell Rad about your closet concerns</label>
-      <input id="askInput" name="ask" type="text" autocomplete="off" maxlength="500" placeholder="Tell me about your closet concerns…">
+      <input id="askInput" name="message" type="text" autocomplete="off" maxlength="500" placeholder="Tell me about your closet concerns…">
       <button type="submit" aria-label="Send your note to Rad">&rarr;</button>
       <span class="ask-reply" id="askReply" aria-live="polite"></span>
     </form>
@@ -837,7 +840,13 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     if (!val){ input.focus(); return; }
     document.getElementById('askReply').textContent = 'Thank you, gorgeous. I’ll reach out soon!';
     askForm.classList.add('sent');
-    openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage');
+    function fallback(){ openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage'); }
+    if (/github\.io$/.test(location.hostname)){ fallback(); return; }
+    var body = 'form-name=inquiry&message=' + encodeURIComponent(val) + '&page=homepage&bot-field=' +
+               encodeURIComponent((askForm.querySelector('[name="bot-field"]')||{}).value || '');
+    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
+      .then(function(r){ if (!r.ok) fallback(); })
+      .catch(fallback);
   });
 })();
 </script>

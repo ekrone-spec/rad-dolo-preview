@@ -1,0 +1,7 @@
+HTTP/2 200 
+cache-control: public,max-age=0,must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://w.behold.so https://gc.zgo.at https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net https://raddolo.goatcounter.com; media-src 'self' https://*.behold.so https://*.cdninstagram.com https://*.fbcdn.net; connect-src 'self' https://feeds.behold.so https://w.behold.so https://raddolo.goatcounter.com; frame-src https://www.instagram.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY

@@ -23,7 +23,7 @@ def check(name, ok, detail=""):
 # expected counts — update these when content is deliberately added or removed
 EXPECT = {"posts": 6, "services": 4, "shop": 3, "marquee": 10, "quotes": 16, "sitemap": 12}
 
-r = subprocess.run(["python3", "build.py"], capture_output=True, text=True)
+r = subprocess.run([sys.executable, "build.py"], capture_output=True, text=True)
 check("build runs clean", r.returncode == 0, r.stderr[-200:])
 print("      " + r.stdout.strip())
 
