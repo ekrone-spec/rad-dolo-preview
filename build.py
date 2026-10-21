@@ -333,6 +333,7 @@ urls += [url_entry("%s/journal/%s/" % (SITE, p["slug"]),
 urls += [url_entry("%s/services/%s/" % (SITE, sv["slug"]),
                    lastmod(os.path.join("content", "services", sv["slug"] + ".md")), "monthly", "0.9") for sv in services]
 urls += [url_entry(SITE + "/privacy/", lastmod(os.path.join("privacy", "index.html")), "yearly", "0.2")]
+urls += [url_entry(SITE + "/press/", lastmod(os.path.join("press", "index.html")), "monthly", "0.6")]
 open(os.path.join(DIST, "sitemap.xml"), "w", encoding="utf-8").write(
 '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n' % "\n".join(urls))
 

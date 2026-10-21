@@ -21,7 +21,7 @@ def check(name, ok, detail=""):
         fails.append(name)
 
 # expected counts — update these when content is deliberately added or removed
-EXPECT = {"posts": 6, "services": 4, "shop": 3, "marquee": 10, "quotes": 16, "sitemap": 12}
+EXPECT = {"posts": 7, "services": 4, "shop": 3, "marquee": 10, "quotes": 16, "sitemap": 14}
 
 r = subprocess.run([sys.executable, "build.py"], capture_output=True, text=True)
 check("build runs clean", r.returncode == 0, r.stderr[-200:])
