@@ -10,3 +10,5 @@
   dolo.radmila@gmail.com. No Netlify token on file.
 - Revert path for the form change: `git revert <that commit>` then push; the
   Netlify form keeps accepting the old field set, nothing else depends on it.
+- 2026-11-03 Behold outage: feeds.behold.so JSON fine (newest post 2026-09-26, reel DdwdAhBu5m9) but behold.pictures (their media CDN) returns 502 for every size, so the widget renders nothing (verified on a bare page with only their embed). cdninstagram URLs in the feed are signed and return 403 outside the widget.
+- 2026-11-03 Instagram token expired: latest-reel trace "refresh failed: 400", "media fetch: 400"; cache age 4142256s (last call Sep 16). Fix at source: netlify/functions/refresh-reel.mjs runs Mondays 09:00 UTC and calls latest-reel. Renewal needs a Generate-token click with Rad logged in (Meta app "Rad Dolo Website", IG app id 1783214602814239).
