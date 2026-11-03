@@ -215,7 +215,8 @@
   }
   .ask-hint{min-height:1.4em;margin:.5rem 0 0;text-align:center;font-family:var(--label);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .ask-hint:empty{display:none}
-  .ask.sent .ask-reply{display:flex}
+  .ask.sent .ask-reply,.ask.warn .ask-reply{display:flex}
+  .ask.warn .ask-reply{color:#C0392B;font-style:normal;font-family:var(--label);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
   .ask.sent input,.ask.sent button{visibility:hidden}
   .facts{
     font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);
@@ -740,6 +741,34 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
   window.addEventListener('load', sizeReel);
   // the widget loads async; re-measure as its content arrives
   [800, 1600, 3000, 5000, 8000].forEach(function(ms){ setTimeout(sizeReel, ms); });
+  // Backup: if Behold has rendered nothing after 6s, show the newest reel
+  // ourselves (video or cover frame from the Instagram API via our function),
+  // inside the same element so the sizing above applies unchanged.
+  setTimeout(function(){
+    if (!beholdEl || beholdEl.offsetHeight > 40) return;
+    fetch('/.netlify/functions/latest-reel').then(function(r){ return r.json(); }).then(function(j){
+      if (!j || !(j.mediaUrl || j.thumbnailUrl)) return;
+      var a = document.createElement('a');
+      a.href = j.permalink || 'https://www.instagram.com/raddydolo/reels/'; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.style.cssText = 'display:block;width:100%;aspect-ratio:9/16;overflow:hidden;background:#111';
+      var m;
+      if (j.mediaUrl){
+        m = document.createElement('video'); m.src = j.mediaUrl; m.muted = true; m.autoplay = true; m.loop = true; m.playsInline = true;
+        if (j.thumbnailUrl) m.poster = j.thumbnailUrl;
+      } else {
+        m = document.createElement('img'); m.src = j.thumbnailUrl; m.alt = 'Latest reel on Instagram';
+      }
+      m.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+      a.appendChild(m);
+      // Behold's element keeps itself at zero height, so swap it for a plain
+      // block that the sizing routine measures the same way
+      var box = document.createElement('div'); box.className = 'reel-fallback';
+      box.style.cssText = 'display:block;width:min(300px,78vw);margin:0 auto';
+      box.appendChild(a); beholdEl.parentNode.replaceChild(box, beholdEl); beholdEl = box;
+      [50, 600, 1500, 3000].forEach(function(ms){ setTimeout(sizeReel, ms); });
+      if (m.play) m.play().catch(function(){});
+    }).catch(function(){});
+  }, 6000);
 
   // rotating testimonials
   // Standout line from each real client testimonial (full versions in testimonials.md)
@@ -857,7 +886,11 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
     // one field: the note must include an email address so Rad can reply
     var found = val.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
     if (!found){
-      input.focus(); document.getElementById('askHint').textContent = 'Add your email in the box so I can reply.'; return;
+      // red notice inside the box itself, then hand the box back for typing
+      reply.textContent = 'Add your email in the box so I can reply';
+      askForm.classList.add('warn');
+      setTimeout(function(){ askForm.classList.remove('warn'); reply.textContent = ''; input.focus(); var n = input.value.length; try { input.setSelectionRange(n, n); } catch (_){} }, 2200);
+      return;
     }
     var em = found[0]; emailEl.value = em;
     document.getElementById('askHint').textContent = '';

@@ -119,12 +119,14 @@ export default async function handler(req) {
   const cached = await readBlobJSON(store, "cache", trace);
   if (cached && cached.checkedAt) {
     const age = Date.now() - new Date(cached.checkedAt).getTime();
-    if (age < CACHE_MAX_AGE_MS) {
+    if (age < CACHE_MAX_AGE_MS && "mediaUrl" in cached) {
       if (trace) trace.push(`cache fresh (age ${Math.round(age / 1000)}s)`);
       return json(
         {
           permalink: cached.permalink || null,
           timestamp: cached.timestamp || null,
+          mediaUrl: cached.mediaUrl || null,
+          thumbnailUrl: cached.thumbnailUrl || null,
           source: "cache",
           checkedAt: cached.checkedAt,
         },
@@ -146,7 +148,7 @@ export default async function handler(req) {
 
   // 3) Call the API and pick the newest reel.
   try {
-    const url = `${GRAPH}/me/media?fields=id,media_type,media_product_type,permalink,timestamp&limit=25&access_token=${encodeURIComponent(token)}`;
+    const url = `${GRAPH}/me/media?fields=id,media_type,media_product_type,permalink,timestamp,media_url,thumbnail_url&limit=25&access_token=${encodeURIComponent(token)}`;
     const res = await fetch(url);
     if (trace) trace.push(`media fetch: ${res.status}`);
     if (!res.ok) {
@@ -163,7 +165,8 @@ export default async function handler(req) {
       return json({ permalink: null, timestamp: null, source: "none", checkedAt }, NONE_CACHE_HEADERS, trace);
     }
 
-    const result = { permalink: pick.permalink, timestamp: pick.timestamp, checkedAt };
+    const result = { permalink: pick.permalink, timestamp: pick.timestamp,
+      mediaUrl: pick.media_url || null, thumbnailUrl: pick.thumbnail_url || null, checkedAt };
     await writeBlobJSON(store, "cache", result, trace);
 
     return json({ ...result, source: "api" }, FRESH_CACHE_HEADERS, trace);
