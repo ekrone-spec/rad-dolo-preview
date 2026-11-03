@@ -213,6 +213,11 @@
     font-family:var(--display);font-style:italic;font-weight:500;
     font-size:clamp(1.05rem,2.3vw,1.35rem);color:var(--ink);
   }
+  .ask-hint{min-height:1.4em;margin:.5rem 0 0;text-align:center;font-family:var(--label);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .ask-hint:empty{display:none}
+  .ask #askEmail{display:none}
+  .ask.step2 #askInput{display:none}
+  .ask.step2 #askEmail{display:block}
   .ask.sent .ask-reply{display:flex}
   .ask.sent input,.ask.sent button{visibility:hidden}
   .facts{
@@ -425,9 +430,12 @@
       <p class="nl-hp" aria-hidden="true"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <label class="sr-only" for="askInput">Tell Rad about your closet concerns</label>
       <input id="askInput" name="message" type="text" autocomplete="off" maxlength="500" placeholder="Tell me about your closet concerns…">
+      <label class="sr-only" for="askEmail">Your email, so Rad can reply</label>
+      <input id="askEmail" name="email" type="email" autocomplete="email" maxlength="200" placeholder="Where should I reply? Your email…">
       <button type="submit" aria-label="Send your note to Rad">&rarr;</button>
       <span class="ask-reply" id="askReply" aria-live="polite"></span>
     </form>
+    <p class="ask-hint" id="askHint" aria-live="polite"></p>
     <p class="facts">In Person In Minneapolis &nbsp;·&nbsp; Virtual Anywhere &nbsp;·&nbsp; <a class="book-open" href="#">First Call Is Free</a></p>
   </div>
 </section>
@@ -837,20 +845,37 @@ if (/invite_token|recovery_token|confirmation_token/.test(location.hash)) locati
 
   // 'Send Rad a note' links scroll to the ask box and focus it (works in every
   // browser, unlike mailto: which Instagram's in-app browser blocks)
-  function focusAsk(){ window.scrollTo({top:0, behavior:'smooth'}); var i=document.getElementById('askInput'); if (i) setTimeout(function(){ i.focus(); }, 350); }
+  function focusAsk(){ window.scrollTo({top:0, behavior:'smooth'}); var f=document.getElementById('askForm'); var i=document.getElementById(f && f.classList.contains('step2') ? 'askEmail' : 'askInput'); if (i) setTimeout(function(){ i.focus(); }, 350); }
   Array.prototype.forEach.call(document.querySelectorAll('.ask-open'), function(a){ a.addEventListener('click', function(e){ e.preventDefault(); focusAsk(); }); });
   if (location.hash === '#ask'){ window.addEventListener('load', focusAsk); }
   var askForm = document.getElementById('askForm');
+  document.getElementById('askEmail').addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ askForm.classList.remove('step2'); document.getElementById('askHint').textContent = ''; document.getElementById('askInput').focus(); }
+  });
   askForm.addEventListener('submit', function(e){
     e.preventDefault();
     var input = document.getElementById('askInput');
+    var emailEl = document.getElementById('askEmail');
     var val = input.value.trim();
     if (!val){ input.focus(); return; }
-    document.getElementById('askReply').textContent = 'Thank you, gorgeous. I’ll reach out soon!';
+    // step 1: the note. step 2: an email so Rad can reply (Netlify uses the
+    // 'email' field as the notification's Reply-To).
+    var reply = document.getElementById('askReply');
+    if (!askForm.classList.contains('step2')){
+      askForm.classList.add('step2'); emailEl.focus();
+      document.getElementById('askHint').textContent = 'One more thing: where should I reply? Esc to go back.';
+      return;
+    }
+    var em = emailEl.value.trim();
+    if (!em || !emailEl.checkValidity()){
+      emailEl.focus(); document.getElementById('askHint').textContent = 'That email does not look right. Try again?'; return;
+    }
+    document.getElementById('askHint').textContent = '';
+    reply.textContent = 'Thank you, gorgeous. I’ll reach out soon!';
     askForm.classList.add('sent');
-    function fallback(){ openEmail('Styling note from raddolo.com', val + '\n\nsent from the raddolo.com homepage'); }
+    function fallback(){ openEmail('Styling note from raddolo.com', val + '\n\nreply to: ' + em + '\nsent from the raddolo.com homepage'); }
     if (/github\.io$/.test(location.hostname)){ fallback(); return; }
-    var body = 'form-name=inquiry&message=' + encodeURIComponent(val) + '&page=homepage&bot-field=' +
+    var body = 'form-name=inquiry&message=' + encodeURIComponent(val) + '&email=' + encodeURIComponent(em) + '&page=homepage&bot-field=' +
                encodeURIComponent((askForm.querySelector('[name="bot-field"]')||{}).value || '');
     fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
       .then(function(r){ if (!r.ok) fallback(); })
