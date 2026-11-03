@@ -121,6 +121,15 @@ check("service links", home.count('class="svc" href="services/') == EXPECT["serv
 for token in ["behold-widget", "gc.zgo.at", "maps.app.goo.gl", "curtain",
               'name="newsletter"', 'href="privacy/"', "BUILT:SERVICES"]:
     check("homepage retains " + token, token in home)
+# every Netlify form must collect a sender email: without a field named "email"
+# the notification has no Reply-To and the lead cannot be answered (Nov 2026)
+noemail = []
+for pg in pages:
+    s_ = open(pg, encoding="utf-8").read()
+    for m in re.finditer(r"<form\b[^>]*data-netlify=\"true\"[^>]*>([\s\S]*?)</form>", s_):
+        if 'name="email"' not in m.group(1):
+            noemail.append(os.path.relpath(pg, DIST) + ": form without an email field")
+check("every Netlify form has an email field", not noemail, "; ".join(noemail))
 check("feed items", open(os.path.join(DIST, "feed.xml"), encoding="utf-8").read().count("<item>") == EXPECT["posts"])
 check("sitemap urls", open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read().count("<url>") == EXPECT["sitemap"])
 
