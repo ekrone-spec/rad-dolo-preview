@@ -25,8 +25,4 @@ A black satin bomber over a white tee, black trousers and pointed flats. This is
 
 A long denim coat with contrast stitching over a dark tee and patchwork jeans, with work boots. Denim on denim works when the two pieces share a wash family and one of them is doing something unexpected.
 
-## Me
-
-All black, a soft knit, a crisp trouser and a little leather, with one bold belt. On camera, black stays out of the way and texture does the talking.
-
 Three things to take from all of it: pick one color story, mix at least two fabrics, and give every outfit a single piece that is clearly the point.
